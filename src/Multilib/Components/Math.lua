@@ -7,7 +7,7 @@ function Lib:Delta(a : number, b : number, c : number)
 	local Delta
 	local Z
 	if a ~= 0 then
-		Delta = (b*2) - (4 * a * c)
+		Delta = math.pow(b, 2) - 4 * a * c
 		if Delta < 0 then
 			Z = false
 		elseif Delta == 0 then
