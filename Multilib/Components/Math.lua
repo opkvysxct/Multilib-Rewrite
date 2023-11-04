@@ -28,6 +28,19 @@ function Lib:Pythagorean(a : number, b : number)
 	return math.sqrt(math.pow(c,2))
 end
 
+-- Misc
+function Lib:Chance(Percent : number, Max : number)
+	if math.random(1,Max) <= Percent then
+		return true
+	else
+		return false
+	end
+end
+
+function Lib:ReturnChance(Percent : number, Total : number) -- sani
+	return math.floor((Percent / Total * 100) * 10 + 0.5) / 10
+end
+
 -- End
 
 function Lib:Init()

@@ -56,3 +56,5 @@ print(_G.M_Raycast:Ray(workspace.r1.CFrame,workspace.r2,1000,{
 }))
 
 print(_G.M_Math:Pythagorean(5,5))
+
+_G.M_Parallel:PutToParallel(script,"Location")
