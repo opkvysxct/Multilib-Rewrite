@@ -1,3 +1,3 @@
 # Multilib Rewrite
-## Feel free to use it as you want, any forks are welcome
+## Feel free to use it, any forks are welcome
 ### wiki wip
