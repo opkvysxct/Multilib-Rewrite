@@ -9,6 +9,9 @@ function Multilib:Init(Comments)
 		_G["M_" .. component.Name] = require(component)
 		_G["M_" .. component.Name]:Init()
 	end
+	for index,class in script.Classes:GetChildren() do
+		_G["M_" .. class.Name] = require(class)
+	end
 end
 
 return Multilib
