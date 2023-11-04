@@ -1,0 +1,23 @@
+{
+	"name": "utils",
+	"tree": {
+		"$className": "DataModel",
+		"ReplicatedStorage": {
+			"Multilib": {
+				"$path": "src/Multilib"
+			}
+		},
+		"ServerScriptService": {
+			"Server": {
+				"$path": "src/server"
+			}
+		},
+		"StarterPlayer": {
+			"StarterPlayerScripts": {
+				"Client": {
+					"$path": "src/client"
+				}
+			}
+		}
+	}
+}
