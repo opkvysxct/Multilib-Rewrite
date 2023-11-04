@@ -11,7 +11,7 @@ _G.M_Instance:DebrisF(Part,5,function()
 	print('a')
 end)
 
---SoundFX({Specs},Instance or Vector3 as position)
+--SoundFX({Specs},Instance or Vector3)
 _G.M_Instance:SoundFX(Vector3.new(0,0,0),{
 	ID = 1837819000,
 	Volume = 1,
@@ -19,3 +19,7 @@ _G.M_Instance:SoundFX(Vector3.new(0,0,0),{
 	MaxDistance = 1000,
 	MinDistance = 10,
 })
+
+local ParticleToUse = script:WaitForChild("ParticleEmitter") -- any particle emitter
+--ParticleFX(Particle,Strength,Instance or Vector3, size of Vector3 (optional))
+_G.M_Instance:ParticleFX(ParticleToUse,15,Vector3.new(0,50,0),Vector3.new(1,1,5))
