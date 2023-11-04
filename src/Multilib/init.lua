@@ -11,6 +11,9 @@ function Multilib:Init(Comments)
 	end
 	for index,class in script.Classes:GetChildren() do
 		_G["M_" .. class.Name] = require(class)
+		if self.Comments then
+			print("[Multilib-" .. class.Name .. "] Registered")
+		end
 	end
 end
 

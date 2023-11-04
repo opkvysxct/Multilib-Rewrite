@@ -1,7 +1,7 @@
 local RunService = game:GetService("RunService")
 --Loading schemat
 _G.M_Loader = require(game:GetService("ReplicatedStorage").Multilib)
-_G.M_Loader:Init(false)
+_G.M_Loader:Init(true)
 
 --Instance Lib
 --Create("Instance name", Parent, {Proporties})
@@ -31,14 +31,13 @@ _G.M_Instance:ParticleFX(ParticleToUse,15,Vector3.new(0,50,0),Vector3.new(1,1,5)
 
 local Spring = _G.M_Spring:new()
 
-local timed = 1
+--[[local timed = 1
 RunService.Heartbeat:Connect(function(deltaTime)
 	timed += 1
 	Spring:Update()
-	print(Spring.Position)
 	_G.M_Instance:Create("Part",workspace,{
 		Size = Vector3.new(1,1,1),
-		Position = Vector3.new(timed,Spring.Position * 2,0),
+		Position = Vector3.new(timed,Spring.Position * 15,0),
 		Anchored = true,
 	})
-end)
+end)--]]
