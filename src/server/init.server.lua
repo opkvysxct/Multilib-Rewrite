@@ -41,3 +41,16 @@ RunService.Heartbeat:Connect(function(deltaTime)
 		Anchored = true,
 	})
 end)--]]
+
+--Delta
+local delta, z = _G.M_Math:Delta(-2,8,1)
+print(delta, z)
+
+--Ray(instance or cframe or position,instance or cframe or position,strength,params(optional))
+print(_G.M_Raycast:Ray(workspace.r1.CFrame,workspace.r2,1000,{
+	CG = "Default", -- CollisionGroup
+	FDI = {workspace.r2}, -- FilterDescendantsInstances
+	FT = Enum.RaycastFilterType.Include, -- FilterType
+	IW = true, -- IgnoreWater
+	RCC = true -- RespectCanCollide
+}))
