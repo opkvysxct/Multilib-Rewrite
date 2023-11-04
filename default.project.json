@@ -4,18 +4,18 @@
 		"$className": "DataModel",
 		"ReplicatedStorage": {
 			"Multilib": {
-				"$path": "src/Multilib"
+				"$path": "Multilib"
 			}
 		},
 		"ServerScriptService": {
 			"Server": {
-				"$path": "src/server"
+				"$path": "server"
 			}
 		},
 		"StarterPlayer": {
 			"StarterPlayerScripts": {
 				"Client": {
-					"$path": "src/client"
+					"$path": "client"
 				}
 			}
 		}
