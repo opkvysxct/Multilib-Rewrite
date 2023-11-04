@@ -21,9 +21,9 @@ _G.M_Instance:SoundFX(Vector3.new(0,0,0),{
 	MinDistance = 10,
 })
 
-local ParticleToUse = script:WaitForChild("ParticleEmitter") -- any particle emitter
+--local ParticleToUse = script:WaitForChild("ParticleEmitter") -- any particle emitter
 --ParticleFX(Particle,Strength,Instance or Vector3, size of Vector3 (optional))
-_G.M_Instance:ParticleFX(ParticleToUse,15,Vector3.new(0,50,0),Vector3.new(1,1,5))
+--_G.M_Instance:ParticleFX(ParticleToUse,15,Vector3.new(0,50,0),Vector3.new(1,1,5))
 
 --Motor6D(Instance, Instance, Parent)
 
@@ -54,3 +54,5 @@ print(_G.M_Raycast:Ray(workspace.r1.CFrame,workspace.r2,1000,{
 	IW = true, -- IgnoreWater
 	RCC = true -- RespectCanCollide
 }))
+
+print(_G.M_Math:Pythagorean(5,5))

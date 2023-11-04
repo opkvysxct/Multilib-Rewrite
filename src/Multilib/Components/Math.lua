@@ -23,6 +23,11 @@ function Lib:Delta(a : number, b : number, c : number)
 	end
 end
 
+function Lib:Pythagorean(a : number, b : number)
+	local c = math.sqrt(math.pow(a,2) + math.pow(b,2))
+	return math.sqrt(math.pow(c,2))
+end
+
 -- End
 
 function Lib:Init()
