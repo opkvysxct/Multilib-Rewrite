@@ -3,6 +3,12 @@ local Players = game:GetService("Players")
 local RecipeProcessor = {}
 RecipeProcessor.__index = RecipeProcessor
 
+function RecipeProcessor:new()
+	local self = setmetatable({}, RecipeProcessor)
+	self.Producs = {}
+	return self
+end
+
 function RecipeProcessor:AddListener(ID : number, FuncAfter : any)
 	self.Producs[ID] = FuncAfter
 end
@@ -26,12 +32,6 @@ end
 
 function RecipeProcessor:Run()
 	MarketplaceService.ProcessReceipt = self.Process
-end
-
-function RecipeProcessor:new()
-	local self = setmetatable({}, RecipeProcessor)
-	self.Producs = {}
-	return self
 end
 
 return RecipeProcessor
