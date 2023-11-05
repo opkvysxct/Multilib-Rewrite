@@ -42,6 +42,24 @@ end
 
 -- End
 
+function Lib:SetDefaultParams(Params : any)
+	local typeofParams = typeof(Params)
+	local NewParams
+	if typeofParams == "RaycastParams" then
+		NewParams = Params
+	elseif typeofParams == "table" then
+		NewParams = RaycastParams.new()
+		NewParams.CollisionGroup = Params.CG or "Default"
+		NewParams.FilterDescendantsInstances = Params.FDI or {}
+		NewParams.FilterType = Params.FT or Enum.RaycastFilterType.Exclude
+		NewParams.IgnoreWater = Params.IW or true
+		NewParams.RespectCanCollide = Params.RCC or true
+	else
+		warn("[Multilib-Raycast] No params specified!")
+	end
+	self.DefParams = NewParams
+end
+
 function Lib:Init()
 	self.DefParams = RaycastParams.new()
 	if _G.M_Loader.Comments then

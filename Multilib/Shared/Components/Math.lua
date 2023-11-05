@@ -25,7 +25,7 @@ end
 
 function Lib:Pythagorean(a : number, b : number)
 	local c = math.sqrt(math.pow(a,2) + math.pow(b,2))
-	return math.sqrt(math.pow(c,2))
+	return c
 end
 
 -- Misc
@@ -41,6 +41,9 @@ function Lib:ReturnChance(Percent : number, Total : number) -- sani
 	return math.floor((Percent / Total * 100) * 10 + 0.5) / 10
 end
 
+function Lib:Lerp(a : number, b : number, t : number)
+	return a + (a + (b - a)) * t
+end
 -- End
 
 function Lib:Init()

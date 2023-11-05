@@ -1,7 +1,7 @@
 local RunService = game:GetService("RunService")
 --Loading schemat
 _G.M_Loader = require(game:GetService("ReplicatedStorage").Multilib)
-_G.M_Loader:Init(true)
+_G.M_Loader:InitServer(true)
 
 --Instance Lib
 --Create("Instance name", Parent, {Proporties})
@@ -29,7 +29,7 @@ _G.M_Instance:SoundFX(Vector3.new(0,0,0),{
 
 --Animation(ID, Animator)
 
-local Spring = _G.M_Spring:new()
+local Spring = _G.M_SimpleSpring:new()
 
 --[[local timed = 1
 RunService.Heartbeat:Connect(function(deltaTime)

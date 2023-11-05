@@ -4,7 +4,7 @@ local Debris = game:GetService("Debris")
 local Lib = {}
 
 -- Core
-function Lib:Create(InstanceName : string,Parent : Instance,Proporties : table)
+function Lib:Create(InstanceName : string, Parent : Instance, Proporties : table)
 	local InstanceCreated = Instance.new(InstanceName,Parent)
 	if _G.M_Loader.Comments then
 		print("[Multilib-Instance]",InstanceName,Parent,Proporties)
@@ -16,7 +16,7 @@ function Lib:Create(InstanceName : string,Parent : Instance,Proporties : table)
 end
 
 -- Misc
-function Lib:DebrisF(Instance : Instance, Time : number, Func)
+function Lib:DebrisF(Instance : Instance, Time : number, Func : any)
 	Debris:AddItem(Instance,Time)
 	if _G.M_Loader.Comments then
 		print("[Multilib-Instance] Destroying",Instance,"in",Time,"s.")
@@ -75,11 +75,11 @@ function Lib:ParticleFX(Particle : Instance, Strength : number, Where : any, Whe
 	Particle.Parent = Where
 	Particle:Emit(Strength)
 	if ToDelete ~= nil then
-		task.delay(self.MinSoundTime,function()
+		task.delay(self.MinParticleTime,function()
 			self:DebrisF(Where,Particle.Lifetime.Max)
 		end)
 	else
-		task.delay(self.MinSoundTime,function()
+		task.delay(self.MinParticleTime,function()
 			self:DebrisF(Particle,Particle.Lifetime.Max)
 		end)
 	end
@@ -100,10 +100,21 @@ function Lib:Animation(ID : number, Animator : Instance)
 	return Animator:LoadAnimation(Animation)
 end
 
+-- Settings
+
+function Lib:SetMinSoundTime(Time : number)
+	self.MinSoundTime = Time
+end
+
+function Lib:MinParticleTime(Time : number)
+	self.MinParticleTime = Time
+end
+
 -- End
 
 function Lib:Init()
 	self.MinSoundTime = 1 -- Try to keep it at least one second, otherwise TimeLength will not load properly and sound will not play
+	self.MinParticleTime = 1
 	if _G.M_Loader.Comments then
 		print("[Multilib] Instance Lib Loaded & safe to use.")
 	end

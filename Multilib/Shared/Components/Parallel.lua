@@ -4,7 +4,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Lib = {}
 
 -- Core
-function Lib:PutToParallel(Script, Where)
+function Lib:PutToParallel(Script : Script, Where : any)
 	if not ReplicatedStorage:FindFirstChild(Where) then
 		_G.M_Instance:Create("Folder",ReplicatedStorage,{Name = Where})
 	end
