@@ -42,8 +42,8 @@ end
 function Lib:Lerp(a : number, b : number, t : number)
 	return a + (a + (b - a)) * t
 end
--- End
 
+-- End
 function Lib:Init()
 	if _G.M_Loader.Comments then
 		warn("[Multilib-" .. script.Name .. "]", script.Name , "Lib Loaded & safe to use.")

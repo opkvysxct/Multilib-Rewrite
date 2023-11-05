@@ -38,8 +38,7 @@ function Lib:Ray(From : any, To : any, Strength : number, Params : any)
 	end
 end
 
--- End
-
+-- Settings
 function Lib:SetDefaultParams(Params : any)
 	local typeofParams = typeof(Params)
 	local NewParams
@@ -58,6 +57,7 @@ function Lib:SetDefaultParams(Params : any)
 	self.DefParams = NewParams
 end
 
+-- End
 function Lib:Init()
 	self.DefParams = RaycastParams.new()
 	if _G.M_Loader.Comments then

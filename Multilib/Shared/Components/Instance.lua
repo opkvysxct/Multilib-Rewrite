@@ -100,7 +100,6 @@ function Lib:Animation(ID : number, Animator : Instance)
 end
 
 -- Settings
-
 function Lib:SetMinSoundTime(Time : number)
 	self.MinSoundTime = Time
 end
@@ -110,7 +109,6 @@ function Lib:MinParticleTime(Time : number)
 end
 
 -- End
-
 function Lib:Init()
 	self.MinSoundTime = 1 -- Try to keep it at least one second, otherwise TimeLength will not load properly and sound will not play
 	self.MinParticleTime = 1

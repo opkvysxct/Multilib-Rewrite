@@ -1,4 +1,3 @@
-local Players = game:GetService("Players")
 --Multilib Rewrite
 --VYSX 2023
 
@@ -30,11 +29,14 @@ function Multilib:InitServer(Comments : boolean)
 			warn("[Multilib-" .. class.Name .. "] Registered")
 		end
 	end
+	if self.Comments then
+		warn("[Multilib]", "Done loading all Classes and Components.")
+	end
 end
 
 function Multilib:InitClient(Comments : boolean)
 	self.Comments = Comments
-	self.Player = Players.LocalPlayer
+	self.Player = game:GetService("Players").LocalPlayer
 	for index,component in script.Shared.Components:GetChildren() do
 		_G["M_" .. component.Name] = require(component)
 		_G["M_" .. component.Name]:Init()
@@ -54,6 +56,9 @@ function Multilib:InitClient(Comments : boolean)
 		if self.Comments then
 			warn("[Multilib-" .. class.Name .. "] Registered")
 		end
+	end
+	if self.Comments then
+		warn("[Multilib]", "Done loading all Classes and Components.")
 	end
 end
 

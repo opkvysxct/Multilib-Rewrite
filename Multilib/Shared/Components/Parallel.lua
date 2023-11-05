@@ -14,7 +14,6 @@ function Lib:PutToParallel(Script : Script, Where : any)
 end
 
 -- End
-
 function Lib:Init()
 	if _G.M_Loader.Comments then
 		warn("[Multilib-" .. script.Name .. "]", script.Name , "Lib Loaded & safe to use.")

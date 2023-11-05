@@ -36,7 +36,6 @@ function Lib:TweenOnce(Element : any, Time : number, Style, Direction, FuncAfter
 end
 
 -- Settings
-
 function Lib:SetDefaultStyle(Style : any)
 	self.DefaultStyle = Style
 end
@@ -46,7 +45,6 @@ function Lib:SetDefaultDirection(Direction : any)
 end
 
 -- End
-
 function Lib:Init()
 	self.DefaultStyle = Enum.EasingStyle.Quad
 	self.DefaultDirection = Enum.EasingDirection.InOut
