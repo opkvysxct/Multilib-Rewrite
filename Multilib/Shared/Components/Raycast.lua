@@ -1,5 +1,3 @@
--- Raycast Component
-
 local Lib = {}
 
 -- Core
@@ -55,7 +53,7 @@ function Lib:SetDefaultParams(Params : any)
 		NewParams.IgnoreWater = Params.IW or true
 		NewParams.RespectCanCollide = Params.RCC or true
 	else
-		warn("[Multilib-Raycast] No params specified!")
+		warn("[Multilib-" .. script.Name .. "]", "No params specified!")
 	end
 	self.DefParams = NewParams
 end
@@ -63,7 +61,7 @@ end
 function Lib:Init()
 	self.DefParams = RaycastParams.new()
 	if _G.M_Loader.Comments then
-		print("[Multilib] Raycast Lib Loaded & safe to use.")
+		warn("[Multilib-" .. script.Name .. "]", script.Name , "Lib Loaded & safe to use.")
 	end
 end
 

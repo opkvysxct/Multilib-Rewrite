@@ -1,5 +1,3 @@
--- Table Component
-
 local Lib = {}
 
 -- Core
@@ -11,7 +9,7 @@ end
 
 function Lib:Init()
 	if _G.M_Loader.Comments then
-		print("[Multilib] Table Lib Loaded & safe to use.")
+		warn("[Multilib-" .. script.Name .. "]", script.Name , "Lib Loaded & safe to use.")
 	end
 end
 

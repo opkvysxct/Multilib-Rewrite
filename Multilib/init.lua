@@ -1,9 +1,14 @@
+local Players = game:GetService("Players")
 --Multilib Rewrite
 --VYSX 2023
 
+--Loading schemat
+--_G.M_Loader = require(game:GetService("ReplicatedStorage").Multilib)
+--_G.M_Loader:InitServer(true/false (Comments)) or _G.M_Loader:InitClient(true/false (Comments))
+
 local Multilib = {}
 
-function Multilib:InitServer(Comments)
+function Multilib:InitServer(Comments : boolean)
 	self.Comments = Comments
 	for index,component in script.Shared.Components:GetChildren() do
 		_G["M_" .. component.Name] = require(component)
@@ -16,19 +21,20 @@ function Multilib:InitServer(Comments)
 	for index,class in script.Shared.Classes:GetChildren() do
 		_G["M_" .. class.Name] = require(class)
 		if self.Comments then
-			print("[Multilib-" .. class.Name .. "] Registered")
+			warn("[Multilib-" .. class.Name .. "] Registered")
 		end
 	end
 	for index,class in script.Server.Classes:GetChildren() do
 		_G["M_" .. class.Name] = require(class)
 		if self.Comments then
-			print("[Multilib-" .. class.Name .. "] Registered")
+			warn("[Multilib-" .. class.Name .. "] Registered")
 		end
 	end
 end
 
-function Multilib:InitClient(Comments)
+function Multilib:InitClient(Comments : boolean)
 	self.Comments = Comments
+	self.Player = Players.LocalPlayer
 	for index,component in script.Shared.Components:GetChildren() do
 		_G["M_" .. component.Name] = require(component)
 		_G["M_" .. component.Name]:Init()
@@ -40,13 +46,13 @@ function Multilib:InitClient(Comments)
 	for index,class in script.Shared.Classes:GetChildren() do
 		_G["M_" .. class.Name] = require(class)
 		if self.Comments then
-			print("[Multilib-" .. class.Name .. "] Registered")
+			warn("[Multilib-" .. class.Name .. "] Registered")
 		end
 	end
 	for index,class in script.Client.Classes:GetChildren() do
 		_G["M_" .. class.Name] = require(class)
 		if self.Comments then
-			print("[Multilib-" .. class.Name .. "] Registered")
+			warn("[Multilib-" .. class.Name .. "] Registered")
 		end
 	end
 end

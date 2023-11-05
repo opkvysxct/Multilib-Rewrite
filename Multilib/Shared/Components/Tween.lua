@@ -1,5 +1,4 @@
 local TweenService = game:GetService("TweenService")
--- Tween Component
 
 local Lib = {}
 
@@ -52,7 +51,7 @@ function Lib:Init()
 	self.DefaultStyle = Enum.EasingStyle.Quad
 	self.DefaultDirection = Enum.EasingDirection.InOut
 	if _G.M_Loader.Comments then
-		print("[Multilib] Table Lib Loaded & safe to use.")
+		warn("[Multilib-" .. script.Name .. "]", script.Name , "Lib Loaded & safe to use.")
 	end
 end
 

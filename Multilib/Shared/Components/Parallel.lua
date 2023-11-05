@@ -1,5 +1,4 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
--- Parallel Component
 
 local Lib = {}
 
@@ -18,7 +17,7 @@ end
 
 function Lib:Init()
 	if _G.M_Loader.Comments then
-		print("[Multilib] Parallel Lib Loaded & safe to use.")
+		warn("[Multilib-" .. script.Name .. "]", script.Name , "Lib Loaded & safe to use.")
 	end
 end
 
