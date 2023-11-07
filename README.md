@@ -11,7 +11,11 @@ A Roblox library that allows you to perform *simple* task even *simplier*. See -
 I just found out that I use the same elements repeatedly across all my projects, and it became quite messy. So, I decided to develop a library that can manage these elements for me. The initial version was quite basic, to be honest, too basic. As a result, I made the decision to rewrite the entire library to include support for multiple modules and classes, among other things. This is why Multilib came into existence.
 
 ## Installation
-First you have to create a node_modules folder, then :
+First step :
+```
+npm init
+```
+Second step :
 ```
 npm install @vysx/multilib
 ```
