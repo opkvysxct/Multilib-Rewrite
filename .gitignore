@@ -5,6 +5,7 @@
 /*.rbxlx.lock
 /*.rbxl.lock
 
+aftman.toml
 package-lock.json
 package.json
 /node_modules
