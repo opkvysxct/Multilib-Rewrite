@@ -4,7 +4,7 @@
 		"$className": "DataModel",
 		"ReplicatedStorage": {
 			"Multilib": {
-				"$path": "Multilib"
+				"$path": "node_modules/@vysx/multilib"
 			}
 		},
 		"ServerScriptService": {
