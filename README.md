@@ -12,7 +12,7 @@ I just found out that I use the same elements repeatedly across all my projects,
 
 ## Installation
 First you have to create a node_modules folder, then :
-```bash
+```
 npm install @vysx/multilib
 ```
 
