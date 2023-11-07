@@ -7,7 +7,7 @@ function Spring:new(Position : number, Target : number, Speed : number, Constant
 	self.Position = Position or 0
 	self.Target = Target or 15
 	self.Speed = Speed or 1
-	self.KConstant = Constant or 0.01
+	self.K_Constant = Constant or 0.01
 	return self
 end
 
@@ -24,15 +24,15 @@ function Spring:Update(DeltaTime : number)
 		end
 	end
 	self.Time = Update()
-	local XDistance
+	local X_Distance
 	if self.Position > self.Target then
-		XDistance = self.Position - self.Target
+		X_Distance = self.Position - self.Target
 	elseif self.Position < self.Target then
-		XDistance= self.Target - self.Position
+		X_Distance= self.Target - self.Position
 	else
-		XDistance = 0
+		X_Distance = 0
 	end
-	local Force = (-self.KConstant * XDistance) * self.Speed
+	local Force = (-self.K_Constant * X_Distance) * self.Speed
 	self.Position -= Force
 end
 
