@@ -23,11 +23,11 @@ npm install @vysx/multilib
 Third step :
 add a path to your default.project.json in rojo
 ```json
-		"ReplicatedStorage": {
-			"Multilib" : {
-				"$path": "node_modules/@vysx/multilib"
-			},
-		}
+"ReplicatedStorage": {
+	"Multilib" : {
+		"$path": "node_modules/@vysx/multilib"
+	},
+}
 ```
 
 ## How do i use it?
