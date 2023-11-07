@@ -8,6 +8,7 @@
 aftman.toml
 package-lock.json
 package.json
+default.project.json
 /node_modules
 /server
 /client
