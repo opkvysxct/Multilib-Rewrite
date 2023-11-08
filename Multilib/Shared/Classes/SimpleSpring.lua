@@ -16,14 +16,6 @@ function Spring:SetTarget(Target : number)
 end
 
 function Spring:Update(DeltaTime : number)
-	local function Update()
-		if DeltaTime ~= nil then
-			return self.Time + DeltaTime
-		else
-			return os.clock()
-		end
-	end
-	self.Time = Update()
 	local X_Distance
 	if self.Position > self.Target then
 		X_Distance = self.Position - self.Target
@@ -33,7 +25,7 @@ function Spring:Update(DeltaTime : number)
 		X_Distance = 0
 	end
 	local Force = (-self.K_Constant * X_Distance) * self.Speed
-	self.Position -= Force
+	self.Position -= Force * DeltaTime
 end
 
 return Spring
