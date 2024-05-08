@@ -1,7 +1,7 @@
 local Spring = {}
 Spring.__index = Spring
 
-function Spring:new(Position : number, Target : number, Speed : number, Constant : number)
+function Spring:new(Position: number, Target: number, Speed: number, Constant: number)
 	local self = setmetatable({}, Spring)
 	self.Time = os.clock()
 	self.Position = Position or 0
@@ -11,16 +11,16 @@ function Spring:new(Position : number, Target : number, Speed : number, Constant
 	return self
 end
 
-function Spring:SetTarget(Target : number)
+function Spring:SetTarget(Target: number)
 	self.Target = Target
 end
 
-function Spring:Update(DeltaTime : number)
+function Spring:Update(DeltaTime: number)
 	local X_Distance
 	if self.Position > self.Target then
 		X_Distance = self.Position - self.Target
 	elseif self.Position < self.Target then
-		X_Distance= self.Target - self.Position
+		X_Distance = self.Target - self.Position
 	else
 		X_Distance = 0
 	end

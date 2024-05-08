@@ -1,28 +1,37 @@
 local Observer = {}
 Observer.__index = Observer
 
-function Observer:new(Value : any)
+function Observer:new(Value: any)
 	local self = setmetatable({}, Observer)
 	self.Value = Value
 	self.Connections = {}
 	return self
 end
 
-function Observer:Set(Value : any)
-	if Value == nil then warn("[Observer]", "No value passed") return end
+function Observer:Set(Value: any)
+	if Value == nil then
+		warn("[Observer]", "No value passed")
+		return
+	end
 	self.Value = Value
-	for index,ConFunc in pairs(self.Connections) do
+	for index, ConFunc in pairs(self.Connections) do
 		ConFunc(self)
 	end
 end
 
-function Observer:Connect(ConName : string,ConFunc : any)
-	if ConName == nil or ConFunc == nil then warn("[Observer]", "No Name or Function passed") return end
+function Observer:Connect(ConName: string, ConFunc: any)
+	if ConName == nil or ConFunc == nil then
+		warn("[Observer]", "No Name or Function passed")
+		return
+	end
 	self.Connections[ConName] = ConFunc
 end
 
-function Observer:Disconnect(ConName : string)
-	if ConName == nil then warn("[Observer]", "No Name passed") return end
+function Observer:Disconnect(ConName: string)
+	if ConName == nil then
+		warn("[Observer]", "No Name passed")
+		return
+	end
 	self.Connections[ConName] = nil
 end
 
@@ -35,6 +44,5 @@ function Observer:Destroy()
 	self.Value = nil
 	self = nil
 end
-
 
 return Observer

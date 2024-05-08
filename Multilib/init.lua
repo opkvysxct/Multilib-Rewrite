@@ -7,23 +7,27 @@
 
 local Multilib = {}
 
-function Multilib:InitServer(Comments : boolean)
+function Multilib:InitServer(Comments: boolean)
 	self.Comments = Comments
-	for index,component in script.Shared.Components:GetChildren() do
+	for index, component in script.Shared.Components:GetChildren() do
 		_G["M_" .. component.Name] = require(component)
 		_G["M_" .. component.Name]:Init()
 	end
-	for index,component in script.Server.Components:GetChildren() do
-		_G["M_" .. component.Name] = require(component)
-		_G["M_" .. component.Name]:Init()
-	end
-	for index,class in script.Shared.Classes:GetChildren() do
+	pcall(function()
+		if script.Server.Components then
+			for index, component in script.Server.Components:GetChildren() do
+				_G["M_" .. component.Name] = require(component)
+				_G["M_" .. component.Name]:Init()
+			end
+		end
+	end)
+	for index, class in script.Shared.Classes:GetChildren() do
 		_G["M_" .. class.Name] = require(class)
 		if self.Comments then
 			warn("[Multilib-" .. class.Name .. "] Registered")
 		end
 	end
-	for index,class in script.Server.Classes:GetChildren() do
+	for index, class in script.Server.Classes:GetChildren() do
 		_G["M_" .. class.Name] = require(class)
 		if self.Comments then
 			warn("[Multilib-" .. class.Name .. "] Registered")
@@ -34,29 +38,33 @@ function Multilib:InitServer(Comments : boolean)
 	end
 end
 
-function Multilib:InitClient(Comments : boolean)
+function Multilib:InitClient(Comments: boolean)
 	self.Comments = Comments
 	self.Player = game:GetService("Players").LocalPlayer
-	for index,component in script.Shared.Components:GetChildren() do
+	for index, component in script.Shared.Components:GetChildren() do
 		_G["M_" .. component.Name] = require(component)
 		_G["M_" .. component.Name]:Init()
 	end
-	for index,component in script.Client.Components:GetChildren() do
+	for index, component in script.Client.Components:GetChildren() do
 		_G["M_" .. component.Name] = require(component)
 		_G["M_" .. component.Name]:Init()
 	end
-	for index,class in script.Shared.Classes:GetChildren() do
+	for index, class in script.Shared.Classes:GetChildren() do
 		_G["M_" .. class.Name] = require(class)
 		if self.Comments then
 			warn("[Multilib-" .. class.Name .. "] Registered")
 		end
 	end
-	for index,class in script.Client.Classes:GetChildren() do
-		_G["M_" .. class.Name] = require(class)
-		if self.Comments then
-			warn("[Multilib-" .. class.Name .. "] Registered")
+	pcall(function()
+		if script.Server.Classes then
+			for index, class in script.Client.Classes:GetChildren() do
+				_G["M_" .. class.Name] = require(class)
+				if self.Comments then
+					warn("[Multilib-" .. class.Name .. "] Registered")
+				end
+			end
 		end
-	end
+	end)
 	if self.Comments then
 		warn("[Multilib]", "Done loading all Classes and Components.")
 	end

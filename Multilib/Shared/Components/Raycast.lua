@@ -1,7 +1,7 @@
 local Lib = {}
 
 -- Core
-function Lib:Ray(From : any, To : any, Strength : number, Params : any)
+function Lib:Ray(From: any, To: any, Strength: number, Params: any)
 	local typeofParams = typeof(Params)
 	local typeofFrom = typeof(From)
 	local typeofTo = typeof(To)
@@ -15,7 +15,8 @@ function Lib:Ray(From : any, To : any, Strength : number, Params : any)
 		ParamsToUse.FilterDescendantsInstances = Params.FDI or {}
 		ParamsToUse.FilterType = Params.FT or Enum.RaycastFilterType.Exclude
 		ParamsToUse.IgnoreWater = Params.IW or true
-		ParamsToUse.RespectCanCollide = Params.RCC or true
+		ParamsToUse.RespectCanCollide = Params.RCC or false
+		ParamsToUse.BruteForceAllSlow = Params.BFAS or false
 	else
 		ParamsToUse = self.DefParams
 	end
@@ -29,7 +30,7 @@ function Lib:Ray(From : any, To : any, Strength : number, Params : any)
 
 	To = CFrame.lookAt(From, To).LookVector * Strength
 
-	local RayResult = workspace:Raycast(From,To,ParamsToUse)
+	local RayResult = workspace:Raycast(From, To, ParamsToUse)
 
 	if RayResult ~= nil then
 		return RayResult
@@ -39,7 +40,7 @@ function Lib:Ray(From : any, To : any, Strength : number, Params : any)
 end
 
 -- Settings
-function Lib:SetDefaultParams(Params : any)
+function Lib:SetDefaultParams(Params: any)
 	local typeofParams = typeof(Params)
 	local NewParams
 	if typeofParams == "RaycastParams" then
@@ -50,7 +51,8 @@ function Lib:SetDefaultParams(Params : any)
 		NewParams.FilterDescendantsInstances = Params.FDI or {}
 		NewParams.FilterType = Params.FT or Enum.RaycastFilterType.Exclude
 		NewParams.IgnoreWater = Params.IW or true
-		NewParams.RespectCanCollide = Params.RCC or true
+		NewParams.RespectCanCollide = Params.RCC or false
+		NewParams.BruteForceAllSlow = Params.BFAS or false
 	else
 		warn("[Multilib-" .. script.Name .. "]", "No params specified!")
 	end
@@ -61,7 +63,7 @@ end
 function Lib:Init()
 	self.DefParams = RaycastParams.new()
 	if _G.M_Loader.Comments then
-		warn("[Multilib-" .. script.Name .. "]", script.Name , "Lib Loaded & safe to use.")
+		warn("[Multilib-" .. script.Name .. "]", script.Name, "Lib Loaded & safe to use.")
 	end
 end
 
