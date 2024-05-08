@@ -11,11 +11,11 @@ function Spring.new(Position: number, Target: number, Speed: number, Constant: n
 	return self
 end
 
-function Spring:SetTarget(Target: number)
+function Spring:setTarget(Target: number)
 	self.Target = Target
 end
 
-function Spring:Update(DeltaTime: number)
+function Spring:update(DeltaTime: number)
 	local X_Distance
 	if self.Position > self.Target then
 		X_Distance = self.Position - self.Target

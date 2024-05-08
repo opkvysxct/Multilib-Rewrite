@@ -21,11 +21,11 @@ function DampedSpring.new(
 	return self
 end
 
-function DampedSpring:SetTarget(Target: number)
+function DampedSpring:setTarget(Target: number)
 	self.Target = Target
 end
 
-function DampedSpring:Update(DeltaTime: number)
+function DampedSpring:update(DeltaTime: number)
 	local acceleration = (-self.C_DampingC * self.Velocity - self.K_Constant * (self.Position - self.Target)) / self.Mass
 	acceleration = (acceleration * DeltaTime) * self.Speed
 	self.Velocity = self.Velocity + acceleration

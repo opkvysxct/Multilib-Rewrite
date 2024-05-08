@@ -11,7 +11,7 @@ function Observer.new(Value: any, ConName: string, ConFunc: any)
 	return self
 end
 
-function Observer:Set(Value: any)
+function Observer:set(Value: any)
 	if Value == nil then
 		warn("[Observer]", "No value passed")
 		return
@@ -22,7 +22,7 @@ function Observer:Set(Value: any)
 	end
 end
 
-function Observer:Connect(ConName: string, ConFunc: any)
+function Observer:connect(ConName: string, ConFunc: any)
 	if ConName == nil or ConFunc == nil then
 		warn("[Observer]", "No Name or Function passed")
 		return
@@ -30,7 +30,7 @@ function Observer:Connect(ConName: string, ConFunc: any)
 	self.Connections[ConName] = ConFunc
 end
 
-function Observer:Disconnect(ConName: string)
+function Observer:disconnect(ConName: string)
 	if ConName == nil then
 		warn("[Observer]", "No Name passed")
 		return
@@ -38,11 +38,11 @@ function Observer:Disconnect(ConName: string)
 	self.Connections[ConName] = nil
 end
 
-function Observer:DisconnectAll()
+function Observer:disconnectAll()
 	table.clear(self.Connections)
 end
 
-function Observer:Destroy()
+function Observer:destroy()
 	table.clear(self.Connections)
 	self.Value = nil
 	self = nil
