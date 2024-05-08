@@ -11,7 +11,7 @@ function Lib:Create(InstanceName: string, Parent: Instance, Proporties: table, p
 	else
 		InstanceCreated = Instance.new(InstanceName, Parent)
 	end
-	if _G.M_Loader.Comments then
+	if _G.MLoader.Comments then
 		print("[Multilib-" .. script.Name .. "]", InstanceName, Parent, Proporties)
 	end
 	for prop, value in pairs(Proporties) do
@@ -26,7 +26,7 @@ end
 -- Misc
 function Lib:DebrisF(Instance: Instance, Time: number, FuncAfter: any)
 	Debris:AddItem(Instance, Time)
-	if _G.M_Loader.Comments then
+	if _G.MLoader.Comments then
 		print("[Multilib-" .. script.Name .. "]", "Destroying", Instance, "in", Time, "s.")
 	end
 	if FuncAfter ~= nil then
@@ -127,7 +127,7 @@ end
 function Lib:Init()
 	self.MinSoundTime = 1 -- Try to keep it at least one second, otherwise TimeLength will not load properly and sound will not play
 	self.MinParticleTime = 1
-	if _G.M_Loader.Comments then
+	if _G.MLoader.Comments then
 		warn("[Multilib-" .. script.Name .. "]", script.Name, "Lib Loaded & safe to use.")
 	end
 end

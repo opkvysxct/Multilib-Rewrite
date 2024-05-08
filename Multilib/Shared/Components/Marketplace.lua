@@ -3,8 +3,8 @@ local Lib = {}
 
 local function IsPlayer(Player)
 	if Player == nil then
-		if _G.M_Loader.Player ~= nil then
-			return _G.M_Loader.Player
+		if _G.MLoader.Player ~= nil then
+			return _G.MLoader.Player
 		else
 			warn("[Multilib-" .. script.Name .. "]", "No Player specified.")
 			return false
@@ -54,7 +54,7 @@ end
 
 -- End
 function Lib:Init()
-	if _G.M_Loader.Comments then
+	if _G.MLoader.Comments then
 		warn("[Multilib-" .. script.Name .. "]", script.Name , "Lib Loaded & safe to use.")
 	end
 end

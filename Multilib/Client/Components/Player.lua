@@ -7,8 +7,8 @@ function Lib:IsFirstPerson(Threshold: number)
 	if Threshold == nil then
 		Threshold = 0.2
 	end
-	if _G.M_Loader.Player.Character ~= nil then
-		if _G.M_Loader.Player.Character.Head.LocalTransparencyModifier > Threshold then
+	if _G.MLoader.Player.Character ~= nil then
+		if _G.MLoader.Player.Character.Head.LocalTransparencyModifier > Threshold then
 			return true
 		end
 	end
@@ -17,15 +17,15 @@ end
 
 function Lib:ForceFirstPerson(State: boolean)
 	if State == true then
-		_G.M_Loader.Player.CameraMode = Enum.CameraMode.LockFirstPerson
+		_G.MLoader.Player.CameraMode = Enum.CameraMode.LockFirstPerson
 	else
-		_G.M_Loader.Player.CameraMode = Enum.CameraMode.Classic
+		_G.MLoader.Player.CameraMode = Enum.CameraMode.Classic
 	end
 end
 
 -- End
 function Lib:Init()
-	if _G.M_Loader.Comments then
+	if _G.MLoader.Comments then
 		warn("[Multilib-" .. script.Name .. "]", script.Name, "Lib Loaded & safe to use.")
 	end
 end

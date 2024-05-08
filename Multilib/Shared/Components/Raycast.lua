@@ -62,7 +62,7 @@ end
 -- End
 function Lib:Init()
 	self.DefParams = RaycastParams.new()
-	if _G.M_Loader.Comments then
+	if _G.MLoader.Comments then
 		warn("[Multilib-" .. script.Name .. "]", script.Name, "Lib Loaded & safe to use.")
 	end
 end
