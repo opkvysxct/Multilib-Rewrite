@@ -1,9 +1,6 @@
 local Lib = {}
 
 -- Core
-function Lib:Do()
-	-- to do
-end
 
 function Lib:DictionaryFind(dictionary: table, requiredValue: any)
 	for index, value in pairs(dictionary) do

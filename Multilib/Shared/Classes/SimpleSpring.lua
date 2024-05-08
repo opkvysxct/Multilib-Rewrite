@@ -1,7 +1,7 @@
 local Spring = {}
 Spring.__index = Spring
 
-function Spring:new(Position: number, Target: number, Speed: number, Constant: number)
+function Spring.new(Position: number, Target: number, Speed: number, Constant: number)
 	local self = setmetatable({}, Spring)
 	self.Time = os.clock()
 	self.Position = Position or 0

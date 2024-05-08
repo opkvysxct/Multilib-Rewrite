@@ -1,10 +1,13 @@
 local Observer = {}
 Observer.__index = Observer
 
-function Observer:new(Value: any)
+function Observer.new(Value: any, ConName: string, ConFunc: any)
 	local self = setmetatable({}, Observer)
 	self.Value = Value
 	self.Connections = {}
+	if ConName ~= nil and ConFunc ~= nil then
+		self.Connections[ConName] = ConFunc
+	end
 	return self
 end
 

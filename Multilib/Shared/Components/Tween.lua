@@ -31,7 +31,7 @@ function Lib:TweenOnce(Element: any, Time: number, Style, Direction, FuncAfter: 
 	end
 end
 
--- Not really a tween but whatever ¯\_(ツ)_/¯
+--[[
 function Lib:TweenMethod(Element: Instance, time: number, initialValue: any, finalValue: any, methodName: string)
 	task.spawn(function()
 		local tweenRunning = true
@@ -56,7 +56,7 @@ function Lib:TweenAndReturn(Element: any, Time: number, Style, Direction, FuncAf
 	self:TweenOnce(Element, Time, Style, Direction)
 	task.wait(Time)
 	self:TweenOnce({Element[1], InitData}, Time, Style, Direction, FuncAfter)
-end
+end]]--
 
 -- Settings
 function Lib:SetDefaultStyle(Style: any)
