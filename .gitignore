@@ -12,5 +12,6 @@ default.project.json
 /node_modules
 /server
 /client
+/build
 .toml
 /default.project.json

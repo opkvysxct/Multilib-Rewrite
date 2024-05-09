@@ -2,7 +2,20 @@ local Players = game:GetService("Players")
 
 local Lib = {}
 
+--[=[
+	@class Player
+	@client
+	Player Functions.
+]=]
+
 -- Core
+
+--[=[
+	@within Player
+	@return <boolean> -- [true/false]
+	Checks if the player is in first person.
+]=]
+
 function Lib:IsFirstPerson(Threshold: number)
 	if Threshold == nil then
 		Threshold = 0.2
@@ -14,6 +27,11 @@ function Lib:IsFirstPerson(Threshold: number)
 	end
 	return false
 end
+
+--[=[
+	@within Player
+	Sets player CameraMode.
+]=]
 
 function Lib:ForceFirstPerson(State: boolean)
 	if State == true then

@@ -1,23 +1,22 @@
-local CheckBox = {}
-CheckBox.__index = CheckBox
+local RadioButton = {}
+RadioButton.__index = RadioButton
 
 --[=[
-	@class CheckBox
+	@class RadioButton
 	@client
-	Class for CheckBox object.
+	Class for RadioButton object.
 ]=]
 
 --[=[
-	@within CheckBox
-	@return <table> -- [Checkbox Object]
-	Constructor for CheckBox object.
+	@within RadioButton
+	@return <table> -- [RadioButton Object]
+	Constructor for RadioButton object.
 ]=]
 
-function CheckBox.new(Model: any, Elements: table, IDName: string, Settings: table)
-	local self = setmetatable({}, CheckBox)
+function RadioButton.new(Model: any, Elements: table, IDName: string, RadioGroup: table, Settings: table)
+	local self = setmetatable({}, RadioButton)
 
 	if Settings == nil then Settings = {} end
-	if Settings.StartingValue == nil then Settings.StartingValue = false end
 	if Settings.Locked == nil then Settings.Locked = false end
 	if Settings.Cooldown == nil then Settings.Cooldown = 0.25 end
 	if Settings.OverrideDisplayAnimation ~= nil then self.displayAnimFunc = Settings.OverrideDisplayAnimation end
@@ -26,29 +25,31 @@ function CheckBox.new(Model: any, Elements: table, IDName: string, Settings: tab
 
 	self.IsCooldown = false
 	self.Initiated = false
-	self.Type = "Checkbox"
+	self.Type = "RadioButton"
+	self.IsSelected = false
 
 	self.Model = Model
 	self.Button = Elements.Button
 	self.Check = Elements.Check
 	self.IDName = IDName
+	self.RadioGroup = RadioGroup
 
 	self.CooldownTime = Settings.Cooldown
-	self.Value = Settings.StartingValue
 	self.Locked = Settings.Locked
 
-	if Settings.StartingValue == true then self:displayAnimFunc(true) end
+	self.RadioGroup:insertElement(self)
+	self:displayAnimFunc(false)
 
 	return self
 end
 
 --[=[
-	@within CheckBox
+	@within RadioButton
 	
 	should be called only via Form:InitAll().
 ]=]
 
-function CheckBox:init() -- should be called only via Form:InitAll()
+function RadioButton:init() -- should be called only via Form:InitAll()
 	if self.Initiated == false then
 		self.Initiated = true
 		self.Button.Activated:Connect(function()
@@ -58,74 +59,60 @@ function CheckBox:init() -- should be called only via Form:InitAll()
 end
 
 --[=[
-	@within CheckBox
-	@return <boolean,string> -- [Value and IDName of the object]
-	Returns value and IDName of the object.
-]=]
-
-function CheckBox:returnValues()
-	return self.Value, self.IDName
-end
-
---[=[
-	@within CheckBox
+	@within RadioButton
 	
-	Changes the CheckBox.Locked property.
+	Changes the RadioButton.Locked property.
 ]=]
 
-function CheckBox:lockStatus(Status: boolean)
+function RadioButton:lockStatus(Status: boolean)
 	self.Locked = Status
 end
 
 --[=[
-	@within CheckBox
+	@within RadioButton
 	
-	Sets the parent of the CheckBox.Model.
+	Sets the parent of the RadioButton.Model.
 ]=]
 
-function CheckBox:append(Where: any)
+function RadioButton:append(Where: any)
 	self.Model.Parent = Where
 end
 
 --[=[
-	@within CheckBox
+	@within RadioButton
 	@private
 	Private Function, should not be called.
 ]=]
 
-function CheckBox:displayAnimFunc(Value: boolean) -- internal private function, do not call
+function RadioButton:displayAnimFunc(Value: boolean) -- internal private function, do not call
 	self.Check.Visible = Value
 end
 
 --[=[
-	@within CheckBox
+	@within RadioButton
 	@private
 	Private Function, should not be called.
 ]=]
 
-function CheckBox:check() -- internal private function, do not call
+function RadioButton:check() -- internal private function, do not call
 	if self.Locked == false and self.IsCooldown == false then
 		self.IsCooldown = true
 		task.delay(self.CooldownTime,function()
 			self.IsCooldown = false
 		end)
-		if self.Value == false then
-			self.Value = true
-			self:displayAnimFunc(true)
-		else
-			self.Value = false
-			self:displayAnimFunc(false)
+		if self.IsSelected == false then
+			self.RadioGroup:selectButton(self)
 		end
 	end
 end
 
 --[=[
-	@within CheckBox
+	@within RadioButton
 	@private
 	Private Function, should not be called.
 ]=]
 
-function CheckBox:perfectClone(TrueModel: any, TrueElements: table) -- internal private function, do not call (also; not quite perfect)
+function RadioButton:perfectClone(TrueModel: any, TrueElements: table) -- internal private function, do not call (also; not quite perfect)
 	local Model = TrueModel:Clone()
 	local Elements = {}
 	for Index, Element in pairs(TrueElements) do
@@ -140,15 +127,26 @@ function CheckBox:perfectClone(TrueModel: any, TrueElements: table) -- internal 
 end
 
 --[=[
-	@within CheckBox
-	Destructor for CheckBox object.
+	@within RadioButton
+	@private
+	Changes selection status.
 ]=]
 
-function CheckBox:destroy()
+function RadioButton:selectionStatus(Value: boolean)
+	self.IsSelected = Value
+	self:displayAnimFunc(Value)
+end
+
+--[=[
+	@within RadioButton
+	Destructor for RadioButton object.
+]=]
+
+function RadioButton:destroy()
 	for Index, Value in pairs(self) do
 		Value = nil
 	end
 end
 
 
-return CheckBox
+return RadioButton
