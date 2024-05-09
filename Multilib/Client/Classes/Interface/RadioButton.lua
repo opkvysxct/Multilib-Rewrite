@@ -23,14 +23,18 @@ function RadioButton.new(Model: any, Elements: table, IDName: string, RadioGroup
 
 	local Model, Elements = self:perfectClone(Model,Elements)
 
+	self.ModelElements = {}
+	for Index, Value in pairs(Elements) do
+		self.ModelElements[Index] = Value
+	end
+
+
 	self.IsCooldown = false
 	self.Initiated = false
 	self.Type = "RadioButton"
 	self.IsSelected = false
 
 	self.Model = Model
-	self.Button = Elements.Button
-	self.Check = Elements.Check
 	self.IDName = IDName
 	self.RadioGroup = RadioGroup
 
@@ -52,7 +56,7 @@ end
 function RadioButton:init() -- should be called only via Form:InitAll()
 	if self.Initiated == false then
 		self.Initiated = true
-		self.Button.Activated:Connect(function()
+		self.ModelElements.Button.Activated:Connect(function()
 			self:check()
 		end)
 	end
@@ -85,7 +89,7 @@ end
 ]=]
 
 function RadioButton:displayAnimFunc(Value: boolean) -- internal private function, do not call
-	self.Check.Visible = Value
+	self.ModelElements.Check.Visible = Value
 end
 
 --[=[
@@ -143,6 +147,7 @@ end
 ]=]
 
 function RadioButton:destroy()
+	self.Model:Destroy()
 	for Index, Value in pairs(self) do
 		Value = nil
 	end
