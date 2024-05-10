@@ -1,4 +1,3 @@
-local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
@@ -49,17 +48,17 @@ function Slider.new(Model: any, Elements: table, IDName: string, Settings: table
 			self.StepBy = Settings.StepBy
 		end
 	elseif Settings.Type == "Text" then
-		if Settings.StartingValue == nil then
-			Settings.StartingValue = "LastValue"
-			self.StartingValue = Settings.StartingValue
-		else
-			self.StartingValue = Settings.StartingValue
-		end
 		if Settings.TextValues == nil then
 			Settings.TextValues = {"FirstValue","StartingValue","LastValue"}
 			self.TextValues = Settings.TextValues
 		else
 			self.TextValues = Settings.TextValues
+		end
+		if Settings.StartingValue == nil then
+			Settings.StartingValue = Settings.TextValues[1]
+			self.StartingValue = Settings.StartingValue
+		else
+			self.StartingValue = Settings.StartingValue
 		end
 		self.StepBy =  1
 		self.MinValue = 0
@@ -78,8 +77,9 @@ function Slider.new(Model: any, Elements: table, IDName: string, Settings: table
 	self.Initiated = false
 	self.Type = "Slider"
 	self.SubType = Settings.Type
-
+	self.Actions = {}
 	self.Model = Model
+	self.Model.Name = IDName
 	self.IDName = IDName
 
 	self.CooldownTime = Settings.Cooldown
@@ -114,74 +114,117 @@ end
 ]=]
 
 function Slider:init() -- should be called only via Form:InitAll()
-	local function Update()
-		local Total:GuiObject = self.ModelElements.Total
-		local MousePos = UserInputService:GetMouseLocation()
-		local LegitimatePositions = {
-			From = Total.AbsolutePosition.X,
-			To = Total.AbsolutePosition.X + Total.AbsoluteSize.X
-		}
-		if MousePos.X > LegitimatePositions.From and MousePos.X < LegitimatePositions.To then
-			local LegitimateValue = math.clamp((MousePos.X - LegitimatePositions.From) / (LegitimatePositions.To - LegitimatePositions.From),0,1)
-			LegitimateValue = LegitimateValue * (self.MaxValue - self.MinValue) + self.MinValue
-			if LegitimateValue < 0.5 then
-				LegitimateValue = math.floor(LegitimateValue)
-			else
-				LegitimateValue = math.ceil(LegitimateValue)
-			end
-			if LegitimateValue % self.StepBy == 0 then
+	if self.Initiated == false then
+		self.Initiated = true
+		local function Change(LegitimateValue)
+			if LegitimateValue ~= self.Value then
 				self:displayAnimFunc(LegitimateValue)
 				self.Value = LegitimateValue
-			else
-				local LeftOver = LegitimateValue % self.StepBy
-				if LeftOver > self.StepBy / 2 then
-					LegitimateValue = math.ceil(LegitimateValue / self.StepBy) * self.StepBy
-					self:displayAnimFunc(LegitimateValue)
-					self.Value = LegitimateValue
-				else
-					LegitimateValue = math.floor(LegitimateValue / self.StepBy) * self.StepBy
-					self:displayAnimFunc(LegitimateValue)
-					self.Value = LegitimateValue
-				end
+				self:executeActions()
 			end
-		elseif MousePos.X < LegitimatePositions.From then
-			local LegitimateValue = self.MinValue
-			self:displayAnimFunc(LegitimateValue)
-			self.Value = LegitimateValue
-		elseif MousePos.X > LegitimatePositions.To then
-			local LegitimateValue = self.MaxValue
-			self:displayAnimFunc(LegitimateValue)
-			self.Value = LegitimateValue
 		end
+		local function Update()
+			local Total:GuiObject = self.ModelElements.Total
+			local MousePos = UserInputService:GetMouseLocation()
+			local LegitimatePositions = {
+				From = Total.AbsolutePosition.X,
+				To = Total.AbsolutePosition.X + Total.AbsoluteSize.X
+			}
+			if MousePos.X > LegitimatePositions.From and MousePos.X < LegitimatePositions.To then
+				local LegitimateValue = math.clamp((MousePos.X - LegitimatePositions.From) / (LegitimatePositions.To - LegitimatePositions.From),0,1)
+				LegitimateValue = LegitimateValue * (self.MaxValue - self.MinValue) + self.MinValue
+				if LegitimateValue < 0.5 then
+					LegitimateValue = math.floor(LegitimateValue)
+				else
+					LegitimateValue = math.ceil(LegitimateValue)
+				end
+				if LegitimateValue % self.StepBy == 0 then
+					Change(LegitimateValue)
+				else
+					local LeftOver = LegitimateValue % self.StepBy
+					if LeftOver > self.StepBy / 2 then
+						LegitimateValue = math.ceil(LegitimateValue / self.StepBy) * self.StepBy
+						Change(LegitimateValue)
+					else
+						LegitimateValue = math.floor(LegitimateValue / self.StepBy) * self.StepBy
+						Change(LegitimateValue)
+					end
+				end
+			elseif MousePos.X < LegitimatePositions.From then
+				local LegitimateValue = self.MinValue
+				Change(LegitimateValue)
+			elseif MousePos.X > LegitimatePositions.To then
+				local LegitimateValue = self.MaxValue
+				Change(LegitimateValue)
+			end
+		end
+		local function Allow(Input)
+			if Input.UserInputType == Enum.UserInputType.MouseButton1 or Input.UserInputType == Enum.UserInputType.Touch and self.IsActive == false and self.Locked == false then
+				return true
+			end
+			return false
+		end
+
+		self.ModelElements.Drag.InputBegan:Connect(function(input)
+			if Allow(input) then
+				self.IsActive = true
+				RunService:BindToRenderStep(self.IDName .. "SliderFunc",Enum.RenderPriority.Input.Value,Update)
+			end
+		end)
+
+		self.ModelElements.Drag.InputEnded:Connect(function(input)
+			if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+				RunService:UnbindFromRenderStep(self.IDName .. "SliderFunc")
+				self.IsActive = false
+			end
+		end)
+
+		self.ModelElements.MobileDetect.InputBegan:Connect(function(input)
+			if Allow(input) then
+				self.IsActive = true
+				RunService:BindToRenderStep(self.IDName .. "SliderFunc",Enum.RenderPriority.Input.Value,Update)
+			end
+		end)
+
+		self.ModelElements.MobileDetect.InputEnded:Connect(function(input)
+			if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+				RunService:UnbindFromRenderStep(self.IDName .. "SliderFunc")
+				self.IsActive = false
+			end
+		end)
 	end
+end
 
-	self.ModelElements.Drag.InputBegan:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch and self.IsActive == false then
-			self.IsActive = true
-			RunService:BindToRenderStep(self.IDName .. "SliderFunc",Enum.RenderPriority.Input.Value,Update)
-		end
-	end)
+--[=[
+	@within Slider
+	
+	Adds action that will be executed on every value change.
+]=]
 
-	self.ModelElements.Drag.InputEnded:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-			RunService:UnbindFromRenderStep(self.IDName .. "SliderFunc")
-			self.IsActive = false
-		end
-	end)
+function Slider:addAction(ActionName: string, Action: any)
+	self.Actions[ActionName] = Action
+end
 
-	self.ModelElements.MobileDetect.InputBegan:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch and self.IsActive == false then
-			self.IsActive = true
-			RunService:BindToRenderStep(self.IDName .. "SliderFunc",Enum.RenderPriority.Input.Value,Update)
-		end
-	end)
+--[=[
+	@within Slider
+	
+	Removes action that would be executed on every value change.
+]=]
 
-	self.ModelElements.MobileDetect.InputEnded:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-			RunService:UnbindFromRenderStep(self.IDName .. "SliderFunc")
-			self.IsActive = false
-		end
-	end)
+function Slider:removeAction(ActionName: string)
+	table.remove(self.Actions,ActionName)
+end
+
+--[=[
+	@within Slider
+	@private
+	Private Function, should not be called.
+]=]
+
+function Slider:executeActions()
+	for Index, Action in pairs(self.Actions) do
+		Action()
+	end
 end
 
 --[=[

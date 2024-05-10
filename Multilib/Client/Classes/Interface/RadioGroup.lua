@@ -16,6 +16,7 @@ RadioGroup.__index = RadioGroup
 function RadioGroup.new(IDName: string)
 	local self = setmetatable({}, RadioGroup)
 	self.RadioButtons = {}
+	self.Actions = {}
 	self.IDName = IDName
 	self.Selected = nil
 	return self
@@ -96,6 +97,38 @@ function RadioGroup:append(Where: any)
 	end
 end
 
+--[=[
+	@within RadioGroup
+	
+	Adds action that will be executed on every value change.
+]=]
+
+function RadioGroup:addAction(ActionName: string, Action: any)
+	self.Actions[ActionName] = Action
+end
+
+--[=[
+	@within RadioGroup
+	
+	Removes action that would be executed on every value change.
+]=]
+
+function RadioGroup:removeAction(ActionName: string)
+	table.remove(self.Actions,ActionName)
+end
+
+--[=[
+	@within RadioGroup
+	@private
+	Private Function, should not be called.
+]=]
+
+function RadioGroup:executeActions()
+	for Index, Action in pairs(self.Actions) do
+		Action()
+	end
+end
+
 
 --[=[
 	@within RadioGroup
@@ -111,6 +144,7 @@ function RadioGroup:selectButton(RadioButtonObject: table)
 		end
 	end
 	RadioButtonObject:selectionStatus(true)
+	self:executeActions()
 end
 
 --[=[

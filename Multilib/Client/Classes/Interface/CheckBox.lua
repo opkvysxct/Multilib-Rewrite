@@ -17,7 +17,6 @@ function CheckBox.new(Model: any, Elements: table, IDName: string, Settings: tab
 	local self = setmetatable({}, CheckBox)
 
 	if Settings == nil then Settings = {} end
-	if Settings.StartingValue == nil then Settings.StartingValue = false end
 	if Settings.Locked == nil then Settings.Locked = false end
 	if Settings.Cooldown == nil then Settings.Cooldown = 0.25 end
 	if Settings.OverrideDisplayAnimation ~= nil then self.displayAnimFunc = Settings.OverrideDisplayAnimation end
@@ -33,15 +32,15 @@ function CheckBox.new(Model: any, Elements: table, IDName: string, Settings: tab
 	self.IsCooldown = false
 	self.Initiated = false
 	self.Type = "Checkbox"
+	self.Actions = {}
 
 	self.Model = Model
+	self.Model.Name = IDName
 	self.IDName = IDName
 
 	self.CooldownTime = Settings.Cooldown
 	self.Value = Settings.StartingValue
 	self.Locked = Settings.Locked
-
-	if Settings.StartingValue == true then self:displayAnimFunc(true) end
 
 	return self
 end
@@ -56,7 +55,21 @@ function CheckBox:init() -- should be called only via Form:InitAll()
 	if self.Initiated == false then
 		self.Initiated = true
 		self.ModelElements.Button.Activated:Connect(function()
-			self:check()
+			if self.Locked == false and self.IsCooldown == false then
+				self.IsCooldown = true
+				task.delay(self.CooldownTime,function()
+					self.IsCooldown = false
+				end)
+				if self.Value == false then
+					self.Value = true
+					self:displayAnimFunc(true)
+					self:executeActions()
+				else
+					self.Value = false
+					self:displayAnimFunc(false)
+					self:executeActions()
+				end
+			end
 		end)
 	end
 end
@@ -103,25 +116,36 @@ end
 
 --[=[
 	@within CheckBox
+	
+	Adds action that will be executed on every value change.
+]=]
+
+function CheckBox:addAction(ActionName: string, Action: any)
+	self.Actions[ActionName] = Action
+end
+
+--[=[
+	@within CheckBox
+	
+	Removes action that would be executed on every value change.
+]=]
+
+function CheckBox:removeAction(ActionName: string)
+	table.remove(self.Actions,ActionName)
+end
+
+--[=[
+	@within CheckBox
 	@private
 	Private Function, should not be called.
 ]=]
 
-function CheckBox:check() -- internal private function, do not call
-	if self.Locked == false and self.IsCooldown == false then
-		self.IsCooldown = true
-		task.delay(self.CooldownTime,function()
-			self.IsCooldown = false
-		end)
-		if self.Value == false then
-			self.Value = true
-			self:displayAnimFunc(true)
-		else
-			self.Value = false
-			self:displayAnimFunc(false)
-		end
+function CheckBox:executeActions()
+	for Index, Action in pairs(self.Actions) do
+		Action()
 	end
 end
+
 
 --[=[
 	@within CheckBox
