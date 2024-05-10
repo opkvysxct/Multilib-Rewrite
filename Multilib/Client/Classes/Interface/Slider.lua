@@ -31,7 +31,7 @@ function Slider.new(Model: any, Elements: table, IDName: string, Settings: table
 			self.StartingValue = Settings.StartingValue
 		end
 		if Settings.MinValue == nil then
-			Settings.MinValue = 1
+			Settings.MinValue = 0
 			self.MinValue = Settings.MinValue
 		else
 			self.MinValue = Settings.MinValue
@@ -50,7 +50,7 @@ function Slider.new(Model: any, Elements: table, IDName: string, Settings: table
 		end
 	elseif Settings.Type == "Text" then
 		if Settings.StartingValue == nil then
-			Settings.StartingValue = "StartingValue"
+			Settings.StartingValue = "LastValue"
 			self.StartingValue = Settings.StartingValue
 		else
 			self.StartingValue = Settings.StartingValue
@@ -61,7 +61,9 @@ function Slider.new(Model: any, Elements: table, IDName: string, Settings: table
 		else
 			self.TextValues = Settings.TextValues
 		end
-		self.StepBy =  100 / #Settings.TextValues
+		self.StepBy =  1
+		self.MinValue = 0
+		self.MaxValue = #Settings.TextValues - 1
 	end
 
 	if Settings.Locked == nil then Settings.Locked = false end
@@ -96,6 +98,12 @@ function Slider.new(Model: any, Elements: table, IDName: string, Settings: table
 	self.ModelElements.MobileDetect.Name = "MobileDetect"
 	self.ModelElements.MobileDetect.Parent = self.ModelElements.Total
 
+	if self.SubType == "Numeric" then
+		self:displayAnimFunc(self.Value)
+	elseif self.SubType == "Text" then
+		self:displayAnimFunc(table.find(self.TextValues,self.Value) - 1)
+	end
+
 	return self
 end
 
@@ -114,7 +122,8 @@ function Slider:init() -- should be called only via Form:InitAll()
 			To = Total.AbsolutePosition.X + Total.AbsoluteSize.X
 		}
 		if MousePos.X > LegitimatePositions.From and MousePos.X < LegitimatePositions.To then
-			local LegitimateValue = ((MousePos.X - LegitimatePositions.From) / (LegitimatePositions.To - LegitimatePositions.From)) * 100
+			local LegitimateValue = math.clamp((MousePos.X - LegitimatePositions.From) / (LegitimatePositions.To - LegitimatePositions.From),0,1)
+			LegitimateValue = LegitimateValue * (self.MaxValue - self.MinValue) + self.MinValue
 			if LegitimateValue < 0.5 then
 				LegitimateValue = math.floor(LegitimateValue)
 			else
@@ -136,11 +145,11 @@ function Slider:init() -- should be called only via Form:InitAll()
 				end
 			end
 		elseif MousePos.X < LegitimatePositions.From then
-			local LegitimateValue = 0
+			local LegitimateValue = self.MinValue
 			self:displayAnimFunc(LegitimateValue)
 			self.Value = LegitimateValue
 		elseif MousePos.X > LegitimatePositions.To then
-			local LegitimateValue = 100
+			local LegitimateValue = self.MaxValue
 			self:displayAnimFunc(LegitimateValue)
 			self.Value = LegitimateValue
 		end
@@ -212,15 +221,23 @@ end
 ]=]
 
 function Slider:displayAnimFunc(Value: number) -- internal private function, do not call
+	local function convertToAbsolute(Value: number)
+		local ClampedValue = math.clamp(Value, self.MinValue, self.MaxValue)
+		local RangeCustom = self.MaxValue - self.MinValue
+		local Proportion = (ClampedValue - self.MinValue) / RangeCustom
+		return Proportion * 100
+	end
 	local Drag:GuiButton = self.ModelElements.Drag
 	local ProgressBar:GuiObject = self.ModelElements.ProgressBar
 	local ShowText:GuiObject = self.ModelElements.ShowText
 	local TweenInfoToUse = TweenInfo.new(0.05,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut)
-	--Drag.Position = UDim2.fromScale(Value / 100,0.5)
-	--ProgressBar.Size = UDim2.fromScale(Value / 100,1)
-	TweenService:Create(Drag,TweenInfoToUse,{Position = UDim2.fromScale(Value / 100,0.5)}):Play()
-	TweenService:Create(ProgressBar,TweenInfoToUse,{Size = UDim2.fromScale(Value / 100,1)}):Play()
-	ShowText.Text = Value .. "%"
+	TweenService:Create(Drag,TweenInfoToUse,{Position = UDim2.fromScale(convertToAbsolute(Value) / 100,0.5)}):Play()
+	TweenService:Create(ProgressBar,TweenInfoToUse,{Size = UDim2.fromScale(convertToAbsolute(Value	) / 100,1)}):Play()
+	if self.SubType == "Numeric" then
+		ShowText.Text = Value
+	elseif self.SubType == "Text" then
+		ShowText.Text = self.TextValues[Value + 1]
+	end
 end
 
 --[=[
