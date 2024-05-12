@@ -166,7 +166,7 @@ function DropDownMenu:displayAnimFunc(AnimType: string, Value: string, Forced: b
 			TweenInfoToUse,
 			{Size = UDim2.fromScale(1,0)}
 		):Play()
-		task.delay(0.1,function()
+		task.delay(self.AnimSettings.Time,function()
 			self.ModelElements.ScrollingFrame.Visible = false
 		end)
 	end
