@@ -10,9 +10,9 @@ function Lib:DictionaryFind(dictionary: table, requiredValue: any)
 	end
 end
 
-function Lib:DeepCopy(Table: table)
+function Lib:DeepCopy(table: table)
 	local copy = {}
-	for k, v in pairs(Table) do
+	for k, v in pairs(table) do
 		if type(v) == "table" then
 			v = self:DeepCopy(v)
 		end
@@ -23,7 +23,7 @@ end
 
 -- End
 function Lib:Init()
-	if _G.MLoader.Comments then
+	if _G.MLoader.comments then
 		warn("[Multilib-" .. script.Name .. "]", script.Name, "Lib Loaded & safe to use.")
 	end
 end

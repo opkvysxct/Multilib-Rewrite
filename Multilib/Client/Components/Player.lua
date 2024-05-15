@@ -3,25 +3,25 @@ local Players = game:GetService("Players")
 local Lib = {}
 
 --[=[
-	@class Player
+	@class player
 	@client
-	Player Functions.
+	player Functions.
 ]=]
 
 -- Core
 
 --[=[
-	@within Player
+	@within player
 	@return <boolean> -- [true/false]
 	Checks if the player is in first person.
 ]=]
 
-function Lib:IsFirstPerson(Threshold: number)
-	if Threshold == nil then
-		Threshold = 0.2
+function Lib:IsFirstPerson(threshold: number)
+	if threshold == nil then
+		threshold = 0.2
 	end
-	if _G.MLoader.Player.Character ~= nil then
-		if _G.MLoader.Player.Character.Head.LocalTransparencyModifier > Threshold then
+	if _G.MLoader.player.Character ~= nil then
+		if _G.MLoader.player.Character.Head.LocalTransparencyModifier > threshold then
 			return true
 		end
 	end
@@ -29,21 +29,21 @@ function Lib:IsFirstPerson(Threshold: number)
 end
 
 --[=[
-	@within Player
+	@within player
 	Sets player CameraMode.
 ]=]
 
 function Lib:ForceFirstPerson(State: boolean)
 	if State == true then
-		_G.MLoader.Player.CameraMode = Enum.CameraMode.LockFirstPerson
+		_G.MLoader.player.CameraMode = Enum.CameraMode.LockFirstPerson
 	else
-		_G.MLoader.Player.CameraMode = Enum.CameraMode.Classic
+		_G.MLoader.player.CameraMode = Enum.CameraMode.Classic
 	end
 end
 
 -- End
 function Lib:Init()
-	if _G.MLoader.Comments then
+	if _G.MLoader.comments then
 		warn("[Multilib-" .. script.Name .. "]", script.Name, "Lib Loaded & safe to use.")
 	end
 end

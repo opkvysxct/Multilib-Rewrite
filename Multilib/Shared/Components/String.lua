@@ -13,7 +13,7 @@ end
 
 -- End
 function Lib:Init()
-	if _G.MLoader.Comments then
+	if _G.MLoader.comments then
 		warn("[Multilib-" .. script.Name .. "]", script.Name, "Lib Loaded & safe to use.")
 	end
 end

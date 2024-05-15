@@ -13,12 +13,12 @@ RadioGroup.__index = RadioGroup
 	Constructor for RadioGroup object.
 ]=]
 
-function RadioGroup.new(IDName: string)
+function RadioGroup.New(idName: string)
 	local self = setmetatable({}, RadioGroup)
-	self.RadioButtons = {}
-	self.Actions = {}
-	self.IDName = IDName
-	self.Selected = nil
+	self.radioButtons = {}
+	self.actions = {}
+	self.idName = idName
+	self.selected = nil
 	return self
 end
 
@@ -28,23 +28,23 @@ end
 	should be called only via Form:InitAll().
 ]=]
 
-function RadioGroup:init() -- should be called only via Form:InitAll()
-	for Index, RadioButton in pairs(self.RadioButtons) do
-		RadioButton:init()
+function RadioGroup:Init() -- should be called only via Form:InitAll()
+	for index, radioButton in pairs(self.radioButtons) do
+		radioButton:Init()
 	end
 end
 
 --[=[
 	@within RadioGroup
-	@return <string,string> -- [IDName of selected and IDName of the object]
-	Returns IDName of selected and IDName of the object.
+	@return <string,string> -- [idName of selected and idName of the object]
+	Returns idName of selected and idName of the object.
 ]=]
 
-function RadioGroup:returnValues()
-	if self.Selected ~= nil then
-		return self.Selected, self.IDName
+function RadioGroup:ReturnValues()
+	if self.selected ~= nil then
+		return self.selected, self.idName
 	else
-		return false, self.IDName
+		return false, self.idName
 	end
 end
 
@@ -53,8 +53,8 @@ end
 	Inserts element into the RadioGroup.RadioButtons table.
 ]=]
 
-function RadioGroup:insertElement(Element: table)
-	self.RadioButtons[Element.IDName] = Element
+function RadioGroup:insertElement(element: table)
+	self.radioButtons[element.idName] = element
 end
 
 --[=[
@@ -62,9 +62,9 @@ end
 	Inserts multiple elements into the RadioGroup.RadioButtons table.
 ]=]
 
-function RadioGroup:insertElements(Elements: table)
-	for Index, Element in pairs(Elements) do
-		self.RadioButtons[Element.IDName] = Element
+function RadioGroup:insertElements(elements: table)
+	for index, element in pairs(elements) do
+		self.radioButtons[element.idName] = element
 	end
 end
 
@@ -74,7 +74,7 @@ end
 ]=]
 
 function RadioGroup:clearElement(ElementName: string)
-	table.remove(self.RadioButtons,ElementName)
+	table.remove(self.radioButtons,ElementName)
 end
 
 --[=[
@@ -83,17 +83,17 @@ end
 ]=]
 
 function RadioGroup:clearAllElements()
-	table.clear(self.RadioButtons)
+	table.clear(self.radioButtons)
 end
 
 --[=[
 	@within RadioGroup
-	Sets the parent of every RadioButton.
+	Sets the parent of every radioButton.
 ]=]
 
-function RadioGroup:append(Where: any)
-	for Index, RadioButton in pairs(self.RadioButtons) do
-		RadioButton:append(Where)
+function RadioGroup:Append(where: any)
+	for index, radioButton in pairs(self.radioButtons) do
+		radioButton:Append(where)
 	end
 end
 
@@ -103,8 +103,8 @@ end
 	Adds action that will be executed on every value change.
 ]=]
 
-function RadioGroup:addAction(ActionName: string, Action: any)
-	self.Actions[ActionName] = Action
+function RadioGroup:AddAction(actionName: string, action: any)
+	self.actions[actionName] = action
 end
 
 --[=[
@@ -113,8 +113,8 @@ end
 	Removes action that would be executed on every value change.
 ]=]
 
-function RadioGroup:removeAction(ActionName: string)
-	table.remove(self.Actions,ActionName)
+function RadioGroup:RemoveAction(actionName: string)
+	table.remove(self.actions,actionName)
 end
 
 --[=[
@@ -123,9 +123,9 @@ end
 	Private Function, should not be called.
 ]=]
 
-function RadioGroup:executeActions()
-	for Index, Action in pairs(self.Actions) do
-		Action()
+function RadioGroup:ExecuteActions()
+	for index, action in pairs(self.actions) do
+		action()
 	end
 end
 
@@ -136,15 +136,15 @@ end
 	Selects one button and deselects all the others.
 ]=]
 
-function RadioGroup:selectButton(RadioButtonObject: table)
-	self.Selected = RadioButtonObject.IDName
-	for Index, RadioButton in pairs(self.RadioButtons) do
-		if RadioButton.IsSelected == true and RadioButton ~= RadioButtonObject then
-			RadioButton:selectionStatus(false)
+function RadioGroup:selectButton(radioButtonObject: table)
+	self.selected = radioButtonObject.idName
+	for index, radioButton in pairs(self.radioButtons) do
+		if radioButton.isSelected == true and radioButton ~= radioButtonObject then
+			radioButton:selectionStatus(false)
 		end
 	end
-	RadioButtonObject:selectionStatus(true)
-	self:executeActions()
+	radioButtonObject:selectionStatus(true)
+	self:ExecuteActions()
 end
 
 --[=[
@@ -153,8 +153,8 @@ end
 ]=]
 
 function RadioGroup:Destroy()
-	for Index, Value in pairs(self) do
-		Value = nil
+	for index, value in pairs(self) do
+		value = nil
 	end
 end
 

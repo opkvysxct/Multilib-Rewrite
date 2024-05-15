@@ -13,44 +13,44 @@ ArrowChange.__index = ArrowChange
 	Constructor for ArrowChange object.
 ]=]
 
-function ArrowChange.new(Model: any, Elements: table, IDName: string, Settings: table?)
+function ArrowChange.New(model: any, elements: table, idName: string, settings: table?)
 	local self = setmetatable({}, ArrowChange)
 
-	if Settings == nil then Settings = {} end
-	if Settings.Locked == nil then Settings.Locked = false end
-	if Settings.Cooldown == nil then Settings.Cooldown = 0.25 end
-	if Settings.OverrideDisplayAnimation ~= nil then self.displayAnimFunc = Settings.OverrideDisplayAnimation end
-	if Settings.Values == nil then Settings.Values = {"First","Second","Third"} end
-	if Settings.StartingIndex == nil then Settings.StartingIndex = 1 end
+	if settings == nil then settings = {} end
+	if settings.locked == nil then settings.locked = false end
+	if settings.cooldown == nil then settings.cooldown = 0.25 end
+	if settings.overrideDisplayAnimation ~= nil then self.DisplayAnimFunc = settings.overrideDisplayAnimation end
+	if settings.values == nil then settings.values = {"first","second","Third"} end
+	if settings.startingIndex == nil then settings.startingIndex = 1 end
 
-	local Model, Elements = self:perfectClone(Model,Elements)
+	local model, elements = self:PerfectClone(model,elements)
 
-	self.ModelElements = {}
-	for Index, Value in pairs(Elements) do
-		self.ModelElements[Index] = Value
+	self.modelElements = {}
+	for index, value in pairs(elements) do
+		self.modelElements[index] = value
 	end
 
-	if Settings.StartingIndex < 1 or Settings.StartingIndex > #Settings.Values then
-		Settings.StartingIndex = 1
+	if settings.startingIndex < 1 or settings.startingIndex > #settings.values then
+		settings.startingIndex = 1
 	end
 
-	self.ActualIndex = Settings.StartingIndex
-	self.Values = Settings.Values
+	self.actualIndex = settings.startingIndex
+	self.values = settings.values
 
-	self.IsCooldown = false
-	self.Initiated = false
-	self.Type = "ArrowChange"
-	self.Actions = {}
+	self.isCooldown = false
+	self.initiated = false
+	self.elementType = "ArrowChange"
+	self.actions = {}
 
-	self.Model = Model
-	self.Model.Name = IDName
-	self.IDName = IDName
+	self.model = model
+	self.model.Name = idName
+	self.idName = idName
 
-	self.CooldownTime = Settings.Cooldown
-	self.Value = Settings.StartingValue
-	self.Locked = Settings.Locked
+	self.cooldownTime = settings.cooldown
+	self.value = settings.startingValue
+	self.locked = settings.locked
 
-	self:displayAnimFunc()
+	self:DisplayAnimFunc()
 
 	return self
 end
@@ -61,29 +61,29 @@ end
 	should be called only via Form:InitAll().
 ]=]
 
-function ArrowChange:init() -- should be called only via Form:InitAll()
-	if self.Initiated == false then
-		self.Initiated = true
-		self.ModelElements.Left.Activated:Connect(function()
-			if self.Locked == false then
-				if self.ActualIndex - 1 == 0 then
-					self.ActualIndex = #self.Values
+function ArrowChange:Init() -- should be called only via Form:InitAll()
+	if self.initiated == false then
+		self.initiated = true
+		self.modelElements.Left.Activated:Connect(function()
+			if self.locked == false then
+				if self.actualIndex - 1 == 0 then
+					self.actualIndex = #self.values
 				else
-					self.ActualIndex -= 1
+					self.actualIndex -= 1
 				end
-				self:displayAnimFunc()
-				self:executeActions()
+				self:DisplayAnimFunc()
+				self:ExecuteActions()
 			end
 		end)
-		self.ModelElements.Right.Activated:Connect(function()
-			if self.Locked == false then
-				if self.ActualIndex + 1 > #self.Values then
-					self.ActualIndex = 1
+		self.modelElements.Right.Activated:Connect(function()
+			if self.locked == false then
+				if self.actualIndex + 1 > #self.values then
+					self.actualIndex = 1
 				else
-					self.ActualIndex += 1
+					self.actualIndex += 1
 				end
-				self:displayAnimFunc()
-				self:executeActions()
+				self:DisplayAnimFunc()
+				self:ExecuteActions()
 			end
 		end)
 	end
@@ -92,52 +92,52 @@ end
 --[=[
 	@within ArrowChange
 	
-	Updates the Values and Index (optional).
+	Updates the values and index (optional).
 ]=]
 
-function ArrowChange:updateValues(Values: any, Index: number?)
-	if Index == nil then Index = self.ActualIndex end
+function ArrowChange:UpdateValues(values: any, index: number?)
+	if index == nil then index = self.actualIndex end
 
-	if Index < 1 or Index > #Values then
-		Index = 1
+	if index < 1 or index > #values then
+		index = 1
 	else
-		Index = self.ActualIndex
+		index = self.actualIndex
 	end
 
-	self.Values = Values
-	self.ActualIndex = Index
-	self:displayAnimFunc()
-	self:executeActions()
+	self.values = values
+	self.actualIndex = index
+	self:DisplayAnimFunc()
+	self:ExecuteActions()
 end
 
 --[=[
 	@within ArrowChange
-	@return <boolean,string> -- [Value and IDName of the object]
-	Returns value and IDName of the object.
+	@return <boolean,string> -- [value and idName of the object]
+	Returns value and idName of the object.
 ]=]
 
-function ArrowChange:returnValues()
-	return self.Values[self.ActualIndex], self.IDName
-end
-
---[=[
-	@within ArrowChange
-	
-	Changes the ArrowChange.Locked property.
-]=]
-
-function ArrowChange:lockStatus(Status: boolean)
-	self.Locked = Status
+function ArrowChange:ReturnValues()
+	return self.values[self.actualIndex], self.idName
 end
 
 --[=[
 	@within ArrowChange
 	
-	Sets the parent of the ArrowChange.Model.
+	Changes the ArrowChange.locked property.
 ]=]
 
-function ArrowChange:append(Where: any)
-	self.Model.Parent = Where
+function ArrowChange:LockStatus(status: boolean)
+	self.locked = status
+end
+
+--[=[
+	@within ArrowChange
+	
+	Sets the parent of the ArrowChange.model.
+]=]
+
+function ArrowChange:Append(where: any)
+	self.model.parent = where
 end
 
 --[=[
@@ -146,8 +146,8 @@ end
 	Private Function, should not be called.
 ]=]
 
-function ArrowChange:displayAnimFunc() -- internal private function, do not call
-	self.ModelElements.TextLabel.Text = self.Values[self.ActualIndex]
+function ArrowChange:DisplayAnimFunc() -- internal private function, do not call
+	self.modelElements.TextLabel.Text = self.values[self.actualIndex]
 end
 
 --[=[
@@ -156,8 +156,8 @@ end
 	Adds action that will be executed on every value change.
 ]=]
 
-function ArrowChange:addAction(ActionName: string, Action: any)
-	self.Actions[ActionName] = Action
+function ArrowChange:AddAction(actionName: string, action: any)
+	self.actions[actionName] = action
 end
 
 --[=[
@@ -166,8 +166,8 @@ end
 	Removes action that would be executed on every value change.
 ]=]
 
-function ArrowChange:removeAction(ActionName: string)
-	table.remove(self.Actions,ActionName)
+function ArrowChange:RemoveAction(actionName: string)
+	table.remove(self.actions,actionName)
 end
 
 --[=[
@@ -176,9 +176,9 @@ end
 	Private Function, should not be called.
 ]=]
 
-function ArrowChange:executeActions()
-	for Index, Action in pairs(self.Actions) do
-		Action()
+function ArrowChange:ExecuteActions()
+	for index, action in pairs(self.actions) do
+		action()
 	end
 end
 
@@ -189,18 +189,18 @@ end
 	Private Function, should not be called.
 ]=]
 
-function ArrowChange:perfectClone(TrueModel: any, TrueElements: table) -- internal private function, do not call (also; not quite perfect)
-	local Model = TrueModel:Clone()
-	local Elements = {}
-	for Index, Element in pairs(TrueElements) do
-		local Path = string.split(Element,".")
-		local FollowedPath = Model
-		for Index2, Value in pairs(Path) do
-			FollowedPath = FollowedPath[Value]
+function ArrowChange:PerfectClone(trueModel: any, trueElements: table) -- internal private function, do not call (also; not quite perfect)
+	local model = trueModel:Clone()
+	local elements = {}
+	for index, element in pairs(trueElements) do
+		local path = string.split(element,".")
+		local followedPath = model
+		for Index2, value in pairs(path) do
+			followedPath = followedPath[value]
 		end
-		Elements[Index] = FollowedPath
+		elements[index] = followedPath
 	end
-	return Model, Elements
+	return model, elements
 end
 
 --[=[
@@ -208,10 +208,10 @@ end
 	Destructor for ArrowChange object.
 ]=]
 
-function ArrowChange:destroy()
-	self.Model:Destroy()
-	for Index, Value in pairs(self) do
-		Value = nil
+function ArrowChange:Destroy()
+	self.model:Destroy()
+	for index, value in pairs(self) do
+		value = nil
 	end
 end
 

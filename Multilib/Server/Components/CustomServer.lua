@@ -2,18 +2,18 @@ local Lib = {}
 
 -- Core
 function Lib:ReturnCustomValue()
-	return self.CustomValue
+	return self.customValue
 end
 
--- Settings
-function Lib:SetCustomValue(Value: string)
-	self.CustomValue = Value
+-- settings
+function Lib:SetCustomValue(value: string)
+	self.customValue = value
 end
 
 -- End
 function Lib:Init()
-	self.CustomValue = "Change Me!"
-	if _G.MLoader.Comments then
+	self.customValue = "Change Me!"
+	if _G.MLoader.comments then
 		warn("[Multilib-" .. script.Name .. "]", script.Name, "Lib Loaded & safe to use.")
 	end
 end

@@ -13,48 +13,48 @@ InputField.__index = InputField
 	Constructor for InputField object.
 ]=]
 
-function InputField.new(Model: any, Elements: table, IDName: string, Settings: table)
+function InputField.New(model: any, elements: table, idName: string, settings: table)
 	local self = setmetatable({}, InputField)
 
-	if Settings == nil then Settings = {} end
-	if Settings.Locked == nil then Settings.Locked = false end
-	if Settings.Cooldown == nil then Settings.Cooldown = 0.25 end
-	if Settings.Type == nil then Settings.Type = "Numeric" end
-	if Settings.PlaceholderText == nil then Settings.PlaceholderText = "Input" end
-	if Settings.Lenght == nil then Settings.Lenght = 10 end
+	if settings == nil then settings = {} end
+	if settings.locked == nil then settings.locked = false end
+	if settings.cooldown == nil then settings.cooldown = 0.25 end
+	if settings.elementType == nil then settings.elementType = "Numeric" end
+	if settings.placeholderText == nil then settings.placeholderText = "Input" end
+	if settings.lenght == nil then settings.lenght = 10 end
 
-	local Model, Elements = self:perfectClone(Model,Elements)
+	local model, elements = self:PerfectClone(model,elements)
 
-	self.ModelElements = {}
-	for Index, Value in pairs(Elements) do
-		self.ModelElements[Index] = Value
+	self.modelElements = {}
+	for index, value in pairs(elements) do
+		self.modelElements[index] = value
 	end
 
-	if Settings.Type == "Numeric" then
-		self.AllowedCharacters = "1234567890"
-	elseif Settings.Type == "Text" then
-		self.AllowedCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	if settings.elementType == "Numeric" then
+		self.allowedCharacters = "1234567890"
+	elseif settings.elementType == "Text" then
+		self.allowedCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	else
-		if Settings.CustomCharacters == nil then Settings.CustomCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890" end
-		self.AllowedCharacters = Settings.CustomCharacters
+		if settings.customCharacters == nil then settings.customCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890" end
+		self.allowedCharacters = settings.customCharacters
 	end
 
-	self.ModelElements.Input.PlaceholderText = Settings.PlaceholderText
+	self.modelElements.Input.placeholderText = settings.placeholderText
 
-	self.IsCooldown = false
-	self.Initiated = false
-	self.Type = "InputField"
-	self.Lenght = Settings.Lenght
-	self.SubType = Settings.Type
-	self.Actions = {}
+	self.isCooldown = false
+	self.initiated = false
+	self.elementType = "InputField"
+	self.lenght = settings.lenght
+	self.subType = settings.elementType
+	self.actions = {}
 
-	self.Model = Model
-	self.Model.Name = IDName
-	self.IDName = IDName
+	self.model = model
+	self.model.Name = idName
+	self.idName = idName
 
-	self.CooldownTime = Settings.Cooldown
-	self.Value = Settings.StartingValue
-	self.Locked = Settings.Locked
+	self.cooldownTime = settings.cooldown
+	self.value = settings.startingValue
+	self.locked = settings.locked
 
 	return self
 end
@@ -65,39 +65,39 @@ end
 	should be called only via Form:InitAll().
 ]=]
 
-function InputField:init() -- should be called only via Form:InitAll()
-	if self.Initiated == false then
-		self.Initiated = true
-		self.ModelElements.Clear.Activated:Connect(function()
-			self.ModelElements.Input.Text = ""
+function InputField:Init() -- should be called only via Form:InitAll()
+	if self.initiated == false then
+		self.initiated = true
+		self.modelElements.Clear.Activated:Connect(function()
+			self.modelElements.Input.Text = ""
 		end)
-		self.ModelElements.Input.Changed:Connect(function(Property: string)
+		self.modelElements.Input.Changed:Connect(function(Property: string)
 			if Property == "Text" then
-				local Text = self.ModelElements.Input.Text
+				local Text = self.modelElements.Input.Text
 				Text = string.split(Text,"")
-				if #Text > self.Lenght then -- Lenght Checker
+				if #Text > self.lenght then -- lenght Checker
 					local NewText = {}
-					for Index = 1, self.Lenght do
-						NewText[Index] = Text[Index]
+					for index = 1, self.lenght do
+						NewText[index] = Text[index]
 					end
 					Text = NewText
 				end
-				local Allowed = string.split(self.AllowedCharacters,"")
+				local Allowed = string.split(self.allowedCharacters,"")
 				local NewText = Text
-				for Index, Letter in Text do
+				for index, Letter in Text do
 					if not table.find(Allowed,Letter) then
 						table.remove(NewText,table.find(NewText,Letter))
 					end
 				end
 				Text = NewText
 				NewText = ""
-				for Index, Letter in Text do
+				for index, Letter in Text do
 					NewText ..= Letter
 				end
 				Text = NewText
-				self.ModelElements.Input.Text = Text
-				self.Value = Text
-				self:executeActions()
+				self.modelElements.Input.Text = Text
+				self.value = Text
+				self:ExecuteActions()
 			end
 		end)
 	end
@@ -105,33 +105,33 @@ end
 
 --[=[
 	@within InputField
-	@return <boolean,string> -- [Value and IDName of the object]
-	Returns value and IDName of the object.
+	@return <boolean,string> -- [value and idName of the object]
+	Returns value and idName of the object.
 ]=]
 
-function InputField:returnValues()
-	return self.Value, self.IDName
+function InputField:ReturnValues()
+	return self.value, self.idName
 end
 
 --[=[
 	@within InputField
 	
-	Changes the InputField.Locked property.
+	Changes the InputField.locked property.
 ]=]
 
-function InputField:lockStatus(Status: boolean)
-	self.Locked = Status
-	self.ModelElements.Input.TextEditable = Status
+function InputField:LockStatus(status: boolean)
+	self.locked = status
+	self.modelElements.Input.TextEditable = status
 end
 
 --[=[
 	@within InputField
 	
-	Sets the parent of the InputField.Model.
+	Sets the parent of the InputField.model.
 ]=]
 
-function InputField:append(Where: any)
-	self.Model.Parent = Where
+function InputField:Append(where: any)
+	self.model.parent = where
 end
 
 --[=[
@@ -140,8 +140,8 @@ end
 	Adds action that will be executed on every value change.
 ]=]
 
-function InputField:addAction(ActionName: string, Action: any)
-	self.Actions[ActionName] = Action
+function InputField:AddAction(actionName: string, action: any)
+	self.actions[actionName] = action
 end
 
 --[=[
@@ -150,8 +150,8 @@ end
 	Removes action that would be executed on every value change.
 ]=]
 
-function InputField:removeAction(ActionName: string)
-	table.remove(self.Actions,ActionName)
+function InputField:RemoveAction(actionName: string)
+	table.remove(self.actions,actionName)
 end
 
 --[=[
@@ -160,9 +160,9 @@ end
 	Private Function, should not be called.
 ]=]
 
-function InputField:executeActions()
-	for Index, Action in pairs(self.Actions) do
-		Action()
+function InputField:ExecuteActions()
+	for index, action in pairs(self.actions) do
+		action()
 	end
 end
 
@@ -173,18 +173,18 @@ end
 	Private Function, should not be called.
 ]=]
 
-function InputField:perfectClone(TrueModel: any, TrueElements: table) -- internal private function, do not call (also; not quite perfect)
-	local Model = TrueModel:Clone()
-	local Elements = {}
-	for Index, Element in pairs(TrueElements) do
-		local Path = string.split(Element,".")
-		local FollowedPath = Model
-		for Index2, Value in pairs(Path) do
-			FollowedPath = FollowedPath[Value]
+function InputField:PerfectClone(trueModel: any, trueElements: table) -- internal private function, do not call (also; not quite perfect)
+	local model = trueModel:Clone()
+	local elements = {}
+	for index, element in pairs(trueElements) do
+		local path = string.split(element,".")
+		local followedPath = model
+		for Index2, value in pairs(path) do
+			followedPath = followedPath[value]
 		end
-		Elements[Index] = FollowedPath
+		elements[index] = followedPath
 	end
-	return Model, Elements
+	return model, elements
 end
 
 --[=[
@@ -192,10 +192,10 @@ end
 	Destructor for InputField object.
 ]=]
 
-function InputField:destroy()
-	self.Model:Destroy()
-	for Index, Value in pairs(self) do
-		Value = nil
+function InputField:Destroy()
+	self.model:Destroy()
+	for index, value in pairs(self) do
+		value = nil
 	end
 end
 

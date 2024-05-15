@@ -16,92 +16,92 @@ Slider.__index = Slider
 	Constructor for Slider object.
 ]=]
 
-function Slider.new(Model: any, Elements: table, IDName: string, Settings: table)
+function Slider.New(model: any, elements: table, idName: string, settings: table)
 	local self = setmetatable({}, Slider)
 
-	if Settings == nil then Settings = {} end
-	if Settings.Type == nil then Settings.Type = "Numeric" end
-	if Settings.SliderArea == nil then Settings.SliderArea = 1.25 end
-	if Settings.Type == "Numeric" then
-		if Settings.StartingValue == nil then
-			Settings.StartingValue = 50
-			self.StartingValue = Settings.StartingValue
+	if settings == nil then settings = {} end
+	if settings.elementType == nil then settings.elementType = "Numeric" end
+	if settings.sliderArea == nil then settings.sliderArea = 1.25 end
+	if settings.elementType == "Numeric" then
+		if settings.startingValue == nil then
+			settings.startingValue = 50
+			self.startingValue = settings.startingValue
 		else
-			self.StartingValue = Settings.StartingValue
+			self.startingValue = settings.startingValue
 		end
-		if Settings.MinValue == nil then
-			Settings.MinValue = 0
-			self.MinValue = Settings.MinValue
+		if settings.minValue == nil then
+			settings.minValue = 0
+			self.minValue = settings.minValue
 		else
-			self.MinValue = Settings.MinValue
+			self.minValue = settings.minValue
 		end
-		if Settings.MaxValue == nil then
-			Settings.MaxValue = 100
-			self.MaxValue = Settings.MaxValue
+		if settings.maxValue == nil then
+			settings.maxValue = 100
+			self.maxValue = settings.maxValue
 		else
-			self.MaxValue = Settings.MaxValue
+			self.maxValue = settings.maxValue
 		end
-		if Settings.StepBy == nil then
-			Settings.StepBy = 5
-			self.StepBy = Settings.StepBy
+		if settings.stepBy == nil then
+			settings.stepBy = 5
+			self.stepBy = settings.stepBy
 		else
-			self.StepBy = Settings.StepBy
+			self.stepBy = settings.stepBy
 		end
-	elseif Settings.Type == "Text" then
-		if Settings.TextValues == nil then
-			Settings.TextValues = {"FirstValue","StartingValue","LastValue"}
-			self.TextValues = Settings.TextValues
+	elseif settings.elementType == "Text" then
+		if settings.textValues == nil then
+			settings.textValues = {"FirstValue","startingValue","LastValue"}
+			self.textValues = settings.textValues
 		else
-			self.TextValues = Settings.TextValues
+			self.textValues = settings.textValues
 		end
-		if Settings.StartingValue == nil then
-			Settings.StartingValue = Settings.TextValues[1]
-			self.StartingValue = Settings.StartingValue
+		if settings.startingValue == nil then
+			settings.startingValue = settings.textValues[1]
+			self.startingValue = settings.startingValue
 		else
-			self.StartingValue = Settings.StartingValue
+			self.startingValue = settings.startingValue
 		end
-		self.StepBy =  1
-		self.MinValue = 0
-		self.MaxValue = #Settings.TextValues - 1
+		self.stepBy =  1
+		self.minValue = 0
+		self.maxValue = #settings.textValues - 1
 	end
 
-	if Settings.Locked == nil then Settings.Locked = false end
+	if settings.locked == nil then settings.locked = false end
 
-	local Model, Elements = self:perfectClone(Model,Elements)
+	local model, elements = self:PerfectClone(model,elements)
 
-	self.ModelElements = {}
-	for Index, Value in pairs(Elements) do
-		self.ModelElements[Index] = Value
+	self.modelElements = {}
+	for index, value in pairs(elements) do
+		self.modelElements[index] = value
 	end
 
-	self.Initiated = false
-	self.Type = "Slider"
-	self.SubType = Settings.Type
-	self.Actions = {}
-	self.Model = Model
-	self.Model.Name = IDName
-	self.IDName = IDName
+	self.initiated = false
+	self.elementType = "Slider"
+	self.subType = settings.elementType
+	self.actions = {}
+	self.model = model
+	self.model.Name = idName
+	self.idName = idName
 
-	self.CooldownTime = Settings.Cooldown
-	self.Value = Settings.StartingValue
-	self.Locked = Settings.Locked
-	self.Active = false
+	self.cooldownTime = settings.cooldown
+	self.value = settings.startingValue
+	self.locked = settings.locked
+	self.isActive = false
 
-	self.ModelElements.Drag.AnchorPoint = Vector2.new(0.5,0.5)
+	self.modelElements.Drag.AnchorPoint = Vector2.New(0.5,0.5)
 
-	self.ModelElements.MobileDetect = Instance.new("Frame")
-	self.ModelElements.MobileDetect.AnchorPoint = Vector2.new(0.5,0.5)
-	self.ModelElements.MobileDetect.Position = UDim2.fromScale(0.5,0.5)
-	self.ModelElements.MobileDetect.Size = UDim2.fromScale(Settings.SliderArea,Settings.SliderArea)
-	self.ModelElements.MobileDetect.BackgroundTransparency = 1
-	self.ModelElements.MobileDetect.ZIndex = math.huge
-	self.ModelElements.MobileDetect.Name = "MobileDetect"
-	self.ModelElements.MobileDetect.Parent = self.ModelElements.Total
+	self.modelElements.MobileDetect = instance.New("Frame")
+	self.modelElements.MobileDetect.AnchorPoint = Vector2.New(0.5,0.5)
+	self.modelElements.MobileDetect.position = UDim2.fromScale(0.5,0.5)
+	self.modelElements.MobileDetect.Size = UDim2.fromScale(settings.sliderArea,settings.sliderArea)
+	self.modelElements.MobileDetect.BackgroundTransparency = 1
+	self.modelElements.MobileDetect.ZIndex = math.huge
+	self.modelElements.MobileDetect.Name = "MobileDetect"
+	self.modelElements.MobileDetect.parent = self.modelElements.Total
 
-	if self.SubType == "Numeric" then
-		self:displayAnimFunc(self.Value)
-	elseif self.SubType == "Text" then
-		self:displayAnimFunc(table.find(self.TextValues,self.Value) - 1)
+	if self.subType == "Numeric" then
+		self:DisplayAnimFunc(self.value)
+	elseif self.subType == "Text" then
+		self:DisplayAnimFunc(table.find(self.textValues,self.value) - 1)
 	end
 
 	return self
@@ -113,83 +113,83 @@ end
 	should be called only via Form:InitAll().
 ]=]
 
-function Slider:init() -- should be called only via Form:InitAll()
-	if self.Initiated == false then
-		self.Initiated = true
+function Slider:Init() -- should be called only via Form:InitAll()
+	if self.initiated == false then
+		self.initiated = true
 		local function Change(LegitimateValue)
-			if LegitimateValue ~= self.Value then
-				self:displayAnimFunc(LegitimateValue)
-				self.Value = LegitimateValue
-				self:executeActions()
+			if LegitimateValue ~= self.value then
+				self:DisplayAnimFunc(LegitimateValue)
+				self.value = LegitimateValue
+				self:ExecuteActions()
 			end
 		end
 		local function Update()
-			local Total:GuiObject = self.ModelElements.Total
-			local MousePos = UserInputService:GetMouseLocation()
-			local LegitimatePositions = {
-				From = Total.AbsolutePosition.X,
-				To = Total.AbsolutePosition.X + Total.AbsoluteSize.X
+			local total:GuiObject = self.modelElements.Total
+			local mousePos = UserInputService:GetMouseLocation()
+			local legitimatePositions = {
+				From = total.AbsolutePosition.X,
+				To = total.AbsolutePosition.X + total.AbsoluteSize.X
 			}
-			if MousePos.X > LegitimatePositions.From and MousePos.X < LegitimatePositions.To then
-				local LegitimateValue = math.clamp((MousePos.X - LegitimatePositions.From) / (LegitimatePositions.To - LegitimatePositions.From),0,1)
-				LegitimateValue = LegitimateValue * (self.MaxValue - self.MinValue) + self.MinValue
-				if LegitimateValue < 0.5 then
-					LegitimateValue = math.floor(LegitimateValue)
+			if mousePos.X > legitimatePositions.From and mousePos.X < legitimatePositions.To then
+				local legitimateValue = math.clamp((mousePos.X - legitimatePositions.From) / (legitimatePositions.To - legitimatePositions.From),0,1)
+				legitimateValue = legitimateValue * (self.maxValue - self.minValue) + self.minValue
+				if legitimateValue < 0.5 then
+					legitimateValue = math.floor(legitimateValue)
 				else
-					LegitimateValue = math.ceil(LegitimateValue)
+					legitimateValue = math.ceil(legitimateValue)
 				end
-				if LegitimateValue % self.StepBy == 0 then
-					Change(LegitimateValue)
+				if legitimateValue % self.stepBy == 0 then
+					Change(legitimateValue)
 				else
-					local LeftOver = LegitimateValue % self.StepBy
-					if LeftOver > self.StepBy / 2 then
-						LegitimateValue = math.ceil(LegitimateValue / self.StepBy) * self.StepBy
-						Change(LegitimateValue)
+					local leftOver = legitimateValue % self.stepBy
+					if leftOver > self.stepBy / 2 then
+						legitimateValue = math.ceil(legitimateValue / self.stepBy) * self.stepBy
+						Change(legitimateValue)
 					else
-						LegitimateValue = math.floor(LegitimateValue / self.StepBy) * self.StepBy
-						Change(LegitimateValue)
+						legitimateValue = math.floor(legitimateValue / self.stepBy) * self.stepBy
+						Change(legitimateValue)
 					end
 				end
-			elseif MousePos.X < LegitimatePositions.From then
-				local LegitimateValue = self.MinValue
+			elseif mousePos.X < legitimatePositions.From then
+				local LegitimateValue = self.minValue
 				Change(LegitimateValue)
-			elseif MousePos.X > LegitimatePositions.To then
-				local LegitimateValue = self.MaxValue
+			elseif mousePos.X > legitimatePositions.To then
+				local LegitimateValue = self.maxValue
 				Change(LegitimateValue)
 			end
 		end
-		local function Allow(Input)
-			if Input.UserInputType == Enum.UserInputType.MouseButton1 or Input.UserInputType == Enum.UserInputType.Touch and self.IsActive == false and self.Locked == false then
+		local function Allow(input)
+			if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch and self.isActive == false and self.locked == false then
 				return true
 			end
 			return false
 		end
 
-		self.ModelElements.Drag.InputBegan:Connect(function(input)
+		self.modelElements.Drag.InputBegan:Connect(function(input)
 			if Allow(input) then
-				self.IsActive = true
-				RunService:BindToRenderStep(self.IDName .. "SliderFunc",Enum.RenderPriority.Input.Value,Update)
+				self.isActive = true
+				RunService:BindToRenderStep(self.idName .. "SliderFunc",Enum.RenderPriority.Input.value,Update)
 			end
 		end)
 
-		self.ModelElements.Drag.InputEnded:Connect(function(input)
+		self.modelElements.Drag.InputEnded:Connect(function(input)
 			if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-				RunService:UnbindFromRenderStep(self.IDName .. "SliderFunc")
-				self.IsActive = false
+				RunService:UnbindFromRenderStep(self.idName .. "SliderFunc")
+				self.isActive = false
 			end
 		end)
 
-		self.ModelElements.MobileDetect.InputBegan:Connect(function(input)
+		self.modelElements.MobileDetect.InputBegan:Connect(function(input)
 			if Allow(input) then
-				self.IsActive = true
-				RunService:BindToRenderStep(self.IDName .. "SliderFunc",Enum.RenderPriority.Input.Value,Update)
+				self.isActive = true
+				RunService:BindToRenderStep(self.idName .. "SliderFunc",Enum.RenderPriority.Input.value,Update)
 			end
 		end)
 
-		self.ModelElements.MobileDetect.InputEnded:Connect(function(input)
+		self.modelElements.MobileDetect.InputEnded:Connect(function(input)
 			if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-				RunService:UnbindFromRenderStep(self.IDName .. "SliderFunc")
-				self.IsActive = false
+				RunService:UnbindFromRenderStep(self.idName .. "SliderFunc")
+				self.isActive = false
 			end
 		end)
 	end
@@ -201,8 +201,8 @@ end
 	Adds action that will be executed on every value change.
 ]=]
 
-function Slider:addAction(ActionName: string, Action: any)
-	self.Actions[ActionName] = Action
+function Slider:AddAction(actionName: string, action: any)
+	self.actions[actionName] = action
 end
 
 --[=[
@@ -211,8 +211,8 @@ end
 	Removes action that would be executed on every value change.
 ]=]
 
-function Slider:removeAction(ActionName: string)
-	table.remove(self.Actions,ActionName)
+function Slider:RemoveAction(actionName: string)
+	table.remove(self.actions,actionName)
 end
 
 --[=[
@@ -221,40 +221,40 @@ end
 	Private Function, should not be called.
 ]=]
 
-function Slider:executeActions()
-	for Index, Action in pairs(self.Actions) do
-		Action()
+function Slider:ExecuteActions()
+	for index, action in pairs(self.actions) do
+		action()
 	end
 end
 
 --[=[
 	@within Slider
-	@return <boolean,string> -- [Value and IDName of the object]
-	Returns value and IDName of the object.
+	@return <boolean,string> -- [value and idName of the object]
+	Returns value and idName of the object.
 ]=]
 
-function Slider:returnValues()
-	return self.Value, self.IDName
+function Slider:ReturnValues()
+	return self.value, self.idName
 end
 
 --[=[
 	@within Slider
 	
-	Changes the Slider.Locked property.
+	Changes the Slider.locked property.
 ]=]
 
-function Slider:lockStatus(Status: boolean)
-	self.Locked = Status
+function Slider:LockStatus(status: boolean)
+	self.locked = status
 end
 
 --[=[
 	@within Slider
 	
-	Sets the parent of the Slider.Model.
+	Sets the parent of the Slider.model.
 ]=]
 
-function Slider:append(Where: any)
-	self.Model.Parent = Where
+function Slider:Append(where: any)
+	self.model.parent = where
 end
 
 --[=[
@@ -263,23 +263,23 @@ end
 	Private Function, should not be called.
 ]=]
 
-function Slider:displayAnimFunc(Value: number) -- internal private function, do not call
-	local function convertToAbsolute(Value: number)
-		local ClampedValue = math.clamp(Value, self.MinValue, self.MaxValue)
-		local RangeCustom = self.MaxValue - self.MinValue
-		local Proportion = (ClampedValue - self.MinValue) / RangeCustom
-		return Proportion * 100
+function Slider:DisplayAnimFunc(value: number) -- internal private function, do not call
+	local function ConvertToAbsolute(value: number)
+		local clampedValue = math.clamp(value, self.minValue, self.maxValue)
+		local rangeCustom = self.maxValue - self.minValue
+		local proportion = (clampedValue - self.minValue) / rangeCustom
+		return proportion * 100
 	end
-	local Drag:GuiButton = self.ModelElements.Drag
-	local ProgressBar:GuiObject = self.ModelElements.ProgressBar
-	local ShowText:GuiObject = self.ModelElements.ShowText
-	local TweenInfoToUse = TweenInfo.new(0.05,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut)
-	TweenService:Create(Drag,TweenInfoToUse,{Position = UDim2.fromScale(convertToAbsolute(Value) / 100,0.5)}):Play()
-	TweenService:Create(ProgressBar,TweenInfoToUse,{Size = UDim2.fromScale(convertToAbsolute(Value	) / 100,1)}):Play()
-	if self.SubType == "Numeric" then
-		ShowText.Text = Value
-	elseif self.SubType == "Text" then
-		ShowText.Text = self.TextValues[Value + 1]
+	local drag:GuiButton = self.modelElements.Drag
+	local progressBar:GuiObject = self.modelElements.ProgressBar
+	local showText:GuiObject = self.modelElements.ShowText
+	local tweenInfoToUse = TweenInfo.New(0.05,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut)
+	TweenService:Create(drag,tweenInfoToUse,{position = UDim2.fromScale(ConvertToAbsolute(value) / 100,0.5)}):Play()
+	TweenService:Create(progressBar,tweenInfoToUse,{Size = UDim2.fromScale(ConvertToAbsolute(value	) / 100,1)}):Play()
+	if self.subType == "Numeric" then
+		showText.Text = value
+	elseif self.subType == "Text" then
+		showText.Text = self.textValues[value + 1]
 	end
 end
 
@@ -289,18 +289,18 @@ end
 	Private Function, should not be called.
 ]=]
 
-function Slider:perfectClone(TrueModel: any, TrueElements: table) -- internal private function, do not call (also; not quite perfect)
-	local Model = TrueModel:Clone()
-	local Elements = {}
-	for Index, Element in pairs(TrueElements) do
-		local Path = string.split(Element,".")
-		local FollowedPath = Model
-		for Index2, Value in pairs(Path) do
-			FollowedPath = FollowedPath[Value]
+function Slider:PerfectClone(trueModel: any, trueElements: table) -- internal private function, do not call (also; not quite perfect)
+	local model = trueModel:Clone()
+	local elements = {}
+	for index, element in pairs(trueElements) do
+		local path = string.split(element,".")
+		local followedPath = model
+		for Index2, value in pairs(path) do
+			followedPath = followedPath[value]
 		end
-		Elements[Index] = FollowedPath
+		elements[index] = followedPath
 	end
-	return Model, Elements
+	return model, elements
 end
 
 --[=[
@@ -308,10 +308,10 @@ end
 	Destructor for Slider object.
 ]=]
 
-function Slider:destroy()
-	self.Model:Destroy()
-	for Index, Value in pairs(self) do
-		Value = nil
+function Slider:Destroy()
+	self.model:Destroy()
+	for index, value in pairs(self) do
+		value = nil
 	end
 end
 

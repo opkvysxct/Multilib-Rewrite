@@ -4,7 +4,7 @@ local Lib = {}
 -- Core
 
 function Lib:Checker()
-	if self.IsEnabled == true or RunService:IsStudio() then
+	if self.isEnabled == true or RunService:IsStudio() then
 		return true
 	end
 	return false
@@ -28,15 +28,15 @@ function Lib:Error(Script: Script, Content: any, Force: boolean)
 	end
 end
 
--- Settings
-function Lib:LoggerSetter(Value: boolean)
-	self.IsEnabled = Value
+-- settings
+function Lib:LoggerSetter(value: boolean)
+	self.isEnabled = value
 end
 
 -- End
 function Lib:Init()
-	self.IsEnabled = true
-	if _G.MLoader.Comments then
+	self.isEnabled = true
+	if _G.MLoader.comments then
 		warn("[Multilib-" .. script.Name .. "]", script.Name, "Lib Loaded & safe to use.")
 	end
 end

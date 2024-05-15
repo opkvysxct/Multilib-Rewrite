@@ -3,14 +3,14 @@ local Players = game:GetService("Players")
 local RecipeProcessor = {}
 RecipeProcessor.__index = RecipeProcessor
 
-function RecipeProcessor:new()
+function RecipeProcessor:New()
 	local self = setmetatable({}, RecipeProcessor)
 	self.Producs = {}
 	return self
 end
 
-function RecipeProcessor:AddListener(ID: number, FuncAfter: any)
-	self.Producs[ID] = FuncAfter
+function RecipeProcessor:AddListener(id: number, funcAfter: any)
+	self.Producs[id] = funcAfter
 end
 
 function RecipeProcessor:Run()
@@ -31,15 +31,15 @@ function RecipeProcessor:Run()
 		return Enum.ProductPurchaseDecision.NotProcessedYet
 	end
 
-	MarketplaceService.PromptGamePassPurchaseFinished:Connect(function(Player: Player, GamepassID: number, WasPurchased : boolean)
-		warn(Player,GamepassID,WasPurchased)
-		if WasPurchased == true then
-			local handler = self.Producs[GamepassID]
-			local success, result = pcall(handler, GamepassID, Player)
+	MarketplaceService.PromptGamePassPurchaseFinished:Connect(function(player: player, gamepassID: number, wasPurchased : boolean)
+		warn(player,gamepassID,wasPurchased)
+		if wasPurchased == true then
+			local handler = self.Producs[gamepassID]
+			local success, result = pcall(handler, gamepassID, player)
 			if success then
 				warn("Purchase Granted")
 			else
-				warn("Failed to process receipt:", GamepassID, result)
+				warn("Failed to process receipt:", gamepassID, result)
 			end
 		end
 	end)

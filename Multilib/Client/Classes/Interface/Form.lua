@@ -13,70 +13,70 @@ Form.__index = Form
 	Constructor for Form object.
 ]=]
 
-function Form.new() -- mostly abstract class to manage other ui elements
+function Form.New() -- mostly abstract class to manage other ui elements
 	local self = setmetatable({}, Form)
 	self.Data = {}
-	self.Elements = {}
+	self.elements = {}
 	return self
 end
 
 --[=[
 	@within Form
-	Inserts element into the Form.Elements table.
+	Inserts element into the Form.elements table.
 ]=]
 
-function Form:insertElement(Element: table)
-	self.Elements[Element.IDName] = Element
+function Form:insertElement(element: table)
+	self.elements[element.idName] = element
 end
 
 --[=[
 	@within Form
-	Inserts multiple elements into the Form.Elements table.
+	Inserts multiple elements into the Form.elements table.
 ]=]
 
-function Form:insertElements(Elements: table)
-	for Index, Element in pairs(Elements) do
-		self.Elements[Element.IDName] = Element
+function Form:insertElements(elements: table)
+	for index, element in pairs(elements) do
+		self.elements[element.idName] = element
 	end
 end
 
 --[=[
 	@within Form
-	Removes element from the Form.Elements table.
+	Removes element from the Form.elements table.
 ]=]
 
 function Form:clearElement(ElementName: string)
-	table.remove(self.Elements,ElementName)
+	table.remove(self.elements,ElementName)
 end
 
 --[=[
 	@within Form
-	Clears the Form.Elements table.
+	Clears the Form.elements table.
 ]=]
 
 function Form:clearAllElements()
-	table.clear(self.Elements)
+	table.clear(self.elements)
 end
 
 --[=[
 	@within Form
-	Initializes all elements inside Form.Elements table.
+	Initializes all elements inside Form.elements table.
 ]=]
 
-function Form:initAll() -- init all elements
-	for Index, Element in pairs(self.Elements) do
-		Element:init()
+function Form:initAll() -- Init all elements
+	for index, element in pairs(self.elements) do
+		element:Init()
 	end
 end
 
 --[=[
 	@within Form
-	Sets parent for all elements inside Form.Elements table.
+	Sets parent for all elements inside Form.elements table.
 ]=]
 
-function Form:appendAll(Where: any) -- random order
-	for Index, Element in pairs(self.Elements) do
-		Element:append(Where)
+function Form:appendAll(where: any) -- random order
+	for index, element in pairs(self.elements) do
+		element:Append(where)
 	end
 end
 
@@ -98,9 +98,9 @@ end
 
 function Form:collectData() -- collect and return all data
 	table.clear(self.Data)
-	for Index, Element in pairs(self.Elements) do
-		local Value, Name = Element:returnValues()
-		self.Data[Name] = Value
+	for index, element in pairs(self.elements) do
+		local value, Name = element:ReturnValues()
+		self.Data[Name] = value
 	end
 	return self.Data
 end
@@ -110,9 +110,9 @@ end
 	Destructor for Form object.
 ]=]
 
-function Form:destroy()
-	for Index, Value in pairs(self) do
-		Value = nil
+function Form:Destroy()
+	for index, value in pairs(self) do
+		value = nil
 	end
 end
 

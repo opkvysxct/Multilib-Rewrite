@@ -14,35 +14,35 @@ DropDownOption.__index = DropDownOption
 	Constructor for DropDownOption object.
 ]=]
 
-function DropDownOption.new(Model: any, Elements: table, IDName: string, DropDownMenu: table, Settings: table)
+function DropDownOption.New(model: any, elements: table, idName: string, DropDownMenu: table, settings: table)
 	local self = setmetatable({}, DropDownOption)
 
-	if Settings == nil then Settings = {} end
-	if Settings.Locked == nil then Settings.Locked = false end
-	if Settings.Cooldown == nil then Settings.Cooldown = 0.25 end
+	if settings == nil then settings = {} end
+	if settings.locked == nil then settings.locked = false end
+	if settings.cooldown == nil then settings.cooldown = 0.25 end
 
-	local Model, Elements = self:perfectClone(Model,Elements)
+	local model, elements = self:PerfectClone(model,elements)
 
-	self.ModelElements = {}
-	for Index, Value in pairs(Elements) do
-		self.ModelElements[Index] = Value
+	self.modelElements = {}
+	for index, value in pairs(elements) do
+		self.modelElements[index] = value
 	end
 
 
-	self.IsCooldown = false
-	self.Initiated = false
-	self.Type = "DropDownOption"
-	self.IsSelected = false
+	self.isCooldown = false
+	self.initiated = false
+	self.elementType = "DropDownOption"
+	self.isSelected = false
 
-	self.Model = Model
-	self.Model.Name = IDName
-	self.IDName = IDName
+	self.model = model
+	self.model.Name = idName
+	self.idName = idName
 	self.DropDownMenu = DropDownMenu
 
-	self.CooldownTime = Settings.Cooldown
-	self.Locked = Settings.Locked
+	self.cooldownTime = settings.cooldown
+	self.locked = settings.locked
 
-	self.ModelElements.TextLabel.Text = IDName
+	self.modelElements.TextLabel.Text = idName
 
 	return self
 end
@@ -53,16 +53,16 @@ end
 	should be called only via Form:InitAll().
 ]=]
 
-function DropDownOption:init() -- should be called only via Form:InitAll()
-	if self.Initiated == false then
-		self.Initiated = true
-		self.ModelElements.Button.Activated:Connect(function()
-			if self.Locked == false and self.IsCooldown == false then
-				self.IsCooldown = true
-				task.delay(self.CooldownTime,function()
-					self.IsCooldown = false
+function DropDownOption:Init() -- should be called only via Form:InitAll()
+	if self.initiated == false then
+		self.initiated = true
+		self.modelElements.Button.Activated:Connect(function()
+			if self.locked == false and self.isCooldown == false then
+				self.isCooldown = true
+				task.delay(self.cooldownTime,function()
+					self.isCooldown = false
 				end)
-				if self.IsSelected == false then
+				if self.isSelected == false then
 					self.DropDownMenu:selectButton(self)
 				end
 			end
@@ -73,21 +73,21 @@ end
 --[=[
 	@within DropDownOption
 	
-	Changes the DropDownOption.Locked property.
+	Changes the DropDownOption.locked property.
 ]=]
 
-function DropDownOption:lockStatus(Status: boolean)
-	self.Locked = Status
+function DropDownOption:LockStatus(status: boolean)
+	self.locked = status
 end
 
 --[=[
 	@within DropDownOption
 	
-	Sets the parent of the DropDownOption.Model.
+	Sets the parent of the DropDownOption.model.
 ]=]
 
-function DropDownOption:append(Where: any)
-	self.Model.Parent = Where
+function DropDownOption:Append(where: any)
+	self.model.parent = where
 end
 
 --[=[
@@ -96,18 +96,18 @@ end
 	Private Function, should not be called.
 ]=]
 
-function DropDownOption:perfectClone(TrueModel: any, TrueElements: table) -- internal private function, do not call (also; not quite perfect)
-	local Model = TrueModel:Clone()
-	local Elements = {}
-	for Index, Element in pairs(TrueElements) do
-		local Path = string.split(Element,".")
-		local FollowedPath = Model
-		for Index2, Value in pairs(Path) do
-			FollowedPath = FollowedPath[Value]
+function DropDownOption:PerfectClone(trueModel: any, trueElements: table) -- internal private function, do not call (also; not quite perfect)
+	local model = trueModel:Clone()
+	local elements = {}
+	for index, element in pairs(trueElements) do
+		local path = string.split(element,".")
+		local followedPath = model
+		for Index2, value in pairs(path) do
+			followedPath = followedPath[value]
 		end
-		Elements[Index] = FollowedPath
+		elements[index] = followedPath
 	end
-	return Model, Elements
+	return model, elements
 end
 
 --[=[
@@ -116,8 +116,8 @@ end
 	Changes selection status.
 ]=]
 
-function DropDownOption:selectionStatus(Value: boolean)
-	self.IsSelected = Value
+function DropDownOption:selectionStatus(value: boolean)
+	self.isSelected = value
 end
 
 --[=[
@@ -125,10 +125,10 @@ end
 	Destructor for DropDownOption object.
 ]=]
 
-function DropDownOption:destroy()
-	self.Model:Destroy()
-	for Index, Value in pairs(self) do
-		Value = nil
+function DropDownOption:Destroy()
+	self.model:Destroy()
+	for index, value in pairs(self) do
+		value = nil
 	end
 end
 

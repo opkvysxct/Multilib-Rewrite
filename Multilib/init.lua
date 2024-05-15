@@ -3,12 +3,12 @@
 
 --Loading schemat
 --_G.MLoader = require(game:GetService("ReplicatedStorage").Multilib)
---_G.MLoader:InitServer(true/false (Comments)) or _G.MLoader:InitClient(true/false (Comments))
+--_G.MLoader:InitServer(true/false (comments)) or _G.MLoader:InitClient(true/false (comments))
 
 local Multilib = {}
 
-function Multilib:InitServer(Comments: boolean)
-	self.Comments = Comments
+function Multilib:InitServer(comments: boolean)
+	self.comments = comments
 	for index, component in script.Shared.Components:GetDescendants() do
 		if component:IsA("ModuleScript") then
 			_G["M" .. component.Name] = require(component)
@@ -28,7 +28,7 @@ function Multilib:InitServer(Comments: boolean)
 	for index, class in script.Shared.Classes:GetDescendants() do
 		if class:IsA("ModuleScript") then
 			_G["M" .. class.Name] = require(class)
-			if self.Comments then
+			if self.comments then
 				warn("[Multilib-" .. class.Name .. "] Registered")
 			end
 		end
@@ -36,19 +36,19 @@ function Multilib:InitServer(Comments: boolean)
 	for index, class in script.Server.Classes:GetDescendants() do
 		if class:IsA("ModuleScript") then
 			_G["M" .. class.Name] = require(class)
-			if self.Comments then
+			if self.comments then
 				warn("[Multilib-" .. class.Name .. "] Registered")
 			end
 		end
 	end
-	if self.Comments then
+	if self.comments then
 		warn("[Multilib]", "Done loading all Classes and Components.")
 	end
 end
 
-function Multilib:InitClient(Comments: boolean)
-	self.Comments = Comments
-	self.Player = game:GetService("Players").LocalPlayer
+function Multilib:InitClient(comments: boolean)
+	self.comments = comments
+	self.player = game:GetService("Players").LocalPlayer
 	for index, component in script.Shared.Components:GetDescendants() do
 		if component:IsA("ModuleScript") then
 			_G["M" .. component.Name] = require(component)
@@ -64,7 +64,7 @@ function Multilib:InitClient(Comments: boolean)
 	for index, class in script.Shared.Classes:GetDescendants() do
 		if class:IsA("ModuleScript") then
 			_G["M" .. class.Name] = require(class)
-			if self.Comments then
+			if self.comments then
 				warn("[Multilib-" .. class.Name .. "] Registered")
 			end
 		end
@@ -73,13 +73,13 @@ function Multilib:InitClient(Comments: boolean)
 		for index, class in script.Client.Classes:GetDescendants() do
 			if class:IsA("ModuleScript") then
 				_G["M" .. class.Name] = require(class)
-				if self.Comments then
+				if self.comments then
 					warn("[Multilib-" .. class.Name .. "] Registered")
 				end
 			end
 		end
 	end
-	if self.Comments then
+	if self.comments then
 		warn("[Multilib]", "Done loading all Classes and Components.")
 	end
 end

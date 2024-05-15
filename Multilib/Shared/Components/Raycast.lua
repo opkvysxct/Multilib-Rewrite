@@ -10,7 +10,7 @@ function Lib:Ray(From: any, To: any, Strength: number, Params: any)
 	if typeofParams == "RaycastParams" then
 		ParamsToUse = Params
 	elseif typeofParams == "table" then
-		ParamsToUse = RaycastParams.new()
+		ParamsToUse = RaycastParams.New()
 		ParamsToUse.CollisionGroup = Params.CG or "Default"
 		ParamsToUse.FilterDescendantsInstances = Params.FDI or {}
 		ParamsToUse.FilterType = Params.FT or Enum.RaycastFilterType.Exclude
@@ -21,11 +21,11 @@ function Lib:Ray(From: any, To: any, Strength: number, Params: any)
 		ParamsToUse = self.DefParams
 	end
 
-	if typeofFrom == "Instance" or typeofFrom == "CFrame" then
-		From = From.Position
+	if typeofFrom == "instance" or typeofFrom == "CFrame" then
+		From = From.position
 	end
-	if typeofTo == "Instance" or typeofTo == "CFrame" then
-		To = To.Position
+	if typeofTo == "instance" or typeofTo == "CFrame" then
+		To = To.position
 	end
 
 	To = CFrame.lookAt(From, To).LookVector * Strength
@@ -39,14 +39,14 @@ function Lib:Ray(From: any, To: any, Strength: number, Params: any)
 	end
 end
 
--- Settings
+-- settings
 function Lib:SetDefaultParams(Params: any)
 	local typeofParams = typeof(Params)
 	local NewParams
 	if typeofParams == "RaycastParams" then
 		NewParams = Params
 	elseif typeofParams == "table" then
-		NewParams = RaycastParams.new()
+		NewParams = RaycastParams.New()
 		NewParams.CollisionGroup = Params.CG or "Default"
 		NewParams.FilterDescendantsInstances = Params.FDI or {}
 		NewParams.FilterType = Params.FT or Enum.RaycastFilterType.Exclude
@@ -61,8 +61,8 @@ end
 
 -- End
 function Lib:Init()
-	self.DefParams = RaycastParams.new()
-	if _G.MLoader.Comments then
+	self.DefParams = RaycastParams.New()
+	if _G.MLoader.comments then
 		warn("[Multilib-" .. script.Name .. "]", script.Name, "Lib Loaded & safe to use.")
 	end
 end

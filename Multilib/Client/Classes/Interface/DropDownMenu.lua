@@ -14,51 +14,51 @@ DropDownMenu.__index = DropDownMenu
 	Constructor for DropDownMenu object.
 ]=]
 
-function DropDownMenu.new(Model: any, Elements: table, IDName: string, DropDownOptions: table, Settings: table)
+function DropDownMenu.New(model: any, elements: table, idName: string, DropDownOptions: table, settings: table)
 	local self = setmetatable({}, DropDownMenu)
 
-	if Settings == nil then Settings = {} end
-	if Settings.Locked == nil then Settings.Locked = false end
-	if Settings.Cooldown == nil then Settings.Cooldown = 0.25 end
-	if Settings.Values == nil then Settings.Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+	if settings == nil then settings = {} end
+	if settings.locked == nil then settings.locked = false end
+	if settings.cooldown == nil then settings.cooldown = 0.25 end
+	if settings.values == nil then settings.values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
 	"eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen",
 	"eighteen", "nineteen", "twenty", "twenty-one", "twenty-two", "twenty-three",
 	"twenty-four", "twenty-five", "twenty-six", "twenty-seven", "twenty-eight",
 	"twenty-nine", "thirty"} end
-	if Settings.SelectedValue == nil then Settings.SelectedValue = Settings.Values[1] end
-	if Settings.AnimSettings == nil then Settings.AnimSettings = {Time = 0.25,Height = 2} end
+	if settings.SelectedValue == nil then settings.SelectedValue = settings.values[1] end
+	if settings.AnimSettings == nil then settings.AnimSettings = {time = 0.25,Height = 2} end
 
-	if Settings.OverrideDisplayAnimation ~= nil then self.displayAnimFunc = Settings.OverrideDisplayAnimation end
+	if settings.overrideDisplayAnimation ~= nil then self.DisplayAnimFunc = settings.overrideDisplayAnimation end
 
-	local Model, Elements = self:perfectClone(Model,Elements)
+	local model, elements = self:PerfectClone(model,elements)
 
-	self.ModelElements = {}
-	for Index, Value in pairs(Elements) do
-		self.ModelElements[Index] = Value
+	self.modelElements = {}
+	for index, value in pairs(elements) do
+		self.modelElements[index] = value
 	end
-	if Settings.CanvasSize == nil then Settings.CanvasSize = self.ModelElements.ScrollingFrame.Size.Y.Scale * 2 end
-	self.ModelElements.ScrollingFrame.CanvasSize = UDim2.fromScale(0,Settings.CanvasSize)
+	if settings.CanvasSize == nil then settings.CanvasSize = self.modelElements.ScrollingFrame.Size.Y.Scale * 2 end
+	self.modelElements.ScrollingFrame.CanvasSize = UDim2.fromScale(0,settings.CanvasSize)
 
-	self.Actions = {}
-	self.IsCooldown = false
-	self.Initiated = false
+	self.actions = {}
+	self.isCooldown = false
+	self.initiated = false
 	self.IsOpen = false
-	self.Type = "DropDownMenu"
-	self.SelectedValue = Settings.SelectedValue
-	self.AnimSettings = Settings.AnimSettings
+	self.elementType = "DropDownMenu"
+	self.SelectedValue = settings.SelectedValue
+	self.AnimSettings = settings.AnimSettings
 
-	self.Model = Model
-	self.Model.Name = IDName
-	self.IDName = IDName
+	self.model = model
+	self.model.Name = idName
+	self.idName = idName
 	self.DropDownOptionsSettings = DropDownOptions
 	self.DropDownOptions = {}
 
-	self.CooldownTime = Settings.Cooldown
-	self.Locked = Settings.Locked
-	self.Values = Settings.Values
+	self.cooldownTime = settings.cooldown
+	self.locked = settings.locked
+	self.values = settings.values
 
-	self:displayAnimFunc("ChangeLabel",self.SelectedValue)
-	self:displayAnimFunc("Collapse",nil,true)
+	self:DisplayAnimFunc("ChangeLabel",self.SelectedValue)
+	self:DisplayAnimFunc("Collapse",nil,true)
 
 	return self
 end
@@ -69,47 +69,47 @@ end
 	should be called only via Form:InitAll().
 ]=]
 
-function DropDownMenu:init() -- should be called only via Form:InitAll()
-	if self.Initiated == false then
-		self.Initiated = true
-		local function CreateAndBind(Value)
-			local DropDownOption = _G.MDropDownOption.new(
-				self.DropDownOptionsSettings.Model,
-				self.DropDownOptionsSettings.Elements,
-				Value,
+function DropDownMenu:Init() -- should be called only via Form:InitAll()
+	if self.initiated == false then
+		self.initiated = true
+		local function CreateAndBind(value)
+			local DropDownOption = _G.MDropDownOption.New(
+				self.DropDownOptionsSettings.model,
+				self.DropDownOptionsSettings.elements,
+				value,
 				self,
 				self.DropDownOptionsSettings.Settingsa
 			)
-			DropDownOption:append(self.ModelElements.ScrollingFrame)
-			DropDownOption:init()
+			DropDownOption:Append(self.modelElements.ScrollingFrame)
+			DropDownOption:Init()
 			table.insert(self.DropDownOptions,DropDownOption)
 		end
-		for Index,Value in pairs(self.Values) do
-			CreateAndBind(Value)
+		for index,value in pairs(self.values) do
+			CreateAndBind(value)
 		end
-		local ScrollingFrame = self.ModelElements.ScrollingFrame
-		for Index,Element in pairs(self.DropDownOptions) do
-			local SizeToSet = (1 / #self.DropDownOptions) - self.ModelElements.UIListLayout.Padding.Scale
-			Element = Element.Model
-			Element.Size = UDim2.new(
-				Element.Size.X.Scale,
-				Element.Size.X.Offset,
+		local ScrollingFrame = self.modelElements.ScrollingFrame
+		for index,element in pairs(self.DropDownOptions) do
+			local SizeToSet = (1 / #self.DropDownOptions) - self.modelElements.UIListLayout.Padding.Scale
+			element = element.model
+			element.Size = UDim2.New(
+				element.Size.X.Scale,
+				element.Size.X.Offset,
 				SizeToSet,
-				Element.Size.Y.Offset
+				element.Size.Y.Offset
 			)
 		end
 
 		local SizeToSet = (ScrollingFrame.CanvasSize.Y.Scale * (#self.DropDownOptions * 0.1))
-		ScrollingFrame.CanvasSize = UDim2.new(
+		ScrollingFrame.CanvasSize = UDim2.New(
 			ScrollingFrame.CanvasSize.X.Scale,
 			ScrollingFrame.CanvasSize.X.Offset,
 			SizeToSet,
 			ScrollingFrame.CanvasSize.Y.Offset)
-		self.ModelElements.MainButton.Activated:Connect(function()
+		self.modelElements.MainButton.Activated:Connect(function()
 			if self.IsOpen == true then
-				self:displayAnimFunc("Collapse")
+				self:DisplayAnimFunc("Collapse")
 			else
-				self:displayAnimFunc("Expand")
+				self:DisplayAnimFunc("Expand")
 			end
 		end)
 	end
@@ -118,24 +118,24 @@ end
 --[=[
 	@within DropDownMenu
 	
-	Changes the DropDownMenu.Locked property.
+	Changes the DropDownMenu.locked property.
 ]=]
 
-function DropDownMenu:lockStatus(Status: boolean)
-	self.Locked = Status
-	for Index, DropDownOption in pairs(self.DropDownOptions) do
-		DropDownOption:lockStatus(Status)
+function DropDownMenu:LockStatus(status: boolean)
+	self.locked = status
+	for index, DropDownOption in pairs(self.DropDownOptions) do
+		DropDownOption:LockStatus(status)
 	end
 end
 
 --[=[
 	@within DropDownMenu
 	
-	Sets the parent of the DropDownMenu.Model.
+	Sets the parent of the DropDownMenu.model.
 ]=]
 
-function DropDownMenu:append(Where: any)
-	self.Model.Parent = Where
+function DropDownMenu:Append(where: any)
+	self.model.parent = where
 end
 
 --[=[
@@ -144,30 +144,30 @@ end
 	Private Function, should not be called.
 ]=]
 
-function DropDownMenu:displayAnimFunc(AnimType: string, Value: string, Forced: boolean) -- internal private function, do not call
+function DropDownMenu:DisplayAnimFunc(AnimType: string, value: string, Forced: boolean) -- internal private function, do not call
 	local TweenInfoToUse
 	if Forced == true then
-		TweenInfoToUse = TweenInfo.new(0,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut)
+		TweenInfoToUse = TweenInfo.New(0,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut)
 	else
-		TweenInfoToUse = TweenInfo.new(self.AnimSettings.Time,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut)
+		TweenInfoToUse = TweenInfo.New(self.AnimSettings.time,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut)
 	end
 	if AnimType == "ChangeLabel" then
-		self.ModelElements.DisplayLabel.Text = Value
+		self.modelElements.DisplayLabel.Text = value
 	elseif AnimType == "Expand" then
-		self.ModelElements.ScrollingFrame.Visible = true
+		self.modelElements.ScrollingFrame.Visible = true
 		self.IsOpen = true
-		TweenService:Create(self.ModelElements.ScrollingFrame,
+		TweenService:Create(self.modelElements.ScrollingFrame,
 			TweenInfoToUse,
 			{Size = UDim2.fromScale(1,self.AnimSettings.Height)}
 		):Play()
 	elseif AnimType == "Collapse" then
 		self.IsOpen = false
-		TweenService:Create(self.ModelElements.ScrollingFrame,
+		TweenService:Create(self.modelElements.ScrollingFrame,
 			TweenInfoToUse,
 			{Size = UDim2.fromScale(1,0)}
 		):Play()
-		task.delay(self.AnimSettings.Time,function()
-			self.ModelElements.ScrollingFrame.Visible = false
+		task.delay(self.AnimSettings.time,function()
+			self.modelElements.ScrollingFrame.Visible = false
 		end)
 	end
 end
@@ -178,8 +178,8 @@ end
 	Adds action that will be executed on every value change.
 ]=]
 
-function DropDownMenu:addAction(ActionName: string, Action: any)
-	self.Actions[ActionName] = Action
+function DropDownMenu:AddAction(actionName: string, action: any)
+	self.actions[actionName] = action
 end
 
 --[=[
@@ -188,8 +188,8 @@ end
 	Removes action that would be executed on every value change.
 ]=]
 
-function DropDownMenu:removeAction(ActionName: string)
-	table.remove(self.Actions,ActionName)
+function DropDownMenu:RemoveAction(actionName: string)
+	table.remove(self.actions,actionName)
 end
 
 --[=[
@@ -198,9 +198,9 @@ end
 	Private Function, should not be called.
 ]=]
 
-function DropDownMenu:executeActions()
-	for Index, Action in pairs(self.Actions) do
-		Action()
+function DropDownMenu:ExecuteActions()
+	for index, action in pairs(self.actions) do
+		action()
 	end
 end
 
@@ -209,8 +209,8 @@ end
 	Inserts element into the DropDownMenu.RadioButtons table.
 ]=]
 
-function DropDownMenu:insertElement(Element: table)
-	self.RadioButtons[Element.IDName] = Element
+function DropDownMenu:insertElement(element: table)
+	self.RadioButtons[element.idName] = element
 end
 
 --[=[
@@ -218,9 +218,9 @@ end
 	Inserts multiple elements into the DropDownMenu.RadioButtons table.
 ]=]
 
-function DropDownMenu:insertElements(Elements: table)
-	for Index, Element in pairs(Elements) do
-		self.RadioButtons[Element.IDName] = Element
+function DropDownMenu:insertElements(elements: table)
+	for index, element in pairs(elements) do
+		self.RadioButtons[element.idName] = element
 	end
 end
 
@@ -244,12 +244,12 @@ end
 
 --[=[
 	@within DropDownMenu
-	@return <boolean,string> -- [Value and IDName of the object]
-	Returns value and IDName of the object.
+	@return <boolean,string> -- [value and idName of the object]
+	Returns value and idName of the object.
 ]=]
 
-function DropDownMenu:returnValues()
-	return self.SelectedValue, self.IDName
+function DropDownMenu:ReturnValues()
+	return self.SelectedValue, self.idName
 end
 
 --[=[
@@ -259,10 +259,10 @@ end
 ]=]
 
 function DropDownMenu:selectButton(DropDownObject: table)
-	self.SelectedValue = DropDownObject.IDName
-	self:displayAnimFunc("ChangeLabel",self.SelectedValue)
-	self:displayAnimFunc("Collapse")
-	self:executeActions()
+	self.SelectedValue = DropDownObject.idName
+	self:DisplayAnimFunc("ChangeLabel",self.SelectedValue)
+	self:DisplayAnimFunc("Collapse")
+	self:ExecuteActions()
 end
 
 --[=[
@@ -271,18 +271,18 @@ end
 	Private Function, should not be called.
 ]=]
 
-function DropDownMenu:perfectClone(TrueModel: any, TrueElements: table) -- internal private function, do not call (also; not quite perfect)
-	local Model = TrueModel:Clone()
-	local Elements = {}
-	for Index, Element in pairs(TrueElements) do
-		local Path = string.split(Element,".")
-		local FollowedPath = Model
-		for Index2, Value in pairs(Path) do
-			FollowedPath = FollowedPath[Value]
+function DropDownMenu:PerfectClone(trueModel: any, trueElements: table) -- internal private function, do not call (also; not quite perfect)
+	local model = trueModel:Clone()
+	local elements = {}
+	for index, element in pairs(trueElements) do
+		local path = string.split(element,".")
+		local followedPath = model
+		for Index2, value in pairs(path) do
+			followedPath = followedPath[value]
 		end
-		Elements[Index] = FollowedPath
+		elements[index] = followedPath
 	end
-	return Model, Elements
+	return model, elements
 end
 
 --[=[
@@ -290,10 +290,10 @@ end
 	Destructor for DropDownMenu object.
 ]=]
 
-function DropDownMenu:destroy()
-	self.Model:Destroy()
-	for Index, Value in pairs(self) do
-		Value = nil
+function DropDownMenu:Destroy()
+	self.model:Destroy()
+	for index, value in pairs(self) do
+		value = nil
 	end
 end
 

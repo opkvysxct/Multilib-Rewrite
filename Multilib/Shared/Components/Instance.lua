@@ -4,130 +4,130 @@ local SoundService = game:GetService("SoundService")
 local Lib = {}
 
 -- Core
-function Lib:Create(InstanceName: string, Parent: Instance, Proporties: table, parentAfter: boolean)
-	local InstanceCreated
+function Lib:Create(instanceName: string, parent: Instance, proporties: table, parentAfter: boolean)
+	local instanceCreated
 	if parentAfter then
-		InstanceCreated = Instance.new(InstanceName)
+		instanceCreated = Instance.New(instanceName)
 	else
-		InstanceCreated = Instance.new(InstanceName, Parent)
+		instanceCreated = Instance.New(instanceName, parent)
 	end
-	if _G.MLoader.Comments then
-		print("[Multilib-" .. script.Name .. "]", InstanceName, Parent, Proporties)
+	if _G.MLoader.comments then
+		print("[Multilib-" .. script.Name .. "]", instanceName, parent, proporties)
 	end
-	for prop, value in pairs(Proporties) do
-		InstanceCreated[prop] = value
+	for prop, value in pairs(proporties) do
+		instanceCreated[prop] = value
 	end
 	if parentAfter then
-		InstanceCreated.Parent = Parent
+		instanceCreated.parent = parent
 	end
-	return InstanceCreated
+	return instanceCreated
 end
 
 -- Misc
-function Lib:DebrisF(Instance: Instance, Time: number, FuncAfter: any)
-	Debris:AddItem(Instance, Time)
-	if _G.MLoader.Comments then
-		print("[Multilib-" .. script.Name .. "]", "Destroying", Instance, "in", Time, "s.")
+function Lib:DebrisF(instance: Instance, time: number, funcAfter: any)
+	Debris:AddItem(instance, time)
+	if _G.MLoader.comments then
+		print("[Multilib-" .. script.Name .. "]", "Destroying", instance, "in", time, "s.")
 	end
-	if FuncAfter ~= nil then
-		task.delay(Time, FuncAfter)
+	if funcAfter ~= nil then
+		task.delay(time, funcAfter)
 	end
 end
 
-function Lib:SoundFX(Where: any, Specs: table)
-	local ToDelete
-	if typeof(Where) == "Vector3" then
-		Where = self:Create("Part", workspace, {
-			Size = Vector3.new(0, 0, 0),
-			Position = Where,
+function Lib:SoundFX(where: any, specs: table)
+	local toDelete
+	if typeof(where) == "Vector3" then
+		where = self:Create("Part", workspace, {
+			Size = Vector3.New(0, 0, 0),
+			position = where,
 			CanCollide = false,
 			Anchored = true,
 			Transparency = 1,
 		})
-		ToDelete = Where
+		toDelete = where
 		print("a")
 	end
-	local Sound = self:Create("Sound", Where, {
-		Name = Specs.Name or "Sound",
-		SoundId = "rbxassetid://" .. Specs.ID,
-		Volume = Specs.Volume or 1,
-		PlaybackSpeed = Specs.Speed or 1,
-		RollOffMaxDistance = Specs.MaxDistance or 1000,
-		RollOffMinDistance = Specs.MinDistance or 10,
-		SoundGroup = SoundService.Master[Specs.Group] or SoundService.Master
+	local sound = self:Create("Sound", where, {
+		Name = specs.Name or "sound",
+		SoundId = "rbxassetid://" .. specs.id,
+		Volume = specs.Volume or 1,
+		PlaybackSpeed = specs.speed or 1,
+		RollOffMaxDistance = specs.MaxDistance or 1000,
+		RollOffMinDistance = specs.MinDistance or 10,
+		SoundGroup = SoundService.Master[specs.Group] or SoundService.Master
 	})
-	Sound:Play()
+	sound:Play()
 
-	if ToDelete ~= nil then
-		task.delay(self.MinSoundTime, function()
-			self:DebrisF(Where, Specs.Duration or Sound.TimeLength)
+	if toDelete ~= nil then
+		task.delay(self.minSoundTime, function()
+			self:DebrisF(where, specs.Duration or sound.TimeLength)
 		end)
 	else
-		task.delay(self.MinSoundTime, function()
-			self:DebrisF(Sound, Specs.Duration or Sound.TimeLength)
+		task.delay(self.minSoundTime, function()
+			self:DebrisF(sound, specs.Duration or sound.TimeLength)
 		end)
 	end
-	return Sound
+	return sound
 end
 
-function Lib:ParticleFX(Particle: Instance, Strength: number, Where: any, WhereSize: Vector3)
-	local ToDelete
-	if typeof(Where) == "Vector3" then
-		Where = self:Create("Part", workspace, {
-			Size = WhereSize or Vector3.new(1, 1, 1),
-			Position = Where,
+function Lib:ParticleFX(particle: Instance, Strength: number, where: any, WhereSize: Vector3)
+	local toDelete
+	if typeof(where) == "Vector3" then
+		where = self:Create("Part", workspace, {
+			Size = WhereSize or Vector3.New(1, 1, 1),
+			position = where,
 			CanCollide = false,
 			Anchored = true,
 			Transparency = 1,
 		})
-		ToDelete = Where
+		toDelete = where
 	end
-	local Particle = Particle:Clone()
-	Particle.Parent = Where
-	Particle:Emit(Strength)
-	if ToDelete ~= nil then
-		task.delay(self.MinParticleTime, function()
-			self:DebrisF(Where, Particle.Lifetime.Max)
+	local particle = particle:Clone()
+	particle.parent = where
+	particle:Emit(Strength)
+	if toDelete ~= nil then
+		task.delay(self.minParticleTime, function()
+			self:DebrisF(where, particle.Lifetime.Max)
 		end)
 	else
-		task.delay(self.MinParticleTime, function()
-			self:DebrisF(Particle, Particle.Lifetime.Max)
+		task.delay(self.minParticleTime, function()
+			self:DebrisF(particle, particle.Lifetime.Max)
 		end)
 	end
-	return Particle
+	return particle
 end
 
-function Lib:Motor6D(First: Instance, Second: Instance, Parent: Instance)
+function Lib:Motor6D(first: Instance, second: Instance, parent: Instance)
 	return self:Create(
 		"Motor6D",
-		Parent,{
-			Part0 = First,
-			Part1 = Second,
+		parent,{
+			Part0 = first,
+			Part1 = second,
 		}
 	)
 end
 
-function Lib:Animation(ID: number, Animator: Instance)
+function Lib:Animation(id: number, animator: Instance)
 	local Animation = self:Create("Animation", nil, {
-		AnimationId = "rbxassetid://" .. ID,
+		AnimationId = "rbxassetid://" .. id,
 	})
-	return Animator:LoadAnimation(Animation)
+	return animator:LoadAnimation(Animation)
 end
 
--- Settings
-function Lib:SetMinSoundTime(Time: number)
-	self.MinSoundTime = Time
+-- settings
+function Lib:SetMinSoundTime(time: number)
+	self.minSoundTime = time
 end
 
-function Lib:MinParticleTime(Time: number)
-	self.MinParticleTime = Time
+function Lib:minParticleTime(time: number)
+	self.minParticleTime = time
 end
 
 -- End
 function Lib:Init()
-	self.MinSoundTime = 1 -- Try to keep it at least one second, otherwise TimeLength will not load properly and sound will not play
-	self.MinParticleTime = 1
-	if _G.MLoader.Comments then
+	self.minSoundTime = 1 -- Try to keep it at least one second, otherwise TimeLength will not load properly and sound will not play
+	self.minParticleTime = 1
+	if _G.MLoader.comments then
 		warn("[Multilib-" .. script.Name .. "]", script.Name, "Lib Loaded & safe to use.")
 	end
 end

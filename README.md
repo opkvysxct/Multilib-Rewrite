@@ -12,11 +12,11 @@ I just found out that I use the same elements repeatedly across all my projects,
 
 ## Installation
 ### Lets make it clear, its meant to be used with [rojo](https://rojo.space/)!
-First step :
+first step :
 ```bash
 npm init
 ```
-Second step :
+second step :
 ```bash
 npm install @vysx/multilib
 ```

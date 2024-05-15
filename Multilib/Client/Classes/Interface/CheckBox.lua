@@ -13,34 +13,34 @@ CheckBox.__index = CheckBox
 	Constructor for CheckBox object.
 ]=]
 
-function CheckBox.new(Model: any, Elements: table, IDName: string, Settings: table)
+function CheckBox.New(model: any, elements: table, idName: string, settings: table)
 	local self = setmetatable({}, CheckBox)
 
-	if Settings == nil then Settings = {} end
-	if Settings.Locked == nil then Settings.Locked = false end
-	if Settings.Cooldown == nil then Settings.Cooldown = 0.25 end
-	if Settings.OverrideDisplayAnimation ~= nil then self.displayAnimFunc = Settings.OverrideDisplayAnimation end
+	if settings == nil then settings = {} end
+	if settings.locked == nil then settings.locked = false end
+	if settings.cooldown == nil then settings.cooldown = 0.25 end
+	if settings.overrideDisplayAnimation ~= nil then self.DisplayAnimFunc = settings.overrideDisplayAnimation end
 
-	local Model, Elements = self:perfectClone(Model,Elements)
+	local model, elements = self:PerfectClone(model,elements)
 
-	self.ModelElements = {}
-	for Index, Value in pairs(Elements) do
-		self.ModelElements[Index] = Value
+	self.modelElements = {}
+	for index, value in pairs(elements) do
+		self.modelElements[index] = value
 	end
 
 
-	self.IsCooldown = false
-	self.Initiated = false
-	self.Type = "Checkbox"
-	self.Actions = {}
+	self.isCooldown = false
+	self.initiated = false
+	self.elementType = "Checkbox"
+	self.actions = {}
 
-	self.Model = Model
-	self.Model.Name = IDName
-	self.IDName = IDName
+	self.model = model
+	self.model.Name = idName
+	self.idName = idName
 
-	self.CooldownTime = Settings.Cooldown
-	self.Value = Settings.StartingValue
-	self.Locked = Settings.Locked
+	self.cooldownTime = settings.cooldown
+	self.value = settings.startingValue
+	self.locked = settings.locked
 
 	return self
 end
@@ -51,23 +51,23 @@ end
 	should be called only via Form:InitAll().
 ]=]
 
-function CheckBox:init() -- should be called only via Form:InitAll()
-	if self.Initiated == false then
-		self.Initiated = true
-		self.ModelElements.Button.Activated:Connect(function()
-			if self.Locked == false and self.IsCooldown == false then
-				self.IsCooldown = true
-				task.delay(self.CooldownTime,function()
-					self.IsCooldown = false
+function CheckBox:Init() -- should be called only via Form:InitAll()
+	if self.initiated == false then
+		self.initiated = true
+		self.modelElements.Button.Activated:Connect(function()
+			if self.locked == false and self.isCooldown == false then
+				self.isCooldown = true
+				task.delay(self.cooldownTime,function()
+					self.isCooldown = false
 				end)
-				if self.Value == false then
-					self.Value = true
-					self:displayAnimFunc(true)
-					self:executeActions()
+				if self.value == false then
+					self.value = true
+					self:DisplayAnimFunc(true)
+					self:ExecuteActions()
 				else
-					self.Value = false
-					self:displayAnimFunc(false)
-					self:executeActions()
+					self.value = false
+					self:DisplayAnimFunc(false)
+					self:ExecuteActions()
 				end
 			end
 		end)
@@ -76,32 +76,32 @@ end
 
 --[=[
 	@within CheckBox
-	@return <boolean,string> -- [Value and IDName of the object]
-	Returns value and IDName of the object.
+	@return <boolean,string> -- [value and idName of the object]
+	Returns value and idName of the object.
 ]=]
 
-function CheckBox:returnValues()
-	return self.Value, self.IDName
+function CheckBox:ReturnValues()
+	return self.value, self.idName
 end
 
 --[=[
 	@within CheckBox
 	
-	Changes the CheckBox.Locked property.
+	Changes the CheckBox.locked property.
 ]=]
 
-function CheckBox:lockStatus(Status: boolean)
-	self.Locked = Status
+function CheckBox:LockStatus(status: boolean)
+	self.locked = status
 end
 
 --[=[
 	@within CheckBox
 	
-	Sets the parent of the CheckBox.Model.
+	Sets the parent of the CheckBox.model.
 ]=]
 
-function CheckBox:append(Where: any)
-	self.Model.Parent = Where
+function CheckBox:Append(where: any)
+	self.model.parent = where
 end
 
 --[=[
@@ -110,8 +110,8 @@ end
 	Private Function, should not be called.
 ]=]
 
-function CheckBox:displayAnimFunc(Value: boolean) -- internal private function, do not call
-	self.ModelElements.Check.Visible = Value
+function CheckBox:DisplayAnimFunc(value: boolean) -- internal private function, do not call
+	self.modelElements.Check.Visible = value
 end
 
 --[=[
@@ -120,8 +120,8 @@ end
 	Adds action that will be executed on every value change.
 ]=]
 
-function CheckBox:addAction(ActionName: string, Action: any)
-	self.Actions[ActionName] = Action
+function CheckBox:AddAction(actionName: string, action: any)
+	self.actions[actionName] = action
 end
 
 --[=[
@@ -130,8 +130,8 @@ end
 	Removes action that would be executed on every value change.
 ]=]
 
-function CheckBox:removeAction(ActionName: string)
-	table.remove(self.Actions,ActionName)
+function CheckBox:RemoveAction(actionName: string)
+	table.remove(self.actions,actionName)
 end
 
 --[=[
@@ -140,9 +140,9 @@ end
 	Private Function, should not be called.
 ]=]
 
-function CheckBox:executeActions()
-	for Index, Action in pairs(self.Actions) do
-		Action()
+function CheckBox:ExecuteActions()
+	for index, action in pairs(self.actions) do
+		action()
 	end
 end
 
@@ -153,18 +153,18 @@ end
 	Private Function, should not be called.
 ]=]
 
-function CheckBox:perfectClone(TrueModel: any, TrueElements: table) -- internal private function, do not call (also; not quite perfect)
-	local Model = TrueModel:Clone()
-	local Elements = {}
-	for Index, Element in pairs(TrueElements) do
-		local Path = string.split(Element,".")
-		local FollowedPath = Model
-		for Index2, Value in pairs(Path) do
-			FollowedPath = FollowedPath[Value]
+function CheckBox:PerfectClone(trueModel: any, trueElements: table) -- internal private function, do not call (also; not quite perfect)
+	local model = trueModel:Clone()
+	local elements = {}
+	for index, element in pairs(trueElements) do
+		local path = string.split(element,".")
+		local followedPath = model
+		for Index2, value in pairs(path) do
+			followedPath = followedPath[value]
 		end
-		Elements[Index] = FollowedPath
+		elements[index] = followedPath
 	end
-	return Model, Elements
+	return model, elements
 end
 
 --[=[
@@ -172,10 +172,10 @@ end
 	Destructor for CheckBox object.
 ]=]
 
-function CheckBox:destroy()
-	self.Model:Destroy()
-	for Index, Value in pairs(self) do
-		Value = nil
+function CheckBox:Destroy()
+	self.model:Destroy()
+	for index, value in pairs(self) do
+		value = nil
 	end
 end
 

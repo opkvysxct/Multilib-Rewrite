@@ -3,43 +3,43 @@ local TweenService = game:GetService("TweenService")
 local Lib = {}
 
 -- Core
-function Lib:TweenTable(Table: table, Time: number, Style, Direction, FuncAfter: any)
-	if Style == nil then
-		Style = self.DefaultStyle
+function Lib:TweenTable(table: table, time: number, style, direction, funcAfter: any)
+	if style == nil then
+		style = self.defaultStyle
 	end
-	if Direction == nil then
-		Direction = self.DefaultDirection
+	if direction == nil then
+		direction = self.defaultDirection
 	end
-	for index, value in pairs(Table) do
-		TweenService:Create(index, TweenInfo.new(Time, Style, Direction), value):Play()
+	for index, value in pairs(table) do
+		TweenService:Create(index, TweenInfo.New(time, style, direction), value):Play()
 	end
-	if FuncAfter ~= nil then
-		task.delay(Time, FuncAfter)
+	if funcAfter ~= nil then
+		task.delay(time, funcAfter)
 	end
 end
 
-function Lib:TweenOnce(Element: any, Time: number, Style, Direction, FuncAfter: any)
-	if Style == nil then
-		Style = self.DefaultStyle
+function Lib:TweenOnce(element: any, time: number, style, direction, funcAfter: any)
+	if style == nil then
+		style = self.defaultStyle
 	end
-	if Direction == nil then
-		Direction = self.DefaultDirection
+	if direction == nil then
+		direction = self.defaultDirection
 	end
-	TweenService:Create(Element[1], TweenInfo.new(Time, Style, Direction), Element[2]):Play()
-	if FuncAfter ~= nil then
-		task.delay(Time, FuncAfter)
+	TweenService:Create(element[1], TweenInfo.New(time, style, direction), element[2]):Play()
+	if funcAfter ~= nil then
+		task.delay(time, funcAfter)
 	end
 end
 
 --[[
-function Lib:TweenMethod(Element: Instance, time: number, initialValue: any, finalValue: any, methodName: string)
+function Lib:TweenMethod(element: instance, time: number, initialValue: any, finalValue: any, methodName: string)
 	task.spawn(function()
 		local tweenRunning = true
 		local increaseValue = (finalValue - initialValue) / (time / 0.015)
 		local progress = initialValue
 		while tweenRunning and task.wait() do
 			progress += increaseValue
-			Element[methodName](Element, progress)
+			element[methodName](element, progress)
 			if progress >= finalValue then
 				tweenRunning = false
 			end
@@ -48,30 +48,30 @@ function Lib:TweenMethod(Element: Instance, time: number, initialValue: any, fin
 	end)
 end
 
-function Lib:TweenAndReturn(Element: any, Time: number, Style, Direction, FuncAfter: any)
+function Lib:TweenAndReturn(element: any, time: number, style, direction, funcAfter: any)
 	local InitData = {}
-	for Attribute: string, _ in pairs(Element[2]) do
-		InitData[Attribute] = Element[1][Attribute]
+	for Attribute: string, _ in pairs(element[2]) do
+		InitData[Attribute] = element[1][Attribute]
 	end
-	self:TweenOnce(Element, Time, Style, Direction)
-	task.wait(Time)
-	self:TweenOnce({Element[1], InitData}, Time, Style, Direction, FuncAfter)
+	self:TweenOnce(element, time, style, direction)
+	task.wait(time)
+	self:TweenOnce({element[1], InitData}, time, style, direction, funcAfter)
 end]]--
 
--- Settings
-function Lib:SetDefaultStyle(Style: any)
-	self.DefaultStyle = Style
+-- settings
+function Lib:SetDefaultStyle(style: any)
+	self.defaultStyle = style
 end
 
-function Lib:SetDefaultDirection(Direction: any)
-	self.DefaultDirection = Direction
+function Lib:SetDefaultDirection(direction: any)
+	self.defaultDirection = direction
 end
 
 -- End
 function Lib:Init()
-	self.DefaultStyle = Enum.EasingStyle.Quad
-	self.DefaultDirection = Enum.EasingDirection.InOut
-	if _G.MLoader.Comments then
+	self.defaultStyle = Enum.EasingStyle.Quad
+	self.defaultDirection = Enum.EasingDirection.InOut
+	if _G.MLoader.comments then
 		warn("[Multilib-" .. script.Name .. "]", script.Name, "Lib Loaded & safe to use.")
 	end
 end

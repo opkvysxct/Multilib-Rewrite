@@ -1,60 +1,60 @@
 local MarketplaceService = game:GetService("MarketplaceService")
 local Lib = {}
 
-local function IsPlayer(Player)
-	if Player == nil then
-		if _G.MLoader.Player ~= nil then
-			return _G.MLoader.Player
+local function IsPlayer(player)
+	if player == nil then
+		if _G.MLoader.player ~= nil then
+			return _G.MLoader.player
 		else
-			warn("[Multilib-" .. script.Name .. "]", "No Player specified.")
+			warn("[Multilib-" .. script.Name .. "]", "No player specified.")
 			return false
 		end
 	else
-		return Player
+		return player
 	end
 end
 
 -- Core
-function Lib:CheckPlayerGamepass(ID : number, Prompt : boolean, Player : Player)
-	Player = IsPlayer(Player)
-	if Player == false then
+function Lib:CheckPlayerGamepass(id : number, Prompt : boolean, player : Player)
+	player = IsPlayer(player)
+	if player == false then
 		return false
 	end
-	local HasPass = false
+	local hasPass = false
 	local success, message = pcall(function()
-		HasPass = MarketplaceService:UserOwnsGamePassAsync(Player.UserId, ID)
+		hasPass = MarketplaceService:UserOwnsGamePassAsync(player.UserId, id)
 	end)
 	if not success then
 		warn("[Multilib-" .. script.Name .. "]", "Error checking gamepass ownership" , tostring(message))
 		return false
 	end
-	if HasPass == true then
+	if hasPass == true then
 		return true
 	elseif Prompt == true then
-		MarketplaceService:PromptGamePassPurchase(Player,ID)
+		MarketplaceService:PromptGamePassPurchase(player,id)
 	end
 	return false
 end
 
-function Lib:PromptProductPurchase(ID : number, Player : Player)
-	Player = IsPlayer(Player)
-	if Player == false then
+function Lib:PromptProductPurchase(id : number, player : Player)
+	player = IsPlayer(player)
+	if player == false then
 		return false
 	end
-	MarketplaceService:PromptProductPurchase(Player, ID)
+	MarketplaceService:PromptProductPurchase(player, id)
 end
 
-function Lib:PromptPremiumPurchase(Player : Player)
-	Player = IsPlayer(Player)
-	if Player == false then
+function Lib:PromptPremiumPurchase(player : Player)
+	player = IsPlayer(player)
+	if player == false then
 		return false
 	end
-	MarketplaceService:PromptPremiumPurchase(Player)
+	MarketplaceService:PromptPremiumPurchase(player)
 end
 
 -- End
 function Lib:Init()
-	if _G.MLoader.Comments then
+	if _G.MLoader.comments then
 		warn("[Multilib-" .. script.Name .. "]", script.Name , "Lib Loaded & safe to use.")
 	end
 end
