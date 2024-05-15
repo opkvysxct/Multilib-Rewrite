@@ -18,7 +18,7 @@ function Lib:Create(instanceName: string, parent: Instance, proporties: table, p
 		instanceCreated[prop] = value
 	end
 	if parentAfter then
-		instanceCreated.parent = parent
+		instanceCreated.Parent = parent
 	end
 	return instanceCreated
 end
@@ -70,7 +70,7 @@ function Lib:SoundFX(where: any, specs: table)
 	return sound
 end
 
-function Lib:ParticleFX(particle: Instance, Strength: number, where: any, WhereSize: Vector3)
+function Lib:ParticleFX(particle: Instance, strength: number, where: any, WhereSize: Vector3)
 	local toDelete
 	if typeof(where) == "Vector3" then
 		where = self:Create("Part", workspace, {
@@ -83,8 +83,8 @@ function Lib:ParticleFX(particle: Instance, Strength: number, where: any, WhereS
 		toDelete = where
 	end
 	local particle = particle:Clone()
-	particle.parent = where
-	particle:Emit(Strength)
+	particle.Parent = where
+	particle:Emit(strength)
 	if toDelete ~= nil then
 		task.delay(self.minParticleTime, function()
 			self:DebrisF(where, particle.Lifetime.Max)
@@ -97,10 +97,10 @@ function Lib:ParticleFX(particle: Instance, Strength: number, where: any, WhereS
 	return particle
 end
 
-function Lib:Motor6D(first: Instance, second: Instance, parent: Instance)
+function Lib:Motor6D(first: Instance, second: Instance, Parent: Instance)
 	return self:Create(
 		"Motor6D",
-		parent,{
+		Parent,{
 			Part0 = first,
 			Part1 = second,
 		}

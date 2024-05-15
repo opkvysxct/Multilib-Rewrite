@@ -127,11 +127,11 @@ end
 --[=[
 	@within InputField
 	
-	Sets the parent of the InputField.model.
+	Sets the Parent of the InputField.model.
 ]=]
 
 function InputField:Append(where: any)
-	self.model.parent = where
+	self.model.Parent = where
 end
 
 --[=[

@@ -9,7 +9,7 @@ function Lib:PutToParallel(Script: Script, where: any)
 	end
 	local Actor = _G.MInstance:Create("Actor", ReplicatedStorage[where], { Name = Script.Name .. "_Actor" })
 	Script = Script:Clone()
-	Script.parent = Actor
+	Script.Parent = Actor
 	return Script, Actor
 end
 

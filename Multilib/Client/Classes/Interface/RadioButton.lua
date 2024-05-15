@@ -42,7 +42,7 @@ function RadioButton.New(model: any, elements: table, idName: string, radioGroup
 	self.cooldownTime = settings.cooldown
 	self.locked = settings.locked
 
-	self.radioGroup:insertElement(self)
+	self.radioGroup:InsertElement(self)
 	self:DisplayAnimFunc(false)
 
 	return self
@@ -84,11 +84,11 @@ end
 --[=[
 	@within RadioButton
 	
-	Sets the parent of the RadioButton.model.
+	Sets the Parent of the RadioButton.model.
 ]=]
 
 function RadioButton:Append(where: any)
-	self.model.parent = where
+	self.model.Parent = where
 end
 
 --[=[

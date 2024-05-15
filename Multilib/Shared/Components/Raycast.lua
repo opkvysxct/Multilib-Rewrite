@@ -1,36 +1,36 @@
 local Lib = {}
 
 -- Core
-function Lib:Ray(From: any, To: any, Strength: number, Params: any)
-	local typeofParams = typeof(Params)
-	local typeofFrom = typeof(From)
-	local typeofTo = typeof(To)
-	local ParamsToUse
+function Lib:Ray(from: any, to: any, strength: number, params: any)
+	local typeofParams = typeof(params)
+	local typeofFrom = typeof(from)
+	local typeofTo = typeof(to)
+	local paramsToUse
 
 	if typeofParams == "RaycastParams" then
-		ParamsToUse = Params
+		paramsToUse = params
 	elseif typeofParams == "table" then
-		ParamsToUse = RaycastParams.New()
-		ParamsToUse.CollisionGroup = Params.CG or "Default"
-		ParamsToUse.FilterDescendantsInstances = Params.FDI or {}
-		ParamsToUse.FilterType = Params.FT or Enum.RaycastFilterType.Exclude
-		ParamsToUse.IgnoreWater = Params.IW or true
-		ParamsToUse.RespectCanCollide = Params.RCC or false
-		ParamsToUse.BruteForceAllSlow = Params.BFAS or false
+		paramsToUse = RaycastParams.New()
+		paramsToUse.CollisionGroup = params.CG or "Default"
+		paramsToUse.FilterDescendantsInstances = params.FDI or {}
+		paramsToUse.FilterType = params.FT or Enum.RaycastFilterType.Exclude
+		paramsToUse.IgnoreWater = params.IW or true
+		paramsToUse.RespectCanCollide = params.RCC or false
+		paramsToUse.BruteForceAllSlow = params.BFAS or false
 	else
-		ParamsToUse = self.DefParams
+		paramsToUse = self.defParams
 	end
 
 	if typeofFrom == "instance" or typeofFrom == "CFrame" then
-		From = From.position
+		from = from.position
 	end
 	if typeofTo == "instance" or typeofTo == "CFrame" then
-		To = To.position
+		to = to.position
 	end
 
-	To = CFrame.lookAt(From, To).LookVector * Strength
+	to = CFrame.lookAt(from, to).LookVector * strength
 
-	local RayResult = workspace:Raycast(From, To, ParamsToUse)
+	local RayResult = workspace:Raycast(from, to, paramsToUse)
 
 	if RayResult ~= nil then
 		return RayResult
@@ -40,28 +40,28 @@ function Lib:Ray(From: any, To: any, Strength: number, Params: any)
 end
 
 -- settings
-function Lib:SetDefaultParams(Params: any)
-	local typeofParams = typeof(Params)
-	local NewParams
+function Lib:SetDefaultParams(params: any)
+	local typeofParams = typeof(params)
+	local newParams
 	if typeofParams == "RaycastParams" then
-		NewParams = Params
+		newParams = params
 	elseif typeofParams == "table" then
-		NewParams = RaycastParams.New()
-		NewParams.CollisionGroup = Params.CG or "Default"
-		NewParams.FilterDescendantsInstances = Params.FDI or {}
-		NewParams.FilterType = Params.FT or Enum.RaycastFilterType.Exclude
-		NewParams.IgnoreWater = Params.IW or true
-		NewParams.RespectCanCollide = Params.RCC or false
-		NewParams.BruteForceAllSlow = Params.BFAS or false
+		newParams = RaycastParams.New()
+		newParams.CollisionGroup = params.CG or "Default"
+		newParams.FilterDescendantsInstances = params.FDI or {}
+		newParams.FilterType = params.FT or Enum.RaycastFilterType.Exclude
+		newParams.IgnoreWater = params.IW or true
+		newParams.RespectCanCollide = params.RCC or false
+		newParams.BruteForceAllSlow = params.BFAS or false
 	else
 		warn("[Multilib-" .. script.Name .. "]", "No params specified!")
 	end
-	self.DefParams = NewParams
+	self.defParams = newParams
 end
 
 -- End
 function Lib:Init()
-	self.DefParams = RaycastParams.New()
+	self.defParams = RaycastParams.new()
 	if _G.MLoader.comments then
 		warn("[Multilib-" .. script.Name .. "]", script.Name, "Lib Loaded & safe to use.")
 	end

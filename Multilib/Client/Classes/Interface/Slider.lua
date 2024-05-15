@@ -96,7 +96,7 @@ function Slider.New(model: any, elements: table, idName: string, settings: table
 	self.modelElements.MobileDetect.BackgroundTransparency = 1
 	self.modelElements.MobileDetect.ZIndex = math.huge
 	self.modelElements.MobileDetect.Name = "MobileDetect"
-	self.modelElements.MobileDetect.parent = self.modelElements.Total
+	self.modelElements.MobileDetect.Parent = self.modelElements.Total
 
 	if self.subType == "Numeric" then
 		self:DisplayAnimFunc(self.value)
@@ -127,11 +127,11 @@ function Slider:Init() -- should be called only via Form:InitAll()
 			local total:GuiObject = self.modelElements.Total
 			local mousePos = UserInputService:GetMouseLocation()
 			local legitimatePositions = {
-				From = total.AbsolutePosition.X,
-				To = total.AbsolutePosition.X + total.AbsoluteSize.X
+				from = total.AbsolutePosition.X,
+				to = total.AbsolutePosition.X + total.AbsoluteSize.X
 			}
-			if mousePos.X > legitimatePositions.From and mousePos.X < legitimatePositions.To then
-				local legitimateValue = math.clamp((mousePos.X - legitimatePositions.From) / (legitimatePositions.To - legitimatePositions.From),0,1)
+			if mousePos.X > legitimatePositions.from and mousePos.X < legitimatePositions.to then
+				local legitimateValue = math.clamp((mousePos.X - legitimatePositions.from) / (legitimatePositions.to - legitimatePositions.from),0,1)
 				legitimateValue = legitimateValue * (self.maxValue - self.minValue) + self.minValue
 				if legitimateValue < 0.5 then
 					legitimateValue = math.floor(legitimateValue)
@@ -150,10 +150,10 @@ function Slider:Init() -- should be called only via Form:InitAll()
 						Change(legitimateValue)
 					end
 				end
-			elseif mousePos.X < legitimatePositions.From then
+			elseif mousePos.X < legitimatePositions.from then
 				local LegitimateValue = self.minValue
 				Change(LegitimateValue)
-			elseif mousePos.X > legitimatePositions.To then
+			elseif mousePos.X > legitimatePositions.to then
 				local LegitimateValue = self.maxValue
 				Change(LegitimateValue)
 			end
@@ -250,11 +250,11 @@ end
 --[=[
 	@within Slider
 	
-	Sets the parent of the Slider.model.
+	Sets the Parent of the Slider.model.
 ]=]
 
 function Slider:Append(where: any)
-	self.model.parent = where
+	self.model.Parent = where
 end
 
 --[=[

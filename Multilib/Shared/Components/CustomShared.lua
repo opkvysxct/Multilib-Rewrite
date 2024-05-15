@@ -1,5 +1,8 @@
 local Lib = {}
-
+export type Lib = {
+	[any]: any,
+	ReturnCustomValue: () -> (any)
+}
 -- Core
 function Lib:ReturnCustomValue()
 	return self.customValue

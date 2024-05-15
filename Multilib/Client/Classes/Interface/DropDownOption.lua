@@ -83,11 +83,11 @@ end
 --[=[
 	@within DropDownOption
 	
-	Sets the parent of the DropDownOption.model.
+	Sets the Parent of the DropDownOption.model.
 ]=]
 
 function DropDownOption:Append(where: any)
-	self.model.parent = where
+	self.model.Parent = where
 end
 
 --[=[

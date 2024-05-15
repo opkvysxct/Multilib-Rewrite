@@ -97,11 +97,11 @@ end
 --[=[
 	@within CheckBox
 	
-	Sets the parent of the CheckBox.model.
+	Sets the Parent of the CheckBox.model.
 ]=]
 
 function CheckBox:Append(where: any)
-	self.model.parent = where
+	self.model.Parent = where
 end
 
 --[=[

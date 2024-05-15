@@ -53,7 +53,7 @@ end
 	Inserts element into the RadioGroup.RadioButtons table.
 ]=]
 
-function RadioGroup:insertElement(element: table)
+function RadioGroup:InsertElement(element: table)
 	self.radioButtons[element.idName] = element
 end
 
@@ -62,7 +62,7 @@ end
 	Inserts multiple elements into the RadioGroup.RadioButtons table.
 ]=]
 
-function RadioGroup:insertElements(elements: table)
+function RadioGroup:InsertElements(elements: table)
 	for index, element in pairs(elements) do
 		self.radioButtons[element.idName] = element
 	end
@@ -73,7 +73,7 @@ end
 	Removes element from the RadioGroup.RadioButtons table.
 ]=]
 
-function RadioGroup:clearElement(ElementName: string)
+function RadioGroup:ClearElement(ElementName: string)
 	table.remove(self.radioButtons,ElementName)
 end
 
@@ -82,13 +82,13 @@ end
 	Clears the RadioGroup.RadioButtons table.
 ]=]
 
-function RadioGroup:clearAllElements()
+function RadioGroup:ClearAllElements()
 	table.clear(self.radioButtons)
 end
 
 --[=[
 	@within RadioGroup
-	Sets the parent of every radioButton.
+	Sets the Parent of every radioButton.
 ]=]
 
 function RadioGroup:Append(where: any)

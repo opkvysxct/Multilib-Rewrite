@@ -133,11 +133,11 @@ end
 --[=[
 	@within ArrowChange
 	
-	Sets the parent of the ArrowChange.model.
+	Sets the Parent of the ArrowChange.model.
 ]=]
 
 function ArrowChange:Append(where: any)
-	self.model.parent = where
+	self.model.Parent = where
 end
 
 --[=[

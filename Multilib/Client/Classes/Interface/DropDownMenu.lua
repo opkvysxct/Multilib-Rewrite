@@ -131,11 +131,11 @@ end
 --[=[
 	@within DropDownMenu
 	
-	Sets the parent of the DropDownMenu.model.
+	Sets the Parent of the DropDownMenu.model.
 ]=]
 
 function DropDownMenu:Append(where: any)
-	self.model.parent = where
+	self.model.Parent = where
 end
 
 --[=[
@@ -209,7 +209,7 @@ end
 	Inserts element into the DropDownMenu.RadioButtons table.
 ]=]
 
-function DropDownMenu:insertElement(element: table)
+function DropDownMenu:InsertElement(element: table)
 	self.RadioButtons[element.idName] = element
 end
 
@@ -218,7 +218,7 @@ end
 	Inserts multiple elements into the DropDownMenu.RadioButtons table.
 ]=]
 
-function DropDownMenu:insertElements(elements: table)
+function DropDownMenu:InsertElements(elements: table)
 	for index, element in pairs(elements) do
 		self.RadioButtons[element.idName] = element
 	end
@@ -229,7 +229,7 @@ end
 	Removes element from the DropDownMenu.RadioButtons table.
 ]=]
 
-function DropDownMenu:clearElement(ElementName: string)
+function DropDownMenu:ClearElement(ElementName: string)
 	table.remove(self.RadioButtons,ElementName)
 end
 
@@ -238,7 +238,7 @@ end
 	Clears the DropDownMenu.RadioButtons table.
 ]=]
 
-function DropDownMenu:clearAllElements()
+function DropDownMenu:ClearAllElements()
 	table.clear(self.RadioButtons)
 end
 

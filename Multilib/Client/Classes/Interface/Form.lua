@@ -25,7 +25,7 @@ end
 	Inserts element into the Form.elements table.
 ]=]
 
-function Form:insertElement(element: table)
+function Form:InsertElement(element: table)
 	self.elements[element.idName] = element
 end
 
@@ -34,7 +34,7 @@ end
 	Inserts multiple elements into the Form.elements table.
 ]=]
 
-function Form:insertElements(elements: table)
+function Form:InsertElements(elements: table)
 	for index, element in pairs(elements) do
 		self.elements[element.idName] = element
 	end
@@ -45,7 +45,7 @@ end
 	Removes element from the Form.elements table.
 ]=]
 
-function Form:clearElement(ElementName: string)
+function Form:ClearElement(ElementName: string)
 	table.remove(self.elements,ElementName)
 end
 
@@ -54,7 +54,7 @@ end
 	Clears the Form.elements table.
 ]=]
 
-function Form:clearAllElements()
+function Form:ClearAllElements()
 	table.clear(self.elements)
 end
 
@@ -63,7 +63,7 @@ end
 	Initializes all elements inside Form.elements table.
 ]=]
 
-function Form:initAll() -- Init all elements
+function Form:InitAll() -- Init all elements
 	for index, element in pairs(self.elements) do
 		element:Init()
 	end
@@ -71,10 +71,10 @@ end
 
 --[=[
 	@within Form
-	Sets parent for all elements inside Form.elements table.
+	Sets Parent for all elements inside Form.elements table.
 ]=]
 
-function Form:appendAll(where: any) -- random order
+function Form:AppendAll(where: any) -- random order
 	for index, element in pairs(self.elements) do
 		element:Append(where)
 	end
@@ -86,7 +86,7 @@ end
 	Validates the data.
 ]=]
 
-function Form:validate() -- validate if data is not corrupted
+function Form:Validate() -- Validate if data is not corrupted
 	
 end
 
@@ -96,7 +96,7 @@ end
 	Collects all the data from the form.
 ]=]
 
-function Form:collectData() -- collect and return all data
+function Form:CollectData() -- collect and return all data
 	table.clear(self.Data)
 	for index, element in pairs(self.elements) do
 		local value, Name = element:ReturnValues()
