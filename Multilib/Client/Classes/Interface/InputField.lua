@@ -1,5 +1,3 @@
-local Players = game:GetService("Players")
-local TextService = game:GetService("TextService")
 local InputField = {}
 InputField.__index = InputField
 
