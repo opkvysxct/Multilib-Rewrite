@@ -12,8 +12,12 @@ I just found out that I use the same elements repeatedly across all my projects,
 
 ## Installation
 ### Lets make it clear, its meant to be used with [rojo](https://rojo.space/)!
+### First Way:
 [WALLY LINK](https://wally.run/package/opkvysxct/multilib), remember to use newest version only.
-For help installing wally see [WALLY INSTALLATION TUTORIAL](https://wally.run/install)
+For help installing wally see [WALLY INSTALLATION TUTORIAL.](https://wally.run/install)
+
+### Second Way:
+Just copy the Multilib folder into your project.
 
 ## How do i use it?
 You can find everything in the [wiki](https://opkvysxct.github.io/Multilib-Rewrite/).

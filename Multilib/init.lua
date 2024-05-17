@@ -2,7 +2,6 @@
 --VYSX/FENGEE 2024
 
 local Multilib = {}
-	--MULTILIB GLOBALS
 
 	--SHARED COMPONENTS
 	Multilib.Shared = {}
