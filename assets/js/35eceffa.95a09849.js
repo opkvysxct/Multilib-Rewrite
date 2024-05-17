@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkdocs=self.webpackChunkdocs||[]).push([[376],{3891:e=>{e.exports=JSON.parse('{"sourceUrl":"https://github.com/opkvysxct/Multilib-Rewrite/blob/master","baseUrl":"/Multilib-Rewrite/","classOrder":[],"apiCategories":[]}')}}]);
