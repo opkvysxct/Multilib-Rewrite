@@ -1,2 +1,5 @@
 title = "Multilib"
 
+[[classOrder]]
+section = "Client Interface Classes"
+classes = ["ArrowChange","CheckBox","DropDownMenu","DropDownOption","Form","InputField","RadioButton","RadioGroup","Slider"]

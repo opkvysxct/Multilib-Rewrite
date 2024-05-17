@@ -12,37 +12,10 @@ I just found out that I use the same elements repeatedly across all my projects,
 
 ## Installation
 ### Lets make it clear, its meant to be used with [rojo](https://rojo.space/)!
-first step :
-```bash
-npm init
-```
-second step :
-```bash
-npm install @vysx/multilib
-```
-Third step :
-add a path to your default.project.json in rojo
-```json
-"ReplicatedStorage": {
-	"Multilib" : {
-		"$path": "node_modules/@vysx/multilib"
-	},
-}
-```
+[WALLY](https://wally.run/package/opkvysxct/multilib)
 
 ## How do i use it?
-You can find everything in the [wiki](https://github.com/opkvysxct/Multilib-Rewrite/wiki/Multilib-Wiki).
-But if You want just the loading schemat, then here you go!
-Server
-```lua
-_G.MultilibGlobalSettings = require(game:GetService("ReplicatedStorage").Multilib)
-_G.MultilibGlobalSettings:InitServer(true/false) -- Logs
-```
-Client
-```lua
-_G.MultilibGlobalSettings = require(game:GetService("ReplicatedStorage").Multilib)
-_G.MultilibGlobalSettings:InitClient(true/false) -- Logs
-```
+You can find everything in the [wiki](https://opkvysxct.github.io/Multilib-Rewrite/).
 
 ## Can i fork it?
 You're welcome!
