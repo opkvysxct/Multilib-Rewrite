@@ -31,7 +31,7 @@ function RecipeProcessor:Run()
 		return Enum.ProductPurchaseDecision.NotProcessedYet
 	end
 
-	MarketplaceService.PromptGamePassPurchaseFinished:Connect(function(player: player, gamepassID: number, wasPurchased : boolean)
+	MarketplaceService.PromptGamePassPurchaseFinished:Connect(function(player: Player, gamepassID: number, wasPurchased : boolean)
 		warn(player,gamepassID,wasPurchased)
 		if wasPurchased == true then
 			local handler = self.Producs[gamepassID]

@@ -11,9 +11,6 @@ function Lib:Create(instanceName: string, parent: Instance, proporties: table, p
 	else
 		instanceCreated = Instance.new(instanceName, parent)
 	end
-	if comments then
-		print("[Multilib-" .. script.Name .. "]", instanceName, parent, proporties)
-	end
 	for prop, value in pairs(proporties) do
 		instanceCreated[prop] = value
 	end
@@ -26,9 +23,6 @@ end
 -- Misc
 function Lib:DebrisF(instance: Instance, time: number, funcAfter: any)
 	Debris:AddItem(instance, time)
-	if comments then
-		print("[Multilib-" .. script.Name .. "]", "Destroying", instance, "in", time, "s.")
-	end
 	if funcAfter ~= nil then
 		task.delay(time, funcAfter)
 	end

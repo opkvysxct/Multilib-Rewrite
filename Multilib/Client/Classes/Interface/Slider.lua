@@ -89,7 +89,7 @@ function Slider.new(model: any, elements: table, idName: string, settings: table
 
 	self.modelElements.Drag.AnchorPoint = Vector2.new(0.5,0.5)
 
-	self.modelElements.MobileDetect = instance.new("Frame")
+	self.modelElements.MobileDetect = Instance.new("Frame")
 	self.modelElements.MobileDetect.AnchorPoint = Vector2.new(0.5,0.5)
 	self.modelElements.MobileDetect.position = UDim2.fromScale(0.5,0.5)
 	self.modelElements.MobileDetect.Size = UDim2.fromScale(settings.sliderArea,settings.sliderArea)
