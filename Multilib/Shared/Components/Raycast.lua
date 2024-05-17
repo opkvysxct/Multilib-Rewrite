@@ -60,11 +60,9 @@ function Lib:SetDefaultParams(params: any)
 end
 
 -- End
-function Lib:Init()
+function Lib:Init(comments: boolean)
 	self.defParams = RaycastParams.new()
-	if _G.MLoader.comments then
-		warn("[Multilib-" .. script.Name .. "]", script.Name, "Lib Loaded & safe to use.")
-	end
+
 end
 
 return Lib

@@ -11,7 +11,7 @@ function Lib:Create(instanceName: string, parent: Instance, proporties: table, p
 	else
 		instanceCreated = Instance.New(instanceName, parent)
 	end
-	if _G.MLoader.comments then
+	if comments then
 		print("[Multilib-" .. script.Name .. "]", instanceName, parent, proporties)
 	end
 	for prop, value in pairs(proporties) do
@@ -26,7 +26,7 @@ end
 -- Misc
 function Lib:DebrisF(instance: Instance, time: number, funcAfter: any)
 	Debris:AddItem(instance, time)
-	if _G.MLoader.comments then
+	if comments then
 		print("[Multilib-" .. script.Name .. "]", "Destroying", instance, "in", time, "s.")
 	end
 	if funcAfter ~= nil then
@@ -124,10 +124,10 @@ function Lib:minParticleTime(time: number)
 end
 
 -- End
-function Lib:Init()
+function Lib:Init(comments: boolean)
 	self.minSoundTime = 1 -- Try to keep it at least one second, otherwise TimeLength will not load properly and sound will not play
 	self.minParticleTime = 1
-	if _G.MLoader.comments then
+	if comments then
 		warn("[Multilib-" .. script.Name .. "]", script.Name, "Lib Loaded & safe to use.")
 	end
 end

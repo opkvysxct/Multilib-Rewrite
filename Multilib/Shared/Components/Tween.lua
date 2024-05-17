@@ -68,10 +68,10 @@ function Lib:SetDefaultDirection(direction: any)
 end
 
 -- End
-function Lib:Init()
+function Lib:Init(comments: boolean)
 	self.defaultStyle = Enum.EasingStyle.Quad
 	self.defaultDirection = Enum.EasingDirection.InOut
-	if _G.MLoader.comments then
+	if comments then
 		warn("[Multilib-" .. script.Name .. "]", script.Name, "Lib Loaded & safe to use.")
 	end
 end

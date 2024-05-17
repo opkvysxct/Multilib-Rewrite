@@ -12,8 +12,8 @@ function Lib:SplitStringByCapitalLetters(string: string)
 end
 
 -- End
-function Lib:Init()
-	if _G.MLoader.comments then
+function Lib:Init(comments: boolean)
+	if comments then
 		warn("[Multilib-" .. script.Name .. "]", script.Name, "Lib Loaded & safe to use.")
 	end
 end

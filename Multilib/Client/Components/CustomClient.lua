@@ -11,9 +11,9 @@ function Lib:SetCustomValue(value: string)
 end
 
 -- End
-function Lib:Init()
+function Lib:Init(comments: boolean)
 	self.customValue = "Change Me!"
-	if _G.MLoader.comments then
+	if comments then
 		warn("[Multilib-" .. script.Name .. "]", script.Name, "Lib Loaded & safe to use.")
 	end
 end

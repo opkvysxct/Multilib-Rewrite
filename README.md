@@ -35,13 +35,13 @@ You can find everything in the [wiki](https://github.com/opkvysxct/Multilib-Rewr
 But if You want just the loading schemat, then here you go!
 Server
 ```lua
-_G.MLoader = require(game:GetService("ReplicatedStorage").Multilib)
-_G.MLoader:InitServer(true/false) -- Logs
+_G.MultilibGlobalSettings = require(game:GetService("ReplicatedStorage").Multilib)
+_G.MultilibGlobalSettings:InitServer(true/false) -- Logs
 ```
 Client
 ```lua
-_G.MLoader = require(game:GetService("ReplicatedStorage").Multilib)
-_G.MLoader:InitClient(true/false) -- Logs
+_G.MultilibGlobalSettings = require(game:GetService("ReplicatedStorage").Multilib)
+_G.MultilibGlobalSettings:InitClient(true/false) -- Logs
 ```
 
 ## Can i fork it?

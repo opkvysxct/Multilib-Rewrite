@@ -1,4 +1,5 @@
 local TweenService = game:GetService("TweenService")
+local DropDownOption = require(script.Parent.DropDownOption)
 local DropDownMenu = {}
 DropDownMenu.__index = DropDownMenu
 
@@ -73,7 +74,7 @@ function DropDownMenu:Init() -- should be called only via Form:InitAll()
 	if self.initiated == false then
 		self.initiated = true
 		local function CreateAndBind(value)
-			local DropDownOption = _G.MDropDownOption.New(
+			local DropDownOption = DropDownOption.New(
 				self.DropDownOptionsSettings.model,
 				self.DropDownOptionsSettings.elements,
 				value,
