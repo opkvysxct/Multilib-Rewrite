@@ -7,9 +7,9 @@ local Lib = {}
 function Lib:Create(instanceName: string, parent: Instance, proporties: table, parentAfter: boolean)
 	local instanceCreated
 	if parentAfter then
-		instanceCreated = Instance.New(instanceName)
+		instanceCreated = Instance.new(instanceName)
 	else
-		instanceCreated = Instance.New(instanceName, parent)
+		instanceCreated = Instance.new(instanceName, parent)
 	end
 	if comments then
 		print("[Multilib-" .. script.Name .. "]", instanceName, parent, proporties)
@@ -38,7 +38,7 @@ function Lib:SoundFX(where: any, specs: table)
 	local toDelete
 	if typeof(where) == "Vector3" then
 		where = self:Create("Part", workspace, {
-			Size = Vector3.New(0, 0, 0),
+			Size = Vector3.new(0, 0, 0),
 			position = where,
 			CanCollide = false,
 			Anchored = true,
@@ -74,7 +74,7 @@ function Lib:ParticleFX(particle: Instance, strength: number, where: any, WhereS
 	local toDelete
 	if typeof(where) == "Vector3" then
 		where = self:Create("Part", workspace, {
-			Size = WhereSize or Vector3.New(1, 1, 1),
+			Size = WhereSize or Vector3.new(1, 1, 1),
 			position = where,
 			CanCollide = false,
 			Anchored = true,

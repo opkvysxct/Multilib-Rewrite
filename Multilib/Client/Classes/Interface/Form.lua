@@ -13,7 +13,7 @@ Form.__index = Form
 	Constructor for Form object.
 ]=]
 
-function Form.New() -- mostly abstract class to manage other ui elements
+function Form.new() -- mostly abstract class to manage other ui elements
 	local self = setmetatable({}, Form)
 	self.Data = {}
 	self.elements = {}

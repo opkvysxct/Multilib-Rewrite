@@ -13,7 +13,7 @@ InputField.__index = InputField
 	Constructor for InputField object.
 ]=]
 
-function InputField.New(model: any, elements: table, idName: string, settings: table)
+function InputField.new(model: any, elements: table, idName: string, settings: table)
 	local self = setmetatable({}, InputField)
 
 	if settings == nil then settings = {} end

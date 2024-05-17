@@ -10,7 +10,7 @@ function Lib:Ray(from: any, to: any, strength: number, params: any)
 	if typeofParams == "RaycastParams" then
 		paramsToUse = params
 	elseif typeofParams == "table" then
-		paramsToUse = RaycastParams.New()
+		paramsToUse = RaycastParams.new()
 		paramsToUse.CollisionGroup = params.CG or "Default"
 		paramsToUse.FilterDescendantsInstances = params.FDI or {}
 		paramsToUse.FilterType = params.FT or Enum.RaycastFilterType.Exclude
@@ -46,7 +46,7 @@ function Lib:SetDefaultParams(params: any)
 	if typeofParams == "RaycastParams" then
 		newParams = params
 	elseif typeofParams == "table" then
-		newParams = RaycastParams.New()
+		newParams = RaycastParams.new()
 		newParams.CollisionGroup = params.CG or "Default"
 		newParams.FilterDescendantsInstances = params.FDI or {}
 		newParams.FilterType = params.FT or Enum.RaycastFilterType.Exclude

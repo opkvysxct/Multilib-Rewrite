@@ -13,7 +13,7 @@ ArrowChange.__index = ArrowChange
 	Constructor for ArrowChange object.
 ]=]
 
-function ArrowChange.New(model: any, elements: table, idName: string, settings: table?)
+function ArrowChange.new(model: any, elements: table, idName: string, settings: table?)
 	local self = setmetatable({}, ArrowChange)
 
 	if settings == nil then settings = {} end

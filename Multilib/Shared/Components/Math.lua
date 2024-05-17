@@ -31,7 +31,7 @@ function Lib:Choose(table : table)
 	local amount = 0
 	local tableOfRanges = {}
 	for i, v in ipairs(table) do
-		tableOfRanges[i] = NumberRange.New(amount, amount + v.Chance)
+		tableOfRanges[i] = NumberRange.new(amount, amount + v.Chance)
 		amount += v.Chance	
 	end
 	local chosenNumber = math.random(1, amount)

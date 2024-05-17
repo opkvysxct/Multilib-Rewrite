@@ -16,7 +16,7 @@ Slider.__index = Slider
 	Constructor for Slider object.
 ]=]
 
-function Slider.New(model: any, elements: table, idName: string, settings: table)
+function Slider.new(model: any, elements: table, idName: string, settings: table)
 	local self = setmetatable({}, Slider)
 
 	if settings == nil then settings = {} end
@@ -87,10 +87,10 @@ function Slider.New(model: any, elements: table, idName: string, settings: table
 	self.locked = settings.locked
 	self.isActive = false
 
-	self.modelElements.Drag.AnchorPoint = Vector2.New(0.5,0.5)
+	self.modelElements.Drag.AnchorPoint = Vector2.new(0.5,0.5)
 
-	self.modelElements.MobileDetect = instance.New("Frame")
-	self.modelElements.MobileDetect.AnchorPoint = Vector2.New(0.5,0.5)
+	self.modelElements.MobileDetect = instance.new("Frame")
+	self.modelElements.MobileDetect.AnchorPoint = Vector2.new(0.5,0.5)
 	self.modelElements.MobileDetect.position = UDim2.fromScale(0.5,0.5)
 	self.modelElements.MobileDetect.Size = UDim2.fromScale(settings.sliderArea,settings.sliderArea)
 	self.modelElements.MobileDetect.BackgroundTransparency = 1
@@ -273,7 +273,7 @@ function Slider:DisplayAnimFunc(value: number) -- internal private function, do 
 	local drag:GuiButton = self.modelElements.Drag
 	local progressBar:GuiObject = self.modelElements.ProgressBar
 	local showText:GuiObject = self.modelElements.ShowText
-	local tweenInfoToUse = TweenInfo.New(0.05,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut)
+	local tweenInfoToUse = TweenInfo.new(0.05,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut)
 	TweenService:Create(drag,tweenInfoToUse,{position = UDim2.fromScale(ConvertToAbsolute(value) / 100,0.5)}):Play()
 	TweenService:Create(progressBar,tweenInfoToUse,{Size = UDim2.fromScale(ConvertToAbsolute(value	) / 100,1)}):Play()
 	if self.subType == "Numeric" then

@@ -1,7 +1,7 @@
 local Observer = {}
 Observer.__index = Observer
 
-function Observer.New(value: any, ConName: string, ConFunc: any)
+function Observer.new(value: any, ConName: string, ConFunc: any)
 	local self = setmetatable({}, Observer)
 	self.value = value
 	self.connections = {}

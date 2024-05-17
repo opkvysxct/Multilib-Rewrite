@@ -3,7 +3,7 @@ local Players = game:GetService("Players")
 local RecipeProcessor = {}
 RecipeProcessor.__index = RecipeProcessor
 
-function RecipeProcessor:New()
+function RecipeProcessor:new()
 	local self = setmetatable({}, RecipeProcessor)
 	self.Producs = {}
 	return self

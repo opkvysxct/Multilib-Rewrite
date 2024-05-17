@@ -15,7 +15,7 @@ DropDownMenu.__index = DropDownMenu
 	Constructor for DropDownMenu object.
 ]=]
 
-function DropDownMenu.New(model: any, elements: table, idName: string, DropDownOptions: table, settings: table)
+function DropDownMenu.new(model: any, elements: table, idName: string, DropDownOptions: table, settings: table)
 	local self = setmetatable({}, DropDownMenu)
 
 	if settings == nil then settings = {} end
@@ -74,7 +74,7 @@ function DropDownMenu:Init() -- should be called only via Form:InitAll()
 	if self.initiated == false then
 		self.initiated = true
 		local function CreateAndBind(value)
-			local DropDownOption = DropDownOption.New(
+			local DropDownOption = DropDownOption.new(
 				self.DropDownOptionsSettings.model,
 				self.DropDownOptionsSettings.elements,
 				value,
@@ -92,7 +92,7 @@ function DropDownMenu:Init() -- should be called only via Form:InitAll()
 		for index,element in pairs(self.DropDownOptions) do
 			local SizeToSet = (1 / #self.DropDownOptions) - self.modelElements.UIListLayout.Padding.Scale
 			element = element.model
-			element.Size = UDim2.New(
+			element.Size = UDim2.new(
 				element.Size.X.Scale,
 				element.Size.X.Offset,
 				SizeToSet,
@@ -101,7 +101,7 @@ function DropDownMenu:Init() -- should be called only via Form:InitAll()
 		end
 
 		local SizeToSet = (ScrollingFrame.CanvasSize.Y.Scale * (#self.DropDownOptions * 0.1))
-		ScrollingFrame.CanvasSize = UDim2.New(
+		ScrollingFrame.CanvasSize = UDim2.new(
 			ScrollingFrame.CanvasSize.X.Scale,
 			ScrollingFrame.CanvasSize.X.Offset,
 			SizeToSet,
@@ -148,9 +148,9 @@ end
 function DropDownMenu:DisplayAnimFunc(AnimType: string, value: string, Forced: boolean) -- internal private function, do not call
 	local TweenInfoToUse
 	if Forced == true then
-		TweenInfoToUse = TweenInfo.New(0,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut)
+		TweenInfoToUse = TweenInfo.new(0,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut)
 	else
-		TweenInfoToUse = TweenInfo.New(self.AnimSettings.time,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut)
+		TweenInfoToUse = TweenInfo.new(self.AnimSettings.time,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut)
 	end
 	if AnimType == "ChangeLabel" then
 		self.modelElements.DisplayLabel.Text = value

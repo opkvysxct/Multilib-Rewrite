@@ -1,7 +1,7 @@
 local DampedSpring = {}
 DampedSpring.__index = DampedSpring
 
-function DampedSpring.New(
+function DampedSpring.new(
 	position: number,
 	mass: number,
 	target: number,

@@ -14,7 +14,7 @@ DropDownOption.__index = DropDownOption
 	Constructor for DropDownOption object.
 ]=]
 
-function DropDownOption.New(model: any, elements: table, idName: string, DropDownMenu: table, settings: table)
+function DropDownOption.new(model: any, elements: table, idName: string, DropDownMenu: table, settings: table)
 	local self = setmetatable({}, DropDownOption)
 
 	if settings == nil then settings = {} end

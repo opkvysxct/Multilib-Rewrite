@@ -13,7 +13,7 @@ CheckBox.__index = CheckBox
 	Constructor for CheckBox object.
 ]=]
 
-function CheckBox.New(model: any, elements: table, idName: string, settings: table)
+function CheckBox.new(model: any, elements: table, idName: string, settings: table)
 	local self = setmetatable({}, CheckBox)
 
 	if settings == nil then settings = {} end

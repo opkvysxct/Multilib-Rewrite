@@ -13,7 +13,7 @@ RadioButton.__index = RadioButton
 	Constructor for RadioButton object.
 ]=]
 
-function RadioButton.New(model: any, elements: table, idName: string, radioGroup: table, settings: table)
+function RadioButton.new(model: any, elements: table, idName: string, radioGroup: table, settings: table)
 	local self = setmetatable({}, RadioButton)
 
 	if settings == nil then settings = {} end

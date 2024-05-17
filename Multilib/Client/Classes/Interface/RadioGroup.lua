@@ -13,7 +13,7 @@ RadioGroup.__index = RadioGroup
 	Constructor for RadioGroup object.
 ]=]
 
-function RadioGroup.New(idName: string)
+function RadioGroup.new(idName: string)
 	local self = setmetatable({}, RadioGroup)
 	self.radioButtons = {}
 	self.actions = {}

@@ -11,7 +11,7 @@ function Lib:TweenTable(table: table, time: number, style, direction, funcAfter:
 		direction = self.defaultDirection
 	end
 	for index, value in pairs(table) do
-		TweenService:Create(index, TweenInfo.New(time, style, direction), value):Play()
+		TweenService:Create(index, TweenInfo.new(time, style, direction), value):Play()
 	end
 	if funcAfter ~= nil then
 		task.delay(time, funcAfter)
@@ -25,7 +25,7 @@ function Lib:TweenOnce(element: any, time: number, style, direction, funcAfter: 
 	if direction == nil then
 		direction = self.defaultDirection
 	end
-	TweenService:Create(element[1], TweenInfo.New(time, style, direction), element[2]):Play()
+	TweenService:Create(element[1], TweenInfo.new(time, style, direction), element[2]):Play()
 	if funcAfter ~= nil then
 		task.delay(time, funcAfter)
 	end
