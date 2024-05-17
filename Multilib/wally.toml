@@ -6,6 +6,4 @@ realm = "shared"
 license = "MIT"
 description = "A Roblox library that allows you to perform simple task even simplier"
 
-exclude = ["package.json"]
-
 [dependencies]
