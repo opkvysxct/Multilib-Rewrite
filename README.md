@@ -12,7 +12,7 @@ I just found out that I use the same elements repeatedly across all my projects,
 
 ## Installation
 ### Lets make it clear, its meant to be used with [rojo](https://rojo.space/)!
-[WALLY](https://wally.run/package/opkvysxct/multilib)
+[WALLY LINK](https://wally.run/package/opkvysxct/multilib), remember to use newest version only.
 
 ## How do i use it?
 You can find everything in the [wiki](https://opkvysxct.github.io/Multilib-Rewrite/).
