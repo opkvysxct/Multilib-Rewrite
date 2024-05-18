@@ -3,10 +3,11 @@
 
 --PROJECT NAMING CONVENTION - KEEP IN MIND WHEN CHANGING THINGS
 --VARIABLES camelCase
---FUNCTIONS PascalCase
+--PUBLIC FUNCTIONS PascalCase
+--PRIVATE FUNCTIONS _PascalCase
 --CLASSES PascalCase
 --PUBLIC PROPORTIES PascalCase
---PRIVATE PROPORTIES _camelCase
+--PRIVATE PROPORTIES _CamelCase
 
 export type SoundSpecs = {
 	Name: string,
