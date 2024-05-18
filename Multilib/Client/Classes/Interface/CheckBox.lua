@@ -1,3 +1,4 @@
+local Multilib = require(game:GetService("ReplicatedStorage").Multilib)
 local CheckBox = {}
 CheckBox.__index = CheckBox
 
@@ -13,13 +14,13 @@ CheckBox.__index = CheckBox
 	Constructor for CheckBox object.
 ]=]
 
-function CheckBox.new(model: any, elements: table, idName: string, settings: table)
+function CheckBox.new(model: any, elements: {GuiObject}, idName: string, settings: Multilib.CheckBox?)
 	local self = setmetatable({}, CheckBox)
 
 	if settings == nil then settings = {} end
-	if settings.locked == nil then settings.locked = false end
-	if settings.cooldown == nil then settings.cooldown = 0.25 end
-	if settings.overrideDisplayAnimation ~= nil then self.DisplayAnimFunc = settings.overrideDisplayAnimation end
+	if settings.Locked == nil then settings.Locked = false end
+	if settings.Cooldown == nil then settings.Cooldown = 0.25 end
+	if settings.OverrideDisplayAnimation ~= nil then self.DisplayAnimFunc = settings.OverrideDisplayAnimation end
 
 	local model, elements = self:PerfectClone(model,elements)
 
@@ -38,9 +39,9 @@ function CheckBox.new(model: any, elements: table, idName: string, settings: tab
 	self.model.Name = idName
 	self.idName = idName
 
-	self.cooldownTime = settings.cooldown
-	self.value = settings.startingValue
-	self.locked = settings.locked
+	self.cooldownTime = settings.Cooldown
+	self.value = settings.StartingValue
+	self.locked = settings.Locked
 
 	return self
 end
@@ -153,7 +154,7 @@ end
 	Private Function, should not be called.
 ]=]
 
-function CheckBox:PerfectClone(trueModel: any, trueElements: table) -- internal private function, do not call (also; not quite perfect)
+function CheckBox:PerfectClone(trueModel: any, trueElements: {GuiObject}) -- internal private function, do not call (also; not quite perfect)
 	local model = trueModel:Clone()
 	local elements = {}
 	for index, element in pairs(trueElements) do

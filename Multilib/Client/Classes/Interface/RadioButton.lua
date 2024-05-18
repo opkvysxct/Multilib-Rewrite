@@ -1,3 +1,4 @@
+local Multilib = require(game:GetService("ReplicatedStorage").Multilib)
 local RadioButton = {}
 RadioButton.__index = RadioButton
 
@@ -13,13 +14,13 @@ RadioButton.__index = RadioButton
 	Constructor for RadioButton object.
 ]=]
 
-function RadioButton.new(model: any, elements: table, idName: string, radioGroup: table, settings: table)
+function RadioButton.new(model: any, elements: {GuiObject}, idName: string, radioGroup: {any}, settings: Multilib.RadioButton?)
 	local self = setmetatable({}, RadioButton)
 
 	if settings == nil then settings = {} end
-	if settings.locked == nil then settings.locked = false end
-	if settings.cooldown == nil then settings.cooldown = 0.25 end
-	if settings.overrideDisplayAnimation ~= nil then self.DisplayAnimFunc = settings.overrideDisplayAnimation end
+	if settings.Locked == nil then settings.Locked = false end
+	if settings.Cooldown == nil then settings.Cooldown = 0.25 end
+	if settings.OverrideDisplayAnimation ~= nil then self.DisplayAnimFunc = settings.OverrideDisplayAnimation end
 
 	local model, elements = self:PerfectClone(model,elements)
 
@@ -39,8 +40,8 @@ function RadioButton.new(model: any, elements: table, idName: string, radioGroup
 	self.idName = idName
 	self.radioGroup = radioGroup
 
-	self.cooldownTime = settings.cooldown
-	self.locked = settings.locked
+	self.cooldownTime = settings.Cooldown
+	self.locked = settings.Locked
 
 	self.radioGroup:InsertElement(self)
 	self:DisplayAnimFunc(false)
@@ -107,7 +108,7 @@ end
 	Private Function, should not be called.
 ]=]
 
-function RadioButton:PerfectClone(trueModel: any, trueElements: table) -- internal private function, do not call (also; not quite perfect)
+function RadioButton:PerfectClone(trueModel: any, trueElements: {any}) -- internal private function, do not call (also; not quite perfect)
 	local model = trueModel:Clone()
 	local elements = {}
 	for index, element in pairs(trueElements) do

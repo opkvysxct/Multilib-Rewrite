@@ -25,7 +25,7 @@ end
 	Inserts element into the Form.elements table.
 ]=]
 
-function Form:InsertElement(element: table)
+function Form:InsertElement(element: {any})
 	self.elements[element.idName] = element
 end
 
@@ -34,7 +34,7 @@ end
 	Inserts multiple elements into the Form.elements table.
 ]=]
 
-function Form:InsertElements(elements: table)
+function Form:InsertElements(elements: {any})
 	for index, element in pairs(elements) do
 		self.elements[element.idName] = element
 	end

@@ -1,3 +1,4 @@
+local Multilib = require(game:GetService("ReplicatedStorage").Multilib)
 local RunService = game:GetService("RunService")
 local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
@@ -16,56 +17,56 @@ Slider.__index = Slider
 	Constructor for Slider object.
 ]=]
 
-function Slider.new(model: any, elements: table, idName: string, settings: table)
+function Slider.new(model: any, elements: {GuiObject}, idName: string, settings: Multilib.Slider?)
 	local self = setmetatable({}, Slider)
 
 	if settings == nil then settings = {} end
-	if settings.elementType == nil then settings.elementType = "Numeric" end
-	if settings.sliderArea == nil then settings.sliderArea = 1.25 end
-	if settings.elementType == "Numeric" then
-		if settings.startingValue == nil then
-			settings.startingValue = 50
-			self.startingValue = settings.startingValue
+	if settings.ElementType == nil then settings.ElementType = "Numeric" end
+	if settings.SliderArea == nil then settings.SliderArea = 1.25 end
+	if settings.ElementType == "Numeric" then
+		if settings.StartingValue == nil then
+			settings.StartingValue = 50
+			self.startingValue = settings.StartingValue
 		else
-			self.startingValue = settings.startingValue
+			self.startingValue = settings.StartingValue
 		end
-		if settings.minValue == nil then
-			settings.minValue = 0
-			self.minValue = settings.minValue
+		if settings.MinValue == nil then
+			settings.MinValue = 0
+			self.minValue = settings.MinValue
 		else
-			self.minValue = settings.minValue
+			self.minValue = settings.MinValue
 		end
-		if settings.maxValue == nil then
-			settings.maxValue = 100
-			self.maxValue = settings.maxValue
+		if settings.MaxValue == nil then
+			settings.MaxValue = 100
+			self.maxValue = settings.MaxValue
 		else
-			self.maxValue = settings.maxValue
+			self.maxValue = settings.MaxValue
 		end
-		if settings.stepBy == nil then
-			settings.stepBy = 5
-			self.stepBy = settings.stepBy
+		if settings.StepBy == nil then
+			settings.StepBy = 5
+			self.stepBy = settings.StepBy
 		else
-			self.stepBy = settings.stepBy
+			self.stepBy = settings.StepBy
 		end
-	elseif settings.elementType == "Text" then
-		if settings.textValues == nil then
-			settings.textValues = {"FirstValue","startingValue","LastValue"}
-			self.textValues = settings.textValues
+	elseif settings.ElementType == "Text" then
+		if settings.TextValues == nil then
+			settings.TextValues = {"FirstValue","startingValue","LastValue"}
+			self.textValues = settings.TextValues
 		else
-			self.textValues = settings.textValues
+			self.textValues = settings.TextValues
 		end
-		if settings.startingValue == nil then
-			settings.startingValue = settings.textValues[1]
-			self.startingValue = settings.startingValue
+		if settings.StartingValue == nil then
+			settings.StartingValue = settings.TextValues[1]
+			self.startingValue = settings.StartingValue
 		else
-			self.startingValue = settings.startingValue
+			self.startingValue = settings.StartingValue
 		end
 		self.stepBy =  1
 		self.minValue = 0
-		self.maxValue = #settings.textValues - 1
+		self.maxValue = #settings.TextValues - 1
 	end
 
-	if settings.locked == nil then settings.locked = false end
+	if settings.Locked == nil then settings.Locked = false end
 
 	local model, elements = self:PerfectClone(model,elements)
 
@@ -76,15 +77,15 @@ function Slider.new(model: any, elements: table, idName: string, settings: table
 
 	self.initiated = false
 	self.elementType = "Slider"
-	self.subType = settings.elementType
+	self.subType = settings.ElementType
 	self.actions = {}
 	self.model = model
 	self.model.Name = idName
 	self.idName = idName
 
-	self.cooldownTime = settings.cooldown
-	self.value = settings.startingValue
-	self.locked = settings.locked
+	self.cooldownTime = settings.Cooldown
+	self.value = settings.StartingValue
+	self.locked = settings.Locked
 	self.isActive = false
 
 	self.modelElements.Drag.AnchorPoint = Vector2.new(0.5,0.5)
@@ -92,7 +93,7 @@ function Slider.new(model: any, elements: table, idName: string, settings: table
 	self.modelElements.MobileDetect = Instance.new("Frame")
 	self.modelElements.MobileDetect.AnchorPoint = Vector2.new(0.5,0.5)
 	self.modelElements.MobileDetect.position = UDim2.fromScale(0.5,0.5)
-	self.modelElements.MobileDetect.Size = UDim2.fromScale(settings.sliderArea,settings.sliderArea)
+	self.modelElements.MobileDetect.Size = UDim2.fromScale(settings.SliderArea,settings.SliderArea)
 	self.modelElements.MobileDetect.BackgroundTransparency = 1
 	self.modelElements.MobileDetect.ZIndex = math.huge
 	self.modelElements.MobileDetect.Name = "MobileDetect"
@@ -289,7 +290,7 @@ end
 	Private Function, should not be called.
 ]=]
 
-function Slider:PerfectClone(trueModel: any, trueElements: table) -- internal private function, do not call (also; not quite perfect)
+function Slider:PerfectClone(trueModel: any, trueElements: {any}) -- internal private function, do not call (also; not quite perfect)
 	local model = trueModel:Clone()
 	local elements = {}
 	for index, element in pairs(trueElements) do

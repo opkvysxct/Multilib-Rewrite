@@ -10,19 +10,19 @@ function Lib:Checker()
 	return false
 end
 
-function Lib:Print(Script: Script, Content: any, Force: boolean)
+function Lib:Print(Script: Script, Content: any, Force: boolean?)
 	if self:Checker() or Force == true then
 		print("[".. Script.Name .. "]", Content)
 	end
 end
 
-function Lib:Warn(Script: Script, Content: any, Force: boolean)
+function Lib:Warn(Script: Script, Content: any, Force: boolean?)
 	if self:Checker() or Force == true  then
 		warn("[".. Script.Name .. "]", Content)
 	end
 end
 
-function Lib:Error(Script: Script, Content: any, Force: boolean)
+function Lib:Error(Script: Script, Content: any, Force: boolean?)
 	if self:Checker() or Force == true  then
 		error("[".. Script.Name .. "]", Content)
 	end

@@ -1,10 +1,10 @@
 local Debris = game:GetService("Debris")
-local SoundService = game:GetService("SoundService")
+local Multilib = require(game:GetService("ReplicatedStorage").Multilib)
 
 local Lib = {}
 
 -- Core
-function Lib:Create(instanceName: string, parent: Instance, proporties: table, parentAfter: boolean)
+function Lib:Create(instanceName: string, parent: Instance, proporties: {any}, parentAfter: boolean?)
 	local instanceCreated
 	if parentAfter then
 		instanceCreated = Instance.new(instanceName)
@@ -21,14 +21,8 @@ function Lib:Create(instanceName: string, parent: Instance, proporties: table, p
 end
 
 -- Misc
-function Lib:DebrisF(instance: Instance, time: number, funcAfter: any)
-	Debris:AddItem(instance, time)
-	if funcAfter ~= nil then
-		task.delay(time, funcAfter)
-	end
-end
 
-function Lib:SoundFX(where: any, specs: table)
+function Lib:SoundFX(where: any, specs: Multilib.SoundSpecs)
 	local toDelete
 	if typeof(where) == "Vector3" then
 		where = self:Create("Part", workspace, {
@@ -43,28 +37,28 @@ function Lib:SoundFX(where: any, specs: table)
 	end
 	local sound = self:Create("Sound", where, {
 		Name = specs.Name or "sound",
-		SoundId = "rbxassetid://" .. specs.id,
+		SoundId = "rbxassetid://" .. specs.SoundId,
 		Volume = specs.Volume or 1,
-		PlaybackSpeed = specs.speed or 1,
+		PlaybackSpeed = specs.PlaybackSpeed or 1,
 		RollOffMaxDistance = specs.MaxDistance or 1000,
 		RollOffMinDistance = specs.MinDistance or 10,
-		SoundGroup = SoundService.Master[specs.Group] or SoundService.Master
+		SoundGroup = specs.SoundGroup or nil
 	})
 	sound:Play()
 
 	if toDelete ~= nil then
 		task.delay(self.minSoundTime, function()
-			self:DebrisF(where, specs.Duration or sound.TimeLength)
+			Debris:AddItem(where, specs.Duration or sound.TimeLength)
 		end)
 	else
 		task.delay(self.minSoundTime, function()
-			self:DebrisF(sound, specs.Duration or sound.TimeLength)
+			Debris:AddItem(sound, specs.Duration or sound.TimeLength)
 		end)
 	end
 	return sound
 end
 
-function Lib:ParticleFX(particle: Instance, strength: number, where: any, WhereSize: Vector3)
+function Lib:ParticleFX(particle: Instance, strength: number, where: any, WhereSize: Vector3?)
 	local toDelete
 	if typeof(where) == "Vector3" then
 		where = self:Create("Part", workspace, {
@@ -81,11 +75,11 @@ function Lib:ParticleFX(particle: Instance, strength: number, where: any, WhereS
 	particle:Emit(strength)
 	if toDelete ~= nil then
 		task.delay(self.minParticleTime, function()
-			self:DebrisF(where, particle.Lifetime.Max)
+			Debris:AddItem(where, particle.Lifetime.Max)
 		end)
 	else
 		task.delay(self.minParticleTime, function()
-			self:DebrisF(particle, particle.Lifetime.Max)
+			Debris:AddItem(particle, particle.Lifetime.Max)
 		end)
 	end
 	return particle
@@ -119,7 +113,7 @@ end
 
 -- End
 function Lib:Init(comments: boolean)
-	self.minSoundTime = 1 -- Try to keep it at least one second, otherwise TimeLength will not load properly and sound will not play
+	self.minSoundTime = 1
 	self.minParticleTime = 1
 	if comments then
 		warn("[Multilib-" .. script.Name .. "]", script.Name, "Lib Loaded & safe to use.")

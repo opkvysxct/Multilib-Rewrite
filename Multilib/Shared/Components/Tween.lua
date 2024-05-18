@@ -3,7 +3,7 @@ local TweenService = game:GetService("TweenService")
 local Lib = {}
 
 -- Core
-function Lib:TweenTable(table: table, time: number, style, direction, funcAfter: any)
+function Lib:TweenTable(table: {any}, time: number, style: Enum.EasingStyle, direction: Enum.EasingDirection, funcAfter: any?)
 	if style == nil then
 		style = self.defaultStyle
 	end
@@ -18,7 +18,7 @@ function Lib:TweenTable(table: table, time: number, style, direction, funcAfter:
 	end
 end
 
-function Lib:TweenOnce(element: any, time: number, style, direction, funcAfter: any)
+function Lib:TweenOnce(element: any, time: number, style: Enum.EasingStyle, direction: Enum.EasingDirection, funcAfter: any?)
 	if style == nil then
 		style = self.defaultStyle
 	end

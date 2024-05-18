@@ -10,24 +10,7 @@ function Lib:Chance(percent: number, max: number)
 	end
 end
 
-function Lib:DrawObject(totalChances: number, objectTable: table, chanceFieldName: string)
-	local cumulativeChances = {}
-	local currentChance = 0
-	for _, object in ipairs(objectTable) do
-		local chance = object[chanceFieldName]
-		currentChance = currentChance + chance
-		cumulativeChances[object.id] = currentChance
-  	end
-
-	local randomChance = math.random(0, totalChances)
-
-	for index, chance: number in pairs(cumulativeChances) do
-		if chance <= randomChance then continue end
-		return objectTable[index]
-	end
-end
-
-function Lib:Choose(table : table)
+function Lib:Choose(table : {any})
 	local amount = 0
 	local tableOfRanges = {}
 	for i, v in ipairs(table) do

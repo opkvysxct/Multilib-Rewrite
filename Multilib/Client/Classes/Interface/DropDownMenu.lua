@@ -1,3 +1,4 @@
+local Multilib = require(game:GetService("ReplicatedStorage").Multilib)
 local TweenService = game:GetService("TweenService")
 local DropDownOption = require(script.Parent.DropDownOption)
 local DropDownMenu = {}
@@ -15,21 +16,21 @@ DropDownMenu.__index = DropDownMenu
 	Constructor for DropDownMenu object.
 ]=]
 
-function DropDownMenu.new(model: any, elements: table, idName: string, DropDownOptions: table, settings: table)
+function DropDownMenu.new(model: any, elements: {GuiObject}, idName: string, DropDownOptions: {any}, settings: Multilib.DropDownMenu?)
 	local self = setmetatable({}, DropDownMenu)
 
 	if settings == nil then settings = {} end
-	if settings.locked == nil then settings.locked = false end
-	if settings.cooldown == nil then settings.cooldown = 0.25 end
-	if settings.values == nil then settings.values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+	if settings.Locked == nil then settings.Locked = false end
+	if settings.Cooldown == nil then settings.Cooldown = 0.25 end
+	if settings.Values == nil then settings.Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
 	"eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen",
 	"eighteen", "nineteen", "twenty", "twenty-one", "twenty-two", "twenty-three",
 	"twenty-four", "twenty-five", "twenty-six", "twenty-seven", "twenty-eight",
 	"twenty-nine", "thirty"} end
-	if settings.SelectedValue == nil then settings.SelectedValue = settings.values[1] end
-	if settings.AnimSettings == nil then settings.AnimSettings = {time = 0.25,Height = 2} end
+	if settings.SelectedValue == nil then settings.SelectedValue = settings.Values[1] end
+	if settings.AnimSettings == nil then settings.AnimSettings = {Time = 0.25,Height = 2} end
 
-	if settings.overrideDisplayAnimation ~= nil then self.DisplayAnimFunc = settings.overrideDisplayAnimation end
+	if settings.OverrideDisplayAnimation ~= nil then self.DisplayAnimFunc = settings.OverrideDisplayAnimation end
 
 	local model, elements = self:PerfectClone(model,elements)
 
@@ -54,9 +55,9 @@ function DropDownMenu.new(model: any, elements: table, idName: string, DropDownO
 	self.DropDownOptionsSettings = DropDownOptions
 	self.DropDownOptions = {}
 
-	self.cooldownTime = settings.cooldown
-	self.locked = settings.locked
-	self.values = settings.values
+	self.cooldownTime = settings.Cooldown
+	self.locked = settings.Locked
+	self.values = settings.Values
 
 	self:DisplayAnimFunc("ChangeLabel",self.SelectedValue)
 	self:DisplayAnimFunc("Collapse",nil,true)
@@ -150,7 +151,7 @@ function DropDownMenu:DisplayAnimFunc(AnimType: string, value: string, Forced: b
 	if Forced == true then
 		TweenInfoToUse = TweenInfo.new(0,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut)
 	else
-		TweenInfoToUse = TweenInfo.new(self.AnimSettings.time,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut)
+		TweenInfoToUse = TweenInfo.new(self.AnimSettings.Time,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut)
 	end
 	if AnimType == "ChangeLabel" then
 		self.modelElements.DisplayLabel.Text = value
@@ -167,7 +168,7 @@ function DropDownMenu:DisplayAnimFunc(AnimType: string, value: string, Forced: b
 			TweenInfoToUse,
 			{Size = UDim2.fromScale(1,0)}
 		):Play()
-		task.delay(self.AnimSettings.time,function()
+		task.delay(self.AnimSettings.Time,function()
 			self.modelElements.ScrollingFrame.Visible = false
 		end)
 	end
@@ -210,7 +211,7 @@ end
 	Inserts element into the DropDownMenu.RadioButtons table.
 ]=]
 
-function DropDownMenu:InsertElement(element: table)
+function DropDownMenu:InsertElement(element: {any})
 	self.RadioButtons[element.idName] = element
 end
 
@@ -219,7 +220,7 @@ end
 	Inserts multiple elements into the DropDownMenu.RadioButtons table.
 ]=]
 
-function DropDownMenu:InsertElements(elements: table)
+function DropDownMenu:InsertElements(elements: {any})
 	for index, element in pairs(elements) do
 		self.RadioButtons[element.idName] = element
 	end
@@ -259,7 +260,7 @@ end
 	Selects one button and deselects all the others.
 ]=]
 
-function DropDownMenu:selectButton(DropDownObject: table)
+function DropDownMenu:selectButton(DropDownObject: {any})
 	self.SelectedValue = DropDownObject.idName
 	self:DisplayAnimFunc("ChangeLabel",self.SelectedValue)
 	self:DisplayAnimFunc("Collapse")
@@ -272,7 +273,7 @@ end
 	Private Function, should not be called.
 ]=]
 
-function DropDownMenu:PerfectClone(trueModel: any, trueElements: table) -- internal private function, do not call (also; not quite perfect)
+function DropDownMenu:PerfectClone(trueModel: any, trueElements: {any}) -- internal private function, do not call (also; not quite perfect)
 	local model = trueModel:Clone()
 	local elements = {}
 	for index, element in pairs(trueElements) do

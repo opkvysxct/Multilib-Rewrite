@@ -1,3 +1,4 @@
+local Multilib = require(game:GetService("ReplicatedStorage").Multilib)
 local ArrowChange = {}
 ArrowChange.__index = ArrowChange
 
@@ -13,15 +14,15 @@ ArrowChange.__index = ArrowChange
 	Constructor for ArrowChange object.
 ]=]
 
-function ArrowChange.new(model: any, elements: table, idName: string, settings: table?)
+function ArrowChange.new(model: any, elements: {GuiObject}, idName: string, settings: Multilib.ArrowChange?)
 	local self = setmetatable({}, ArrowChange)
 
 	if settings == nil then settings = {} end
-	if settings.locked == nil then settings.locked = false end
-	if settings.cooldown == nil then settings.cooldown = 0.25 end
-	if settings.overrideDisplayAnimation ~= nil then self.DisplayAnimFunc = settings.overrideDisplayAnimation end
-	if settings.values == nil then settings.values = {"first","second","Third"} end
-	if settings.startingIndex == nil then settings.startingIndex = 1 end
+	if settings.Locked == nil then settings.Locked = false end
+	if settings.Cooldown == nil then settings.Cooldown = 0.25 end
+	if settings.OverrideDisplayAnimation ~= nil then self.DisplayAnimFunc = settings.OverrideDisplayAnimation end
+	if settings.Values == nil then settings.Values = {"first","second","Third"} end
+	if settings.StartingIndex == nil then settings.StartingIndex = 1 end
 
 	local model, elements = self:PerfectClone(model,elements)
 
@@ -30,12 +31,12 @@ function ArrowChange.new(model: any, elements: table, idName: string, settings: 
 		self.modelElements[index] = value
 	end
 
-	if settings.startingIndex < 1 or settings.startingIndex > #settings.values then
-		settings.startingIndex = 1
+	if settings.StartingIndex < 1 or settings.StartingIndex > #settings.Values then
+		settings.StartingIndex = 1
 	end
 
-	self.actualIndex = settings.startingIndex
-	self.values = settings.values
+	self.actualIndex = settings.StartingIndex
+	self.values = settings.Values
 
 	self.isCooldown = false
 	self.initiated = false
@@ -46,9 +47,9 @@ function ArrowChange.new(model: any, elements: table, idName: string, settings: 
 	self.model.Name = idName
 	self.idName = idName
 
-	self.cooldownTime = settings.cooldown
-	self.value = settings.startingValue
-	self.locked = settings.locked
+	self.cooldownTime = settings.Cooldown
+	self.value = settings.StartingValue
+	self.locked = settings.Locked
 
 	self:DisplayAnimFunc()
 
@@ -189,7 +190,7 @@ end
 	Private Function, should not be called.
 ]=]
 
-function ArrowChange:PerfectClone(trueModel: any, trueElements: table) -- internal private function, do not call (also; not quite perfect)
+function ArrowChange:PerfectClone(trueModel: any, trueElements: {GuiObject}) -- internal private function, do not call (also; not quite perfect)
 	local model = trueModel:Clone()
 	local elements = {}
 	for index, element in pairs(trueElements) do

@@ -1,3 +1,4 @@
+local Multilib = require(game:GetService("ReplicatedStorage").Multilib)
 local DropDownOption = {}
 DropDownOption.__index = DropDownOption
 
@@ -14,12 +15,12 @@ DropDownOption.__index = DropDownOption
 	Constructor for DropDownOption object.
 ]=]
 
-function DropDownOption.new(model: any, elements: table, idName: string, DropDownMenu: table, settings: table)
+function DropDownOption.new(model: any, elements: {GuiObject}, idName: string, DropDownMenu: {any}, settings: Multilib.DropDownOption?)
 	local self = setmetatable({}, DropDownOption)
 
 	if settings == nil then settings = {} end
-	if settings.locked == nil then settings.locked = false end
-	if settings.cooldown == nil then settings.cooldown = 0.25 end
+	if settings.Locked == nil then settings.Locked = false end
+	if settings.Cooldown == nil then settings.Cooldown = 0.25 end
 
 	local model, elements = self:PerfectClone(model,elements)
 
@@ -39,8 +40,8 @@ function DropDownOption.new(model: any, elements: table, idName: string, DropDow
 	self.idName = idName
 	self.DropDownMenu = DropDownMenu
 
-	self.cooldownTime = settings.cooldown
-	self.locked = settings.locked
+	self.cooldownTime = settings.Cooldown
+	self.locked = settings.Locked
 
 	self.modelElements.TextLabel.Text = idName
 
@@ -96,7 +97,7 @@ end
 	Private Function, should not be called.
 ]=]
 
-function DropDownOption:PerfectClone(trueModel: any, trueElements: table) -- internal private function, do not call (also; not quite perfect)
+function DropDownOption:PerfectClone(trueModel: any, trueElements: {any}) -- internal private function, do not call (also; not quite perfect)
 	local model = trueModel:Clone()
 	local elements = {}
 	for index, element in pairs(trueElements) do

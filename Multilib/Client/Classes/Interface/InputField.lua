@@ -1,3 +1,4 @@
+local Multilib = require(game:GetService("ReplicatedStorage").Multilib)
 local InputField = {}
 InputField.__index = InputField
 
@@ -13,15 +14,15 @@ InputField.__index = InputField
 	Constructor for InputField object.
 ]=]
 
-function InputField.new(model: any, elements: table, idName: string, settings: table)
+function InputField.new(model: any, elements: {GuiObject}, idName: string, settings: Multilib.InputField?)
 	local self = setmetatable({}, InputField)
 
 	if settings == nil then settings = {} end
-	if settings.locked == nil then settings.locked = false end
-	if settings.cooldown == nil then settings.cooldown = 0.25 end
-	if settings.elementType == nil then settings.elementType = "Numeric" end
-	if settings.placeholderText == nil then settings.placeholderText = "Input" end
-	if settings.lenght == nil then settings.lenght = 10 end
+	if settings.Locked == nil then settings.Locked = false end
+	if settings.Cooldown == nil then settings.Cooldown = 0.25 end
+	if settings.ElementType == nil then settings.ElementType = "Numeric" end
+	if settings.PlaceholderText == nil then settings.PlaceholderText = "Input" end
+	if settings.Lenght == nil then settings.Lenght = 10 end
 
 	local model, elements = self:PerfectClone(model,elements)
 
@@ -30,31 +31,31 @@ function InputField.new(model: any, elements: table, idName: string, settings: t
 		self.modelElements[index] = value
 	end
 
-	if settings.elementType == "Numeric" then
+	if settings.ElementType == "Numeric" then
 		self.allowedCharacters = "1234567890"
-	elseif settings.elementType == "Text" then
+	elseif settings.ElementType == "Text" then
 		self.allowedCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	else
 		if settings.customCharacters == nil then settings.customCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890" end
 		self.allowedCharacters = settings.customCharacters
 	end
 
-	self.modelElements.Input.placeholderText = settings.placeholderText
+	self.modelElements.Input.placeholderText = settings.PlaceholderText
 
 	self.isCooldown = false
 	self.initiated = false
 	self.elementType = "InputField"
-	self.lenght = settings.lenght
-	self.subType = settings.elementType
+	self.lenght = settings.Lenght
+	self.subType = settings.ElementType
 	self.actions = {}
 
 	self.model = model
 	self.model.Name = idName
 	self.idName = idName
 
-	self.cooldownTime = settings.cooldown
-	self.value = settings.startingValue
-	self.locked = settings.locked
+	self.cooldownTime = settings.Cooldown
+	self.value = settings.StartingValue
+	self.locked = settings.Locked
 
 	return self
 end
@@ -173,7 +174,7 @@ end
 	Private Function, should not be called.
 ]=]
 
-function InputField:PerfectClone(trueModel: any, trueElements: table) -- internal private function, do not call (also; not quite perfect)
+function InputField:PerfectClone(trueModel: any, trueElements: {any}) -- internal private function, do not call (also; not quite perfect)
 	local model = trueModel:Clone()
 	local elements = {}
 	for index, element in pairs(trueElements) do
