@@ -1,4 +1,4 @@
-local Multilib = require(game:GetService("ReplicatedStorage").Multilib)
+local Mtypes = require(game:GetService("ReplicatedStorage").Multilib.Types)
 local RadioButton = {}
 RadioButton.__index = RadioButton
 
@@ -14,7 +14,7 @@ RadioButton.__index = RadioButton
 	Constructor for RadioButton object.
 ]=]
 
-function RadioButton.new(model: any, elements: {GuiObject}, idName: string, radioGroup: {any}, settings: Multilib.RadioButton?)
+function RadioButton.new(model: any, elements: {GuiObject}, idName: string, radioGroup: {any}, settings: Mtypes.RadioButton?)
 	local self = setmetatable({}, RadioButton)
 
 	if settings == nil then settings = {} end

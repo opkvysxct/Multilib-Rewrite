@@ -1,4 +1,4 @@
-local Multilib = require(game:GetService("ReplicatedStorage").Multilib)
+local Mtypes = require(game:GetService("ReplicatedStorage").Multilib.Types)
 local ArrowChange = {}
 ArrowChange.__index = ArrowChange
 
@@ -14,7 +14,7 @@ ArrowChange.__index = ArrowChange
 	Constructor for ArrowChange object.
 ]=]
 
-function ArrowChange.new(model: any, elements: {GuiObject}, idName: string, settings: Multilib.ArrowChange?)
+function ArrowChange.new(model: any, elements: {GuiObject}, idName: string, settings: Mtypes.ArrowChange?)
 	local self = setmetatable({}, ArrowChange)
 
 	if settings == nil then settings = {} end

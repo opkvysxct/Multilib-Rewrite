@@ -3,7 +3,7 @@ local Lib = {}
 -- Core
 
 
--- settings
+-- Settings
 
 
 -- End

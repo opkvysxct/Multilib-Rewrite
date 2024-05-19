@@ -1,4 +1,4 @@
-local Multilib = require(game:GetService("ReplicatedStorage").Multilib)
+local Mtypes = require(game:GetService("ReplicatedStorage").Multilib.Types)
 local DropDownOption = {}
 DropDownOption.__index = DropDownOption
 
@@ -15,7 +15,7 @@ DropDownOption.__index = DropDownOption
 	Constructor for DropDownOption object.
 ]=]
 
-function DropDownOption.new(model: any, elements: {GuiObject}, idName: string, DropDownMenu: {any}, settings: Multilib.DropDownOption?)
+function DropDownOption.new(model: any, elements: {GuiObject}, idName: string, DropDownMenu: {any}, settings: Mtypes.DropDownOption?)
 	local self = setmetatable({}, DropDownOption)
 
 	if settings == nil then settings = {} end

@@ -1,4 +1,4 @@
-local Multilib = require(game:GetService("ReplicatedStorage").Multilib)
+local Mtypes = require(game:GetService("ReplicatedStorage").Multilib.Types)
 local CheckBox = {}
 CheckBox.__index = CheckBox
 
@@ -14,7 +14,7 @@ CheckBox.__index = CheckBox
 	Constructor for CheckBox object.
 ]=]
 
-function CheckBox.new(model: any, elements: {GuiObject}, idName: string, settings: Multilib.CheckBox?)
+function CheckBox.new(model: any, elements: {GuiObject}, idName: string, settings: Mtypes.CheckBox?)
 	local self = setmetatable({}, CheckBox)
 
 	if settings == nil then settings = {} end

@@ -22,10 +22,10 @@ function Lib:Ray(from: any, to: any, strength: number, params: any)
 	end
 
 	if typeofFrom == "instance" or typeofFrom == "CFrame" then
-		from = from.position
+		from = from.Position
 	end
 	if typeofTo == "instance" or typeofTo == "CFrame" then
-		to = to.position
+		to = to.Position
 	end
 
 	to = CFrame.lookAt(from, to).LookVector * strength

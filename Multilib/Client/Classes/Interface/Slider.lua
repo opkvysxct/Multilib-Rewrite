@@ -1,4 +1,4 @@
-local Multilib = require(game:GetService("ReplicatedStorage").Multilib)
+local Mtypes = require(game:GetService("ReplicatedStorage").Multilib.Types)
 local RunService = game:GetService("RunService")
 local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
@@ -17,7 +17,7 @@ Slider.__index = Slider
 	Constructor for Slider object.
 ]=]
 
-function Slider.new(model: any, elements: {GuiObject}, idName: string, settings: Multilib.Slider?)
+function Slider.new(model: any, elements: {GuiObject}, idName: string, settings: Mtypes.Slider?)
 	local self = setmetatable({}, Slider)
 
 	if settings == nil then settings = {} end
@@ -92,7 +92,7 @@ function Slider.new(model: any, elements: {GuiObject}, idName: string, settings:
 
 	self.modelElements.MobileDetect = Instance.new("Frame")
 	self.modelElements.MobileDetect.AnchorPoint = Vector2.new(0.5,0.5)
-	self.modelElements.MobileDetect.position = UDim2.fromScale(0.5,0.5)
+	self.modelElements.MobileDetect.Position = UDim2.fromScale(0.5,0.5)
 	self.modelElements.MobileDetect.Size = UDim2.fromScale(settings.SliderArea,settings.SliderArea)
 	self.modelElements.MobileDetect.BackgroundTransparency = 1
 	self.modelElements.MobileDetect.ZIndex = math.huge

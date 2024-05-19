@@ -1,5 +1,5 @@
 local Debris = game:GetService("Debris")
-local Multilib = require(game:GetService("ReplicatedStorage").Multilib)
+local Mtypes = require(game:GetService("ReplicatedStorage").Multilib.Types)
 
 local Lib = {}
 
@@ -22,18 +22,17 @@ end
 
 -- Misc
 
-function Lib:SoundFX(where: any, specs: Multilib.SoundSpecs)
+function Lib:SoundFX(where: any, specs: Mtypes.SoundSpecs)
 	local toDelete
 	if typeof(where) == "Vector3" then
 		where = self:Create("Part", workspace, {
 			Size = Vector3.new(0, 0, 0),
-			position = where,
+			Position = where,
 			CanCollide = false,
 			Anchored = true,
 			Transparency = 1,
 		})
 		toDelete = where
-		print("a")
 	end
 	local sound = self:Create("Sound", where, {
 		Name = specs.Name or "sound",
@@ -63,7 +62,7 @@ function Lib:ParticleFX(particle: Instance, strength: number, where: any, WhereS
 	if typeof(where) == "Vector3" then
 		where = self:Create("Part", workspace, {
 			Size = WhereSize or Vector3.new(1, 1, 1),
-			position = where,
+			Position = where,
 			CanCollide = false,
 			Anchored = true,
 			Transparency = 1,

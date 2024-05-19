@@ -1,4 +1,4 @@
-local Multilib = require(game:GetService("ReplicatedStorage").Multilib)
+local Mtypes = require(game:GetService("ReplicatedStorage").Multilib.Types)
 local InputField = {}
 InputField.__index = InputField
 
@@ -14,7 +14,7 @@ InputField.__index = InputField
 	Constructor for InputField object.
 ]=]
 
-function InputField.new(model: any, elements: {GuiObject}, idName: string, settings: Multilib.InputField?)
+function InputField.new(model: any, elements: {GuiObject}, idName: string, settings: Mtypes.InputField?)
 	local self = setmetatable({}, InputField)
 
 	if settings == nil then settings = {} end
