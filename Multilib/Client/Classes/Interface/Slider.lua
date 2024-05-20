@@ -68,10 +68,10 @@ function Slider.new(model: any, elements: {GuiObject}, idName: string, settings:
 
 	if settings.Locked == nil then settings.Locked = false end
 
-	local model, elements = self:PerfectClone(model,elements)
+	local model, elements = self:_PerfectClone(model,elements)
 
 	self.modelElements = {}
-	for index, value in pairs(elements) do
+	for index, value in elements do
 		self.modelElements[index] = value
 	end
 
@@ -83,7 +83,7 @@ function Slider.new(model: any, elements: {GuiObject}, idName: string, settings:
 	self.model.Name = idName
 	self.idName = idName
 
-	self.cooldownTime = settings.Cooldown
+	self._cooldownTime = settings.Cooldown
 	self.value = settings.StartingValue
 	self.locked = settings.Locked
 	self.isActive = false
@@ -100,9 +100,9 @@ function Slider.new(model: any, elements: {GuiObject}, idName: string, settings:
 	self.modelElements.MobileDetect.Parent = self.modelElements.Total
 
 	if self.subType == "Numeric" then
-		self:DisplayAnimFunc(self.value)
+		self:_DisplayAnimFunc(self.value)
 	elseif self.subType == "Text" then
-		self:DisplayAnimFunc(table.find(self.textValues,self.value) - 1)
+		self:_DisplayAnimFunc(table.find(self.textValues,self.value) - 1)
 	end
 
 	return self
@@ -119,9 +119,9 @@ function Slider:Init() -- should be called only via Form:InitAll()
 		self.initiated = true
 		local function Change(LegitimateValue)
 			if LegitimateValue ~= self.value then
-				self:DisplayAnimFunc(LegitimateValue)
+				self:_DisplayAnimFunc(LegitimateValue)
 				self.value = LegitimateValue
-				self:ExecuteActions()
+				self:_ExecuteActions()
 			end
 		end
 		local function Update()
@@ -222,8 +222,8 @@ end
 	Private Function, should not be called.
 ]=]
 
-function Slider:ExecuteActions()
-	for index, action in pairs(self.actions) do
+function Slider:_ExecuteActions()
+	for index, action in self.actions do
 		action()
 	end
 end
@@ -264,7 +264,7 @@ end
 	Private Function, should not be called.
 ]=]
 
-function Slider:DisplayAnimFunc(value: number) -- internal private function, do not call
+function Slider:_DisplayAnimFunc(value: number) -- internal private function, do not call
 	local function ConvertToAbsolute(value: number)
 		local clampedValue = math.clamp(value, self.minValue, self.maxValue)
 		local rangeCustom = self.maxValue - self.minValue
@@ -290,13 +290,13 @@ end
 	Private Function, should not be called.
 ]=]
 
-function Slider:PerfectClone(trueModel: any, trueElements: {any}) -- internal private function, do not call (also; not quite perfect)
+function Slider:_PerfectClone(trueModel: any, trueElements: {any}) -- internal private function, do not call (also; not quite perfect)
 	local model = trueModel:Clone()
 	local elements = {}
-	for index, element in pairs(trueElements) do
+	for index, element in trueElements do
 		local path = string.split(element,".")
 		local followedPath = model
-		for Index2, value in pairs(path) do
+		for Index2, value in path do
 			followedPath = followedPath[value]
 		end
 		elements[index] = followedPath
@@ -311,7 +311,7 @@ end
 
 function Slider:Destroy()
 	self.model:Destroy()
-	for index, value in pairs(self) do
+	for index, value in self do
 		value = nil
 	end
 end

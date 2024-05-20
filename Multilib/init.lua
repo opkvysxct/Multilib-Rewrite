@@ -62,19 +62,19 @@ local Multilib = {}
 	Multilib.Client.CC.Interface.Slider = require(script.Client.Classes.Interface.Slider)
 
 	function Multilib:InitServer(comments: boolean)
-		for index, Component in self.Shared.C do
+		for _, Component in self.Shared.C do
 			Component:Init(comments)
 		end
-		for index, Component in self.Server.C do
+		for _, Component in self.Server.C do
 			Component:Init(comments)
 		end
 	end
 
 	function Multilib:InitClient(comments: boolean)
-		for index, Component in self.Shared.C do
+		for _, Component in self.Shared.C do
 			Component:Init(comments)
 		end
-		for index, Component in self.Client.C do
+		for _, Component in self.Client.C do
 			Component:Init(comments)
 		end
 	end

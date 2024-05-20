@@ -29,7 +29,7 @@ end
 ]=]
 
 function RadioGroup:Init() -- should be called only via Form:InitAll()
-	for index, radioButton in pairs(self.radioButtons) do
+	for index, radioButton in self.radioButtons do
 		radioButton:Init()
 	end
 end
@@ -63,7 +63,7 @@ end
 ]=]
 
 function RadioGroup:InsertElements(elements: {any})
-	for index, element in pairs(elements) do
+	for index, element in elements do
 		self.radioButtons[element.idName] = element
 	end
 end
@@ -92,7 +92,7 @@ end
 ]=]
 
 function RadioGroup:Append(where: any)
-	for index, radioButton in pairs(self.radioButtons) do
+	for index, radioButton in self.radioButtons do
 		radioButton:Append(where)
 	end
 end
@@ -123,8 +123,8 @@ end
 	Private Function, should not be called.
 ]=]
 
-function RadioGroup:ExecuteActions()
-	for index, action in pairs(self.actions) do
+function RadioGroup:_ExecuteActions()
+	for index, action in self.actions do
 		action()
 	end
 end
@@ -138,13 +138,13 @@ end
 
 function RadioGroup:selectButton(radioButtonObject: {any})
 	self.selected = radioButtonObject.idName
-	for index, radioButton in pairs(self.radioButtons) do
+	for index, radioButton in self.radioButtons do
 		if radioButton.isSelected == true and radioButton ~= radioButtonObject then
 			radioButton:selectionStatus(false)
 		end
 	end
 	radioButtonObject:selectionStatus(true)
-	self:ExecuteActions()
+	self:_ExecuteActions()
 end
 
 --[=[
@@ -153,7 +153,7 @@ end
 ]=]
 
 function RadioGroup:Destroy()
-	for index, value in pairs(self) do
+	for index, value in self do
 		value = nil
 	end
 end

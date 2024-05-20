@@ -35,7 +35,7 @@ end
 ]=]
 
 function Form:InsertElements(elements: {any})
-	for index, element in pairs(elements) do
+	for index, element in elements do
 		self.elements[element.idName] = element
 	end
 end
@@ -64,7 +64,7 @@ end
 ]=]
 
 function Form:InitAll() -- Init all elements
-	for index, element in pairs(self.elements) do
+	for index, element in self.elements do
 		element:Init()
 	end
 end
@@ -75,7 +75,7 @@ end
 ]=]
 
 function Form:AppendAll(where: any) -- random order
-	for index, element in pairs(self.elements) do
+	for index, element in self.elements do
 		element:Append(where)
 	end
 end
@@ -98,7 +98,7 @@ end
 
 function Form:CollectData() -- collect and return all data
 	table.clear(self.Data)
-	for index, element in pairs(self.elements) do
+	for index, element in self.elements do
 		local value, Name = element:ReturnValues()
 		self.Data[Name] = value
 	end
@@ -111,7 +111,7 @@ end
 ]=]
 
 function Form:Destroy()
-	for index, value in pairs(self) do
+	for index, value in self do
 		value = nil
 	end
 end

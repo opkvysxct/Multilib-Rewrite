@@ -24,10 +24,10 @@ function InputField.new(model: any, elements: {GuiObject}, idName: string, setti
 	if settings.PlaceholderText == nil then settings.PlaceholderText = "Input" end
 	if settings.Lenght == nil then settings.Lenght = 10 end
 
-	local model, elements = self:PerfectClone(model,elements)
+	local model, elements = self:_PerfectClone(model,elements)
 
 	self.modelElements = {}
-	for index, value in pairs(elements) do
+	for index, value in elements do
 		self.modelElements[index] = value
 	end
 
@@ -42,7 +42,7 @@ function InputField.new(model: any, elements: {GuiObject}, idName: string, setti
 
 	self.modelElements.Input.placeholderText = settings.PlaceholderText
 
-	self.isCooldown = false
+	self._isCooldown = false
 	self.initiated = false
 	self.elementType = "InputField"
 	self.lenght = settings.Lenght
@@ -53,7 +53,7 @@ function InputField.new(model: any, elements: {GuiObject}, idName: string, setti
 	self.model.Name = idName
 	self.idName = idName
 
-	self.cooldownTime = settings.Cooldown
+	self._cooldownTime = settings.Cooldown
 	self.value = settings.StartingValue
 	self.locked = settings.Locked
 
@@ -98,7 +98,7 @@ function InputField:Init() -- should be called only via Form:InitAll()
 				Text = NewText
 				self.modelElements.Input.Text = Text
 				self.value = Text
-				self:ExecuteActions()
+				self:_ExecuteActions()
 			end
 		end)
 	end
@@ -161,8 +161,8 @@ end
 	Private Function, should not be called.
 ]=]
 
-function InputField:ExecuteActions()
-	for index, action in pairs(self.actions) do
+function InputField:_ExecuteActions()
+	for index, action in self.actions do
 		action()
 	end
 end
@@ -174,13 +174,13 @@ end
 	Private Function, should not be called.
 ]=]
 
-function InputField:PerfectClone(trueModel: any, trueElements: {any}) -- internal private function, do not call (also; not quite perfect)
+function InputField:_PerfectClone(trueModel: any, trueElements: {any}) -- internal private function, do not call (also; not quite perfect)
 	local model = trueModel:Clone()
 	local elements = {}
-	for index, element in pairs(trueElements) do
+	for index, element in trueElements do
 		local path = string.split(element,".")
 		local followedPath = model
-		for Index2, value in pairs(path) do
+		for Index2, value in path do
 			followedPath = followedPath[value]
 		end
 		elements[index] = followedPath
@@ -195,7 +195,7 @@ end
 
 function InputField:Destroy()
 	self.model:Destroy()
-	for index, value in pairs(self) do
+	for index, value in self do
 		value = nil
 	end
 end

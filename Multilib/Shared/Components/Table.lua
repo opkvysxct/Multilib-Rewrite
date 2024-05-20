@@ -3,7 +3,7 @@ local Lib = {}
 -- Core
 
 function Lib:DictionaryFind(dictionary: {any}, requiredValue: any)
-	for index, value in pairs(dictionary) do
+	for index, value in dictionary do
 		if value == requiredValue then
 			return index
 		end
@@ -12,7 +12,7 @@ end
 
 function Lib:DeepCopy(table: {any})
 	local copy = {}
-	for k, v in pairs(table) do
+	for k, v in table do
 		if type(v) == "table" then
 			v = self:DeepCopy(v)
 		end

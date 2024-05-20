@@ -20,14 +20,14 @@ function ArrowChange.new(model: any, elements: {GuiObject}, idName: string, sett
 	if settings == nil then settings = {} end
 	if settings.Locked == nil then settings.Locked = false end
 	if settings.Cooldown == nil then settings.Cooldown = 0.25 end
-	if settings.OverrideDisplayAnimation ~= nil then self.DisplayAnimFunc = settings.OverrideDisplayAnimation end
+	if settings.OverrideDisplayAnimation ~= nil then self._DisplayAnimFunc = settings.OverrideDisplayAnimation end
 	if settings.Values == nil then settings.Values = {"first","second","Third"} end
 	if settings.StartingIndex == nil then settings.StartingIndex = 1 end
 
-	local model, elements = self:PerfectClone(model,elements)
+	local model, elements = self:_PerfectClone(model,elements)
 
 	self.modelElements = {}
-	for index, value in pairs(elements) do
+	for index, value in elements do
 		self.modelElements[index] = value
 	end
 
@@ -38,7 +38,7 @@ function ArrowChange.new(model: any, elements: {GuiObject}, idName: string, sett
 	self.actualIndex = settings.StartingIndex
 	self.values = settings.Values
 
-	self.isCooldown = false
+	self._isCooldown = false
 	self.initiated = false
 	self.elementType = "ArrowChange"
 	self.actions = {}
@@ -47,11 +47,11 @@ function ArrowChange.new(model: any, elements: {GuiObject}, idName: string, sett
 	self.model.Name = idName
 	self.idName = idName
 
-	self.cooldownTime = settings.Cooldown
+	self._cooldownTime = settings.Cooldown
 	self.value = settings.StartingValue
 	self.locked = settings.Locked
 
-	self:DisplayAnimFunc()
+	self:_DisplayAnimFunc()
 
 	return self
 end
@@ -72,8 +72,8 @@ function ArrowChange:Init() -- should be called only via Form:InitAll()
 				else
 					self.actualIndex -= 1
 				end
-				self:DisplayAnimFunc()
-				self:ExecuteActions()
+				self:_DisplayAnimFunc()
+				self:_ExecuteActions()
 			end
 		end)
 		self.modelElements.Right.Activated:Connect(function()
@@ -83,8 +83,8 @@ function ArrowChange:Init() -- should be called only via Form:InitAll()
 				else
 					self.actualIndex += 1
 				end
-				self:DisplayAnimFunc()
-				self:ExecuteActions()
+				self:_DisplayAnimFunc()
+				self:_ExecuteActions()
 			end
 		end)
 	end
@@ -107,8 +107,8 @@ function ArrowChange:UpdateValues(values: any, index: number?)
 
 	self.values = values
 	self.actualIndex = index
-	self:DisplayAnimFunc()
-	self:ExecuteActions()
+	self:_DisplayAnimFunc()
+	self:_ExecuteActions()
 end
 
 --[=[
@@ -147,7 +147,7 @@ end
 	Private Function, should not be called.
 ]=]
 
-function ArrowChange:DisplayAnimFunc() -- internal private function, do not call
+function ArrowChange:_DisplayAnimFunc() -- internal private function, do not call
 	self.modelElements.TextLabel.Text = self.values[self.actualIndex]
 end
 
@@ -177,8 +177,8 @@ end
 	Private Function, should not be called.
 ]=]
 
-function ArrowChange:ExecuteActions()
-	for index, action in pairs(self.actions) do
+function ArrowChange:_ExecuteActions()
+	for index, action in self.actions do
 		action()
 	end
 end
@@ -190,13 +190,13 @@ end
 	Private Function, should not be called.
 ]=]
 
-function ArrowChange:PerfectClone(trueModel: any, trueElements: {GuiObject}) -- internal private function, do not call (also; not quite perfect)
+function ArrowChange:_PerfectClone(trueModel: any, trueElements: {GuiObject}) -- internal private function, do not call (also; not quite perfect)
 	local model = trueModel:Clone()
 	local elements = {}
-	for index, element in pairs(trueElements) do
+	for index, element in trueElements do
 		local path = string.split(element,".")
 		local followedPath = model
-		for Index2, value in pairs(path) do
+		for Index2, value in path do
 			followedPath = followedPath[value]
 		end
 		elements[index] = followedPath
@@ -211,7 +211,7 @@ end
 
 function ArrowChange:Destroy()
 	self.model:Destroy()
-	for index, value in pairs(self) do
+	for _, value in self do
 		value = nil
 	end
 end

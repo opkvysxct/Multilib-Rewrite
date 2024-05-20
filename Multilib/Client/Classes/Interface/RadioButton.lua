@@ -20,17 +20,17 @@ function RadioButton.new(model: any, elements: {GuiObject}, idName: string, radi
 	if settings == nil then settings = {} end
 	if settings.Locked == nil then settings.Locked = false end
 	if settings.Cooldown == nil then settings.Cooldown = 0.25 end
-	if settings.OverrideDisplayAnimation ~= nil then self.DisplayAnimFunc = settings.OverrideDisplayAnimation end
+	if settings.OverrideDisplayAnimation ~= nil then self._DisplayAnimFunc = settings.OverrideDisplayAnimation end
 
-	local model, elements = self:PerfectClone(model,elements)
+	local model, elements = self:_PerfectClone(model,elements)
 
 	self.modelElements = {}
-	for index, value in pairs(elements) do
+	for index, value in elements do
 		self.modelElements[index] = value
 	end
 
 
-	self.isCooldown = false
+	self._isCooldown = false
 	self.initiated = false
 	self.elementType = "RadioButton"
 	self.isSelected = false
@@ -40,11 +40,11 @@ function RadioButton.new(model: any, elements: {GuiObject}, idName: string, radi
 	self.idName = idName
 	self.radioGroup = radioGroup
 
-	self.cooldownTime = settings.Cooldown
+	self._cooldownTime = settings.Cooldown
 	self.locked = settings.Locked
 
 	self.radioGroup:InsertElement(self)
-	self:DisplayAnimFunc(false)
+	self:_DisplayAnimFunc(false)
 
 	return self
 end
@@ -59,10 +59,10 @@ function RadioButton:Init() -- should be called only via Form:InitAll()
 	if self.initiated == false then
 		self.initiated = true
 		self.modelElements.Button.Activated:Connect(function()
-			if self.locked == false and self.isCooldown == false then
-				self.isCooldown = true
-				task.delay(self.cooldownTime,function()
-					self.isCooldown = false
+			if self.locked == false and self._isCooldown == false then
+				self._isCooldown = true
+				task.delay(self._cooldownTime,function()
+					self._isCooldown = false
 				end)
 				if self.isSelected == false then
 					self.radioGroup:selectButton(self)
@@ -98,7 +98,7 @@ end
 	Private Function, should not be called.
 ]=]
 
-function RadioButton:DisplayAnimFunc(value: boolean) -- internal private function, do not call
+function RadioButton:_DisplayAnimFunc(value: boolean) -- internal private function, do not call
 	self.modelElements.Check.Visible = value
 end
 
@@ -108,13 +108,13 @@ end
 	Private Function, should not be called.
 ]=]
 
-function RadioButton:PerfectClone(trueModel: any, trueElements: {any}) -- internal private function, do not call (also; not quite perfect)
+function RadioButton:_PerfectClone(trueModel: any, trueElements: {any}) -- internal private function, do not call (also; not quite perfect)
 	local model = trueModel:Clone()
 	local elements = {}
-	for index, element in pairs(trueElements) do
+	for index, element in trueElements do
 		local path = string.split(element,".")
 		local followedPath = model
-		for Index2, value in pairs(path) do
+		for Index2, value in path do
 			followedPath = followedPath[value]
 		end
 		elements[index] = followedPath
@@ -130,7 +130,7 @@ end
 
 function RadioButton:selectionStatus(value: boolean)
 	self.isSelected = value
-	self:DisplayAnimFunc(value)
+	self:_DisplayAnimFunc(value)
 end
 
 --[=[
@@ -140,7 +140,7 @@ end
 
 function RadioButton:Destroy()
 	self.model:Destroy()
-	for index, value in pairs(self) do
+	for index, value in self do
 		value = nil
 	end
 end

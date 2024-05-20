@@ -17,7 +17,7 @@ function Observer:Set(value: any)
 		return
 	end
 	self.value = value
-	for index, ConFunc in pairs(self.connections) do
+	for index, ConFunc in self.connections do
 		ConFunc(self)
 	end
 end

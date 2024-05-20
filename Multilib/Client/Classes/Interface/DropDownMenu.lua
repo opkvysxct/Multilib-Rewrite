@@ -30,9 +30,9 @@ function DropDownMenu.new(model: any, elements: {GuiObject}, idName: string, Dro
 	if settings.SelectedValue == nil then settings.SelectedValue = settings.Values[1] end
 	if settings.AnimSettings == nil then settings.AnimSettings = {Time = 0.25,Height = 2} end
 
-	if settings.OverrideDisplayAnimation ~= nil then self.DisplayAnimFunc = settings.OverrideDisplayAnimation end
+	if settings.OverrideDisplayAnimation ~= nil then self._DisplayAnimFunc = settings.OverrideDisplayAnimation end
 
-	local model, elements = self:PerfectClone(model,elements)
+	local model, elements = self:_PerfectClone(model,elements)
 
 	self.modelElements = {}
 	for index, value in pairs(elements) do
@@ -42,7 +42,7 @@ function DropDownMenu.new(model: any, elements: {GuiObject}, idName: string, Dro
 	self.modelElements.ScrollingFrame.CanvasSize = UDim2.fromScale(0,settings.CanvasSize)
 
 	self.actions = {}
-	self.isCooldown = false
+	self._isCooldown = false
 	self.initiated = false
 	self.IsOpen = false
 	self.elementType = "DropDownMenu"
@@ -55,12 +55,12 @@ function DropDownMenu.new(model: any, elements: {GuiObject}, idName: string, Dro
 	self.DropDownOptionsSettings = DropDownOptions
 	self.DropDownOptions = {}
 
-	self.cooldownTime = settings.Cooldown
+	self._cooldownTime = settings.Cooldown
 	self.locked = settings.Locked
 	self.values = settings.Values
 
-	self:DisplayAnimFunc("ChangeLabel",self.SelectedValue)
-	self:DisplayAnimFunc("Collapse",nil,true)
+	self:_DisplayAnimFunc("ChangeLabel",self.SelectedValue)
+	self:_DisplayAnimFunc("Collapse",nil,true)
 
 	return self
 end
@@ -109,9 +109,9 @@ function DropDownMenu:Init() -- should be called only via Form:InitAll()
 			ScrollingFrame.CanvasSize.Y.Offset)
 		self.modelElements.MainButton.Activated:Connect(function()
 			if self.IsOpen == true then
-				self:DisplayAnimFunc("Collapse")
+				self:_DisplayAnimFunc("Collapse")
 			else
-				self:DisplayAnimFunc("Expand")
+				self:_DisplayAnimFunc("Expand")
 			end
 		end)
 	end
@@ -146,7 +146,7 @@ end
 	Private Function, should not be called.
 ]=]
 
-function DropDownMenu:DisplayAnimFunc(AnimType: string, value: string, Forced: boolean) -- internal private function, do not call
+function DropDownMenu:_DisplayAnimFunc(AnimType: string, value: string, Forced: boolean) -- internal private function, do not call
 	local TweenInfoToUse
 	if Forced == true then
 		TweenInfoToUse = TweenInfo.new(0,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut)
@@ -200,7 +200,7 @@ end
 	Private Function, should not be called.
 ]=]
 
-function DropDownMenu:ExecuteActions()
+function DropDownMenu:_ExecuteActions()
 	for index, action in pairs(self.actions) do
 		action()
 	end
@@ -262,9 +262,9 @@ end
 
 function DropDownMenu:selectButton(DropDownObject: {any})
 	self.SelectedValue = DropDownObject.idName
-	self:DisplayAnimFunc("ChangeLabel",self.SelectedValue)
-	self:DisplayAnimFunc("Collapse")
-	self:ExecuteActions()
+	self:_DisplayAnimFunc("ChangeLabel",self.SelectedValue)
+	self:_DisplayAnimFunc("Collapse")
+	self:_ExecuteActions()
 end
 
 --[=[
@@ -273,7 +273,7 @@ end
 	Private Function, should not be called.
 ]=]
 
-function DropDownMenu:PerfectClone(trueModel: any, trueElements: {any}) -- internal private function, do not call (also; not quite perfect)
+function DropDownMenu:_PerfectClone(trueModel: any, trueElements: {any}) -- internal private function, do not call (also; not quite perfect)
 	local model = trueModel:Clone()
 	local elements = {}
 	for index, element in pairs(trueElements) do

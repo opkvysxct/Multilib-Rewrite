@@ -11,7 +11,7 @@ function Lib:Create(instanceName: string, parent: Instance, proporties: {any}, p
 	else
 		instanceCreated = Instance.new(instanceName, parent)
 	end
-	for prop, value in pairs(proporties) do
+	for prop, value in proporties do
 		instanceCreated[prop] = value
 	end
 	if parentAfter then

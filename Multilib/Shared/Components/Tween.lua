@@ -10,7 +10,7 @@ function Lib:TweenTable(table: {any}, time: number, style: Enum.EasingStyle, dir
 	if direction == nil then
 		direction = self.defaultDirection
 	end
-	for index, value in pairs(table) do
+	for index, value in table do
 		TweenService:Create(index, TweenInfo.new(time, style, direction), value):Play()
 	end
 	if funcAfter ~= nil then
@@ -50,7 +50,7 @@ end
 
 function Lib:TweenAndReturn(element: any, time: number, style, direction, funcAfter: any)
 	local InitData = {}
-	for Attribute: string, _ in pairs(element[2]) do
+	for Attribute: string, _ in element[2]) do
 		InitData[Attribute] = element[1][Attribute]
 	end
 	self:TweenOnce(element, time, style, direction)
