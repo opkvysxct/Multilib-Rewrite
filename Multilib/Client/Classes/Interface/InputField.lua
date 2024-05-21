@@ -1,4 +1,5 @@
 local Mtypes = require(game:GetService("ReplicatedStorage").Multilib.Types)
+local MInstance = require(game:GetService("ReplicatedStorage").Multilib.Shared.Components.Instance)
 local InputField = {}
 InputField.__index = InputField
 
@@ -24,11 +25,11 @@ function InputField.new(model: any, elements: {GuiObject}, idName: string, setti
 	if settings.PlaceholderText == nil then settings.PlaceholderText = "Input" end
 	if settings.Lenght == nil then settings.Lenght = 10 end
 
-	local model, elements = self:_PerfectClone(model,elements)
+	local model, elements = MInstance:PerfectClone(model,elements)
 
-	self.modelElements = {}
+	self._ModelElements = {}
 	for index, value in elements do
-		self.modelElements[index] = value
+		self._ModelElements[index] = value
 	end
 
 	if settings.ElementType == "Numeric" then
@@ -40,22 +41,22 @@ function InputField.new(model: any, elements: {GuiObject}, idName: string, setti
 		self.allowedCharacters = settings.customCharacters
 	end
 
-	self.modelElements.Input.placeholderText = settings.PlaceholderText
+	self._ModelElements.Input.placeholderText = settings.PlaceholderText
 
-	self._isCooldown = false
-	self.initiated = false
-	self.elementType = "InputField"
+	self._IsCooldown = false
+	self.Initiated = false
+	self.ElementType = "InputField"
 	self.lenght = settings.Lenght
-	self.subType = settings.ElementType
-	self.actions = {}
+	self.SubType = settings.ElementType
+	self.Actions = {}
 
-	self.model = model
-	self.model.Name = idName
-	self.idName = idName
+	self.Model = model
+	self.Model.Name = idName
+	self.IdName = idName
 
-	self._cooldownTime = settings.Cooldown
-	self.value = settings.StartingValue
-	self.locked = settings.Locked
+	self.CooldownTime = settings.Cooldown
+	self.Value = settings.StartingValue
+	self.Locked = settings.Locked
 
 	return self
 end
@@ -67,14 +68,14 @@ end
 ]=]
 
 function InputField:Init() -- should be called only via Form:InitAll()
-	if self.initiated == false then
-		self.initiated = true
-		self.modelElements.Clear.Activated:Connect(function()
-			self.modelElements.Input.Text = ""
+	if self.Initiated == false then
+		self.Initiated = true
+		self._ModelElements.Clear.Activated:Connect(function()
+			self._ModelElements.Input.Text = ""
 		end)
-		self.modelElements.Input.Changed:Connect(function(Property: string)
+		self._ModelElements.Input.Changed:Connect(function(Property: string)
 			if Property == "Text" then
-				local Text = self.modelElements.Input.Text
+				local Text = self._ModelElements.Input.Text
 				Text = string.split(Text,"")
 				if #Text > self.lenght then -- lenght Checker
 					local NewText = {}
@@ -96,8 +97,8 @@ function InputField:Init() -- should be called only via Form:InitAll()
 					NewText ..= Letter
 				end
 				Text = NewText
-				self.modelElements.Input.Text = Text
-				self.value = Text
+				self._ModelElements.Input.Text = Text
+				self.Value = Text
 				self:_ExecuteActions()
 			end
 		end)
@@ -111,7 +112,7 @@ end
 ]=]
 
 function InputField:ReturnValues()
-	return self.value, self.idName
+	return self.Value, self.IdName
 end
 
 --[=[
@@ -121,8 +122,8 @@ end
 ]=]
 
 function InputField:LockStatus(status: boolean)
-	self.locked = status
-	self.modelElements.Input.TextEditable = status
+	self.Locked = status
+	self._ModelElements.Input.TextEditable = status
 end
 
 --[=[
@@ -132,7 +133,7 @@ end
 ]=]
 
 function InputField:Append(where: any)
-	self.model.Parent = where
+	self.Model.Parent = where
 end
 
 --[=[
@@ -142,7 +143,7 @@ end
 ]=]
 
 function InputField:AddAction(actionName: string, action: any)
-	self.actions[actionName] = action
+	self.Actions[actionName] = action
 end
 
 --[=[
@@ -152,7 +153,7 @@ end
 ]=]
 
 function InputField:RemoveAction(actionName: string)
-	table.remove(self.actions,actionName)
+	table.remove(self.Actions,actionName)
 end
 
 --[=[
@@ -162,30 +163,9 @@ end
 ]=]
 
 function InputField:_ExecuteActions()
-	for index, action in self.actions do
+	for index, action in self.Actions do
 		action()
 	end
-end
-
-
---[=[
-	@within InputField
-	@private
-	Private Function, should not be called.
-]=]
-
-function InputField:_PerfectClone(trueModel: any, trueElements: {any}) -- internal private function, do not call (also; not quite perfect)
-	local model = trueModel:Clone()
-	local elements = {}
-	for index, element in trueElements do
-		local path = string.split(element,".")
-		local followedPath = model
-		for Index2, value in path do
-			followedPath = followedPath[value]
-		end
-		elements[index] = followedPath
-	end
-	return model, elements
 end
 
 --[=[
@@ -194,7 +174,7 @@ end
 ]=]
 
 function InputField:Destroy()
-	self.model:Destroy()
+	self.Model:Destroy()
 	for index, value in self do
 		value = nil
 	end

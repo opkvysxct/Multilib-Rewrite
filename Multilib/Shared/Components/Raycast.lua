@@ -18,7 +18,7 @@ function Lib:Ray(from: any, to: any, strength: number, params: any)
 		paramsToUse.RespectCanCollide = params.RCC or false
 		paramsToUse.BruteForceAllSlow = params.BFAS or false
 	else
-		paramsToUse = self.defParams
+		paramsToUse = self.DefParams
 	end
 
 	if typeofFrom == "instance" or typeofFrom == "CFrame" then
@@ -56,13 +56,12 @@ function Lib:SetDefaultParams(params: any)
 	else
 		warn("[Multilib-" .. script.Name .. "]", "No params specified!")
 	end
-	self.defParams = newParams
+	self.DefParams = newParams
 end
 
 -- End
 function Lib:Init(comments: boolean)
-	self.defParams = RaycastParams.new()
-
+	self.DefParams = RaycastParams.new()
 end
 
 return Lib

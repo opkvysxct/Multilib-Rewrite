@@ -20,6 +20,21 @@ function Lib:Create(instanceName: string, parent: Instance, proporties: {any}, p
 	return instanceCreated
 end
 
+function Lib:PerfectClone(trueModel: any, trueElements: {any})
+	local model = trueModel:Clone()
+	local elements = {}
+	for index, element in trueElements do
+		local path = string.split(element,"/")
+		local followedPath = model
+		for Index2, value in path do
+			followedPath = followedPath[value]
+		end
+		elements[index] = followedPath
+	end
+	return model, elements
+end
+
+
 -- Misc
 
 function Lib:SoundFX(where: any, specs: Mtypes.SoundSpecs)
@@ -46,11 +61,11 @@ function Lib:SoundFX(where: any, specs: Mtypes.SoundSpecs)
 	sound:Play()
 
 	if toDelete ~= nil then
-		task.delay(self.minSoundTime, function()
+		task.delay(self.MinSoundTime, function()
 			Debris:AddItem(where, specs.Duration or sound.TimeLength)
 		end)
 	else
-		task.delay(self.minSoundTime, function()
+		task.delay(self.MinSoundTime, function()
 			Debris:AddItem(sound, specs.Duration or sound.TimeLength)
 		end)
 	end
@@ -73,21 +88,21 @@ function Lib:ParticleFX(particle: Instance, strength: number, where: any, WhereS
 	particle.Parent = where
 	particle:Emit(strength)
 	if toDelete ~= nil then
-		task.delay(self.minParticleTime, function()
+		task.delay(self.MinParticleTime, function()
 			Debris:AddItem(where, particle.Lifetime.Max)
 		end)
 	else
-		task.delay(self.minParticleTime, function()
+		task.delay(self.MinParticleTime, function()
 			Debris:AddItem(particle, particle.Lifetime.Max)
 		end)
 	end
 	return particle
 end
 
-function Lib:Motor6D(first: Instance, second: Instance, Parent: Instance)
+function Lib:Motor6D(first: Instance, second: Instance, parent: Instance)
 	return self:Create(
 		"Motor6D",
-		Parent,{
+		parent,{
 			Part0 = first,
 			Part1 = second,
 		}
@@ -103,17 +118,17 @@ end
 
 -- settings
 function Lib:SetMinSoundTime(time: number)
-	self.minSoundTime = time
+	self.MinSoundTime = time
 end
 
-function Lib:minParticleTime(time: number)
-	self.minParticleTime = time
+function Lib:MinParticleTime(time: number)
+	self.MinParticleTime = time
 end
 
 -- End
 function Lib:Init(comments: boolean)
-	self.minSoundTime = 1
-	self.minParticleTime = 1
+	self.MinSoundTime = 1
+	self.MinParticleTime = 1
 	if comments then
 		warn("[Multilib-" .. script.Name .. "]", script.Name, "Lib Loaded & safe to use.")
 	end

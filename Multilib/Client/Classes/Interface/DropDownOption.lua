@@ -1,4 +1,5 @@
 local Mtypes = require(game:GetService("ReplicatedStorage").Multilib.Types)
+local MInstance = require(game:GetService("ReplicatedStorage").Multilib.Shared.Components.Instance)
 local DropDownOption = {}
 DropDownOption.__index = DropDownOption
 
@@ -22,28 +23,28 @@ function DropDownOption.new(model: any, elements: {GuiObject}, idName: string, D
 	if settings.Locked == nil then settings.Locked = false end
 	if settings.Cooldown == nil then settings.Cooldown = 0.25 end
 
-	local model, elements = self:_PerfectClone(model,elements)
+	local model, elements = MInstance:PerfectClone(model,elements)
 
-	self.modelElements = {}
+	self._ModelElements = {}
 	for index, value in elements do
-		self.modelElements[index] = value
+		self._ModelElements[index] = value
 	end
 
 
-	self._isCooldown = false
-	self.initiated = false
-	self.elementType = "DropDownOption"
-	self.isSelected = false
+	self._IsCooldown = false
+	self.Initiated = false
+	self.ElementType = "DropDownOption"
+	self.IsSelected = false
 
-	self.model = model
-	self.model.Name = idName
-	self.idName = idName
+	self.Model = model
+	self.Model.Name = idName
+	self.IdName = idName
 	self.DropDownMenu = DropDownMenu
 
-	self._cooldownTime = settings.Cooldown
-	self.locked = settings.Locked
+	self.CooldownTime = settings.Cooldown
+	self.Locked = settings.Locked
 
-	self.modelElements.TextLabel.Text = idName
+	self._ModelElements.TextLabel.Text = idName
 
 	return self
 end
@@ -55,15 +56,15 @@ end
 ]=]
 
 function DropDownOption:Init() -- should be called only via Form:InitAll()
-	if self.initiated == false then
-		self.initiated = true
-		self.modelElements.Button.Activated:Connect(function()
-			if self.locked == false and self._isCooldown == false then
-				self._isCooldown = true
-				task.delay(self._cooldownTime,function()
-					self._isCooldown = false
+	if self.Initiated == false then
+		self.Initiated = true
+		self._ModelElements.Button.Activated:Connect(function()
+			if self.Locked == false and self._IsCooldown == false then
+				self._IsCooldown = true
+				task.delay(self.CooldownTime,function()
+					self._IsCooldown = false
 				end)
-				if self.isSelected == false then
+				if self.IsSelected == false then
 					self.DropDownMenu:selectButton(self)
 				end
 			end
@@ -78,7 +79,7 @@ end
 ]=]
 
 function DropDownOption:LockStatus(status: boolean)
-	self.locked = status
+	self.Locked = status
 end
 
 --[=[
@@ -88,27 +89,7 @@ end
 ]=]
 
 function DropDownOption:Append(where: any)
-	self.model.Parent = where
-end
-
---[=[
-	@within DropDownOption
-	@private
-	Private Function, should not be called.
-]=]
-
-function DropDownOption:_PerfectClone(trueModel: any, trueElements: {any}) -- internal private function, do not call (also; not quite perfect)
-	local model = trueModel:Clone()
-	local elements = {}
-	for index, element in trueElements do
-		local path = string.split(element,".")
-		local followedPath = model
-		for Index2, value in path do
-			followedPath = followedPath[value]
-		end
-		elements[index] = followedPath
-	end
-	return model, elements
+	self.Model.Parent = where
 end
 
 --[=[
@@ -118,7 +99,7 @@ end
 ]=]
 
 function DropDownOption:selectionStatus(value: boolean)
-	self.isSelected = value
+	self.IsSelected = value
 end
 
 --[=[
@@ -127,7 +108,7 @@ end
 ]=]
 
 function DropDownOption:Destroy()
-	self.model:Destroy()
+	self.Model:Destroy()
 	for index, value in self do
 		value = nil
 	end

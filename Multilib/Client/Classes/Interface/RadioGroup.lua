@@ -16,8 +16,8 @@ RadioGroup.__index = RadioGroup
 function RadioGroup.new(idName: string)
 	local self = setmetatable({}, RadioGroup)
 	self.radioButtons = {}
-	self.actions = {}
-	self.idName = idName
+	self.Actions = {}
+	self.IdName = idName
 	self.selected = nil
 	return self
 end
@@ -42,9 +42,9 @@ end
 
 function RadioGroup:ReturnValues()
 	if self.selected ~= nil then
-		return self.selected, self.idName
+		return self.selected, self.IdName
 	else
-		return false, self.idName
+		return false, self.IdName
 	end
 end
 
@@ -104,7 +104,7 @@ end
 ]=]
 
 function RadioGroup:AddAction(actionName: string, action: any)
-	self.actions[actionName] = action
+	self.Actions[actionName] = action
 end
 
 --[=[
@@ -114,7 +114,7 @@ end
 ]=]
 
 function RadioGroup:RemoveAction(actionName: string)
-	table.remove(self.actions,actionName)
+	table.remove(self.Actions,actionName)
 end
 
 --[=[
@@ -124,7 +124,7 @@ end
 ]=]
 
 function RadioGroup:_ExecuteActions()
-	for index, action in self.actions do
+	for index, action in self.Actions do
 		action()
 	end
 end

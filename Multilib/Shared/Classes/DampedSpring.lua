@@ -11,25 +11,25 @@ function DampedSpring.new(
 	dampingC: number
 )
 	local self = setmetatable({}, DampedSpring)
-	self.mass = mass or 1
-	self.position = position or 0
-	self.target = target or 15
-	self.speed = speed or 5
-	self.velocity = velocity or 0
-	self.kConstant = constant or 0.05
-	self.cDampingC = dampingC or 0.1
+	self._Mass = mass or 1
+	self.Position = position or 0
+	self.Target = target or 15
+	self._Speed = speed or 5
+	self._Velocity = velocity or 0
+	self._KConstant = constant or 0.05
+	self._CDamping = dampingC or 0.1
 	return self
 end
 
 function DampedSpring:SetTarget(target: number)
-	self.target = target
+	self.Target = target
 end
 
 function DampedSpring:Update(deltaTime: number)
-	local acceleration = (-self.cDampingC * self.velocity - self.kConstant * (self.position - self.target)) / self.mass
-	acceleration = (acceleration * deltaTime) * self.speed
-	self.velocity = self.velocity + acceleration
-	self.position = self.position + self.velocity
+	local acceleration = (-self._CDamping * self._Velocity - self._KConstant * (self.Position - self.Target)) / self._Mass
+	acceleration = (acceleration * deltaTime) * self._Speed
+	self._Velocity = self._Velocity + acceleration
+	self.Position = self.Position + self._Velocity
 end
 
 return DampedSpring

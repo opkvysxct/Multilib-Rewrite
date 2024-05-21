@@ -1,4 +1,5 @@
 local Mtypes = require(game:GetService("ReplicatedStorage").Multilib.Types)
+local MInstance = require(game:GetService("ReplicatedStorage").Multilib.Shared.Components.Instance)
 local ArrowChange = {}
 ArrowChange.__index = ArrowChange
 
@@ -24,32 +25,32 @@ function ArrowChange.new(model: any, elements: {GuiObject}, idName: string, sett
 	if settings.Values == nil then settings.Values = {"first","second","Third"} end
 	if settings.StartingIndex == nil then settings.StartingIndex = 1 end
 
-	local model, elements = self:_PerfectClone(model,elements)
+	local model, elements = MInstance:PerfectClone(model,elements)
 
-	self.modelElements = {}
+	self._ModelElements = {}
 	for index, value in elements do
-		self.modelElements[index] = value
+		self._ModelElements[index] = value
 	end
 
 	if settings.StartingIndex < 1 or settings.StartingIndex > #settings.Values then
 		settings.StartingIndex = 1
 	end
 
-	self.actualIndex = settings.StartingIndex
-	self.values = settings.Values
+	self.ActualIndex = settings.StartingIndex
+	self.Values = settings.Values
 
-	self._isCooldown = false
-	self.initiated = false
-	self.elementType = "ArrowChange"
-	self.actions = {}
+	self._IsCooldown = false
+	self.Initiated = false
+	self.ElementType = "ArrowChange"
+	self.Actions = {}
 
-	self.model = model
-	self.model.Name = idName
-	self.idName = idName
+	self.Model = model
+	self.Model.Name = idName
+	self.IdName = idName
 
-	self._cooldownTime = settings.Cooldown
-	self.value = settings.StartingValue
-	self.locked = settings.Locked
+	self.CooldownTime = settings.Cooldown
+	self.Value = settings.StartingValue
+	self.Locked = settings.Locked
 
 	self:_DisplayAnimFunc()
 
@@ -63,25 +64,25 @@ end
 ]=]
 
 function ArrowChange:Init() -- should be called only via Form:InitAll()
-	if self.initiated == false then
-		self.initiated = true
-		self.modelElements.Left.Activated:Connect(function()
-			if self.locked == false then
-				if self.actualIndex - 1 == 0 then
-					self.actualIndex = #self.values
+	if self.Initiated == false then
+		self.Initiated = true
+		self._ModelElements.Left.Activated:Connect(function()
+			if self.Locked == false then
+				if self.ActualIndex - 1 == 0 then
+					self.ActualIndex = #self.Values
 				else
-					self.actualIndex -= 1
+					self.ActualIndex -= 1
 				end
 				self:_DisplayAnimFunc()
 				self:_ExecuteActions()
 			end
 		end)
-		self.modelElements.Right.Activated:Connect(function()
-			if self.locked == false then
-				if self.actualIndex + 1 > #self.values then
-					self.actualIndex = 1
+		self._ModelElements.Right.Activated:Connect(function()
+			if self.Locked == false then
+				if self.ActualIndex + 1 > #self.Values then
+					self.ActualIndex = 1
 				else
-					self.actualIndex += 1
+					self.ActualIndex += 1
 				end
 				self:_DisplayAnimFunc()
 				self:_ExecuteActions()
@@ -97,16 +98,16 @@ end
 ]=]
 
 function ArrowChange:UpdateValues(values: any, index: number?)
-	if index == nil then index = self.actualIndex end
+	if index == nil then index = self.ActualIndex end
 
 	if index < 1 or index > #values then
 		index = 1
 	else
-		index = self.actualIndex
+		index = self.ActualIndex
 	end
 
-	self.values = values
-	self.actualIndex = index
+	self.Values = values
+	self.ActualIndex = index
 	self:_DisplayAnimFunc()
 	self:_ExecuteActions()
 end
@@ -118,7 +119,7 @@ end
 ]=]
 
 function ArrowChange:ReturnValues()
-	return self.values[self.actualIndex], self.idName
+	return self.Values[self.ActualIndex], self.IdName
 end
 
 --[=[
@@ -128,7 +129,7 @@ end
 ]=]
 
 function ArrowChange:LockStatus(status: boolean)
-	self.locked = status
+	self.Locked = status
 end
 
 --[=[
@@ -138,7 +139,7 @@ end
 ]=]
 
 function ArrowChange:Append(where: any)
-	self.model.Parent = where
+	self.Model.Parent = where
 end
 
 --[=[
@@ -148,7 +149,7 @@ end
 ]=]
 
 function ArrowChange:_DisplayAnimFunc() -- internal private function, do not call
-	self.modelElements.TextLabel.Text = self.values[self.actualIndex]
+	self._ModelElements.TextLabel.Text = self.Values[self.ActualIndex]
 end
 
 --[=[
@@ -158,7 +159,7 @@ end
 ]=]
 
 function ArrowChange:AddAction(actionName: string, action: any)
-	self.actions[actionName] = action
+	self.Actions[actionName] = action
 end
 
 --[=[
@@ -168,7 +169,7 @@ end
 ]=]
 
 function ArrowChange:RemoveAction(actionName: string)
-	table.remove(self.actions,actionName)
+	table.remove(self.Actions,actionName)
 end
 
 --[=[
@@ -178,30 +179,9 @@ end
 ]=]
 
 function ArrowChange:_ExecuteActions()
-	for index, action in self.actions do
+	for index, action in self.Actions do
 		action()
 	end
-end
-
-
---[=[
-	@within ArrowChange
-	@private
-	Private Function, should not be called.
-]=]
-
-function ArrowChange:_PerfectClone(trueModel: any, trueElements: {GuiObject}) -- internal private function, do not call (also; not quite perfect)
-	local model = trueModel:Clone()
-	local elements = {}
-	for index, element in trueElements do
-		local path = string.split(element,".")
-		local followedPath = model
-		for Index2, value in path do
-			followedPath = followedPath[value]
-		end
-		elements[index] = followedPath
-	end
-	return model, elements
 end
 
 --[=[
@@ -210,7 +190,7 @@ end
 ]=]
 
 function ArrowChange:Destroy()
-	self.model:Destroy()
+	self.Model:Destroy()
 	for _, value in self do
 		value = nil
 	end

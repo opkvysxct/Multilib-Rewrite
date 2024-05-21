@@ -5,10 +5,10 @@ local Lib = {}
 -- Core
 function Lib:TweenTable(table: {any}, time: number, style: Enum.EasingStyle, direction: Enum.EasingDirection, funcAfter: any?)
 	if style == nil then
-		style = self.defaultStyle
+		style = self.DefaultStyle
 	end
 	if direction == nil then
-		direction = self.defaultDirection
+		direction = self.DefaultDirection
 	end
 	for index, value in table do
 		TweenService:Create(index, TweenInfo.new(time, style, direction), value):Play()
@@ -20,10 +20,10 @@ end
 
 function Lib:TweenOnce(element: any, time: number, style: Enum.EasingStyle, direction: Enum.EasingDirection, funcAfter: any?)
 	if style == nil then
-		style = self.defaultStyle
+		style = self.DefaultStyle
 	end
 	if direction == nil then
-		direction = self.defaultDirection
+		direction = self.DefaultDirection
 	end
 	TweenService:Create(element[1], TweenInfo.new(time, style, direction), element[2]):Play()
 	if funcAfter ~= nil then
@@ -60,17 +60,17 @@ end]]--
 
 -- settings
 function Lib:SetDefaultStyle(style: any)
-	self.defaultStyle = style
+	self.DefaultStyle = style
 end
 
 function Lib:SetDefaultDirection(direction: any)
-	self.defaultDirection = direction
+	self.DefaultDirection = direction
 end
 
 -- End
 function Lib:Init(comments: boolean)
-	self.defaultStyle = Enum.EasingStyle.Quad
-	self.defaultDirection = Enum.EasingDirection.InOut
+	self.DefaultStyle = Enum.EasingStyle.Quad
+	self.DefaultDirection = Enum.EasingDirection.InOut
 	if comments then
 		warn("[Multilib-" .. script.Name .. "]", script.Name, "Lib Loaded & safe to use.")
 	end
