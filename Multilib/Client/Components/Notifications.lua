@@ -51,7 +51,7 @@ function Lib:_AppendSmallNotifLogic(title: string, description: string, imageID:
 	local model, elements = MInstance:PerfectClone(self.SmallNotifConfig.Template,self.SmallNotifConfig.TemplatePathes)
 	local heightBase = model.Size.Y.Scale
 	table.insert(self._SmallNotifs,{Model = model, Elements = elements})
-	for index, notif in ipairs(self._SmallNotifs) do
+	for index, notif in self._SmallNotifs do
 		local heighToUse = 1 - ((#self._SmallNotifs - index) * heightBase)
 		self.SmallNotifConfig.Animations.giveWay(notif.Model,notif.Elements, heighToUse)
 	end
@@ -94,13 +94,8 @@ function Lib:SetSmallNotifAnimations(anims: {any})
 	self.SmallNotifConfig.Animations = anims
 end
 
-function Lib:SetPadding(padding: number)
-	self.Padding = padding
-end
-
 -- End
 function Lib:Init(comments: boolean)
-	self.Padding = 0.01
 	self._Queue = {}
 	self.BigNotifConfig = {
 		WasConfigured = false,
@@ -139,7 +134,6 @@ function Lib:Init(comments: boolean)
 			end,
 			giveWay = function(model: GuiObject, elements: {GuiObject}, height: number)
 				TweenService:Create(model,TweenInfo.new(0.1,Enum.EasingStyle.Quad,Enum.EasingDirection.InOut),{Position = UDim2.fromScale(0,height)}):Play()
-				task.wait(0.1)
 			end
 		}
 	}
