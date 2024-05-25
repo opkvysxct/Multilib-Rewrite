@@ -13,11 +13,11 @@ RadioGroup.__index = RadioGroup
 	Constructor for RadioGroup object.
 ]=]
 
-function RadioGroup.new(idName: string)
+function RadioGroup.new(IdName: string)
 	local self = setmetatable({}, RadioGroup)
 	self.radioButtons = {}
 	self.Actions = {}
-	self.IdName = idName
+	self.IdName = IdName
 	self.selected = nil
 	return self
 end
@@ -36,8 +36,8 @@ end
 
 --[=[
 	@within RadioGroup
-	@return <string,string> -- [idName of selected and idName of the object]
-	Returns idName of selected and idName of the object.
+	@return <string,string> -- [IdName of selected and IdName of the object]
+	Returns IdName of selected and IdName of the object.
 ]=]
 
 function RadioGroup:ReturnValues()
@@ -54,7 +54,7 @@ end
 ]=]
 
 function RadioGroup:InsertElement(element: {any})
-	self.radioButtons[element.idName] = element
+	self.radioButtons[element.IdName] = element
 end
 
 --[=[
@@ -64,7 +64,7 @@ end
 
 function RadioGroup:InsertElements(elements: {any})
 	for index, element in elements do
-		self.radioButtons[element.idName] = element
+		self.radioButtons[element.IdName] = element
 	end
 end
 
@@ -137,7 +137,7 @@ end
 ]=]
 
 function RadioGroup:selectButton(radioButtonObject: {any})
-	self.selected = radioButtonObject.idName
+	self.selected = radioButtonObject.IdName
 	for index, radioButton in self.radioButtons do
 		if radioButton.isSelected == true and radioButton ~= radioButtonObject then
 			radioButton:selectionStatus(false)

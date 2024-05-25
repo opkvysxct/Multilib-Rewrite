@@ -15,7 +15,7 @@ ArrowChange.__index = ArrowChange
 	Constructor for ArrowChange object.
 ]=]
 
-function ArrowChange.new(model: any, elements: {GuiObject}, idName: string, settings: Mtypes.ArrowChange?)
+function ArrowChange.new(model: any, elements: {GuiObject}, IdName: string, settings: Mtypes.ArrowChange?)
 	local self = setmetatable({}, ArrowChange)
 
 	if settings == nil then settings = {} end
@@ -44,9 +44,9 @@ function ArrowChange.new(model: any, elements: {GuiObject}, idName: string, sett
 	self.ElementType = "ArrowChange"
 	self.Actions = {}
 
-	self.Model = model
-	self.Model.Name = idName
-	self.IdName = idName
+	self._Model = model
+	self._Model.Name = IdName
+	self.IdName = IdName
 
 	self.CooldownTime = settings.Cooldown
 	self.Value = settings.StartingValue
@@ -114,8 +114,8 @@ end
 
 --[=[
 	@within ArrowChange
-	@return <boolean,string> -- [value and idName of the object]
-	Returns value and idName of the object.
+	@return <boolean,string> -- [value and IdName of the object]
+	Returns value and IdName of the object.
 ]=]
 
 function ArrowChange:ReturnValues()
@@ -139,7 +139,7 @@ end
 ]=]
 
 function ArrowChange:Append(where: any)
-	self.Model.Parent = where
+	self._Model.Parent = where
 end
 
 --[=[
@@ -190,7 +190,7 @@ end
 ]=]
 
 function ArrowChange:Destroy()
-	self.Model:Destroy()
+	self._Model:Destroy()
 	for _, value in self do
 		value = nil
 	end

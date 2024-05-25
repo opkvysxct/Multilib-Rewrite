@@ -14,6 +14,10 @@ function Lib:SetBigNotifConfig(time: number, template: GuiObject)
 	self.BigNotifConfig.Template = template
 end
 
+function Lib:SetSmallNotifAnimations(anims: {})
+	
+end
+
 function Lib:SetPadding(padding: number)
 	self.Padding = padding
 end
@@ -24,10 +28,13 @@ function Lib:Init(comments: boolean)
 	self.SmallNotifConfig = {
 		Time = 4,
 		Template = nil,
+		Animations = {
+		}
 	}
 	self.BigNotifConfig = {
 		Time = 6,
 		Template = nil,
+		Animations = {}
 	}
 	if comments then
 		warn("[Multilib-" .. script.Name .. "]", script.Name, "Lib Loaded & safe to use.")

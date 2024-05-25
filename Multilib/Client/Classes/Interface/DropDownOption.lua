@@ -16,7 +16,7 @@ DropDownOption.__index = DropDownOption
 	Constructor for DropDownOption object.
 ]=]
 
-function DropDownOption.new(model: any, elements: {GuiObject}, idName: string, DropDownMenu: {any}, settings: Mtypes.DropDownOption?)
+function DropDownOption.new(model: any, elements: {GuiObject}, IdName: string, DropDownMenu: {any}, settings: Mtypes.DropDownOption?)
 	local self = setmetatable({}, DropDownOption)
 
 	if settings == nil then settings = {} end
@@ -36,15 +36,15 @@ function DropDownOption.new(model: any, elements: {GuiObject}, idName: string, D
 	self.ElementType = "DropDownOption"
 	self.IsSelected = false
 
-	self.Model = model
-	self.Model.Name = idName
-	self.IdName = idName
+	self._Model = model
+	self._Model.Name = IdName
+	self.IdName = IdName
 	self.DropDownMenu = DropDownMenu
 
 	self.CooldownTime = settings.Cooldown
 	self.Locked = settings.Locked
 
-	self._ModelElements.TextLabel.Text = idName
+	self._ModelElements.TextLabel.Text = IdName
 
 	return self
 end
@@ -89,7 +89,7 @@ end
 ]=]
 
 function DropDownOption:Append(where: any)
-	self.Model.Parent = where
+	self._Model.Parent = where
 end
 
 --[=[
@@ -108,7 +108,7 @@ end
 ]=]
 
 function DropDownOption:Destroy()
-	self.Model:Destroy()
+	self._Model:Destroy()
 	for index, value in self do
 		value = nil
 	end

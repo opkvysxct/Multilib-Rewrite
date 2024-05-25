@@ -13,69 +13,69 @@ Form.__index = Form
 	Constructor for Form object.
 ]=]
 
-function Form.new() -- mostly abstract class to manage other ui elements
+function Form.new() -- mostly abstract class to manage other ui Elements
 	local self = setmetatable({}, Form)
 	self.Data = {}
-	self.elements = {}
+	self.Elements = {}
 	return self
 end
 
 --[=[
 	@within Form
-	Inserts element into the Form.elements table.
+	Inserts element into the Form.Elements table.
 ]=]
 
 function Form:InsertElement(element: {any})
-	self.elements[element.idName] = element
+	self.Elements[element.IdName] = element
 end
 
 --[=[
 	@within Form
-	Inserts multiple elements into the Form.elements table.
+	Inserts multiple Elements into the Form.Elements table.
 ]=]
 
-function Form:InsertElements(elements: {any})
-	for index, element in elements do
-		self.elements[element.idName] = element
+function Form:InsertElements(Elements: {any})
+	for index, element in Elements do
+		self.Elements[element.IdName] = element
 	end
 end
 
 --[=[
 	@within Form
-	Removes element from the Form.elements table.
+	Removes element from the Form.Elements table.
 ]=]
 
 function Form:ClearElement(ElementName: string)
-	table.remove(self.elements,ElementName)
+	table.remove(self.Elements,ElementName)
 end
 
 --[=[
 	@within Form
-	Clears the Form.elements table.
+	Clears the Form.Elements table.
 ]=]
 
 function Form:ClearAllElements()
-	table.clear(self.elements)
+	table.clear(self.Elements)
 end
 
 --[=[
 	@within Form
-	Initializes all elements inside Form.elements table.
+	Initializes all Elements inside Form.Elements table.
 ]=]
 
-function Form:InitAll() -- Init all elements
-	for index, element in self.elements do
+function Form:InitAll() -- Init all Elements
+	for index, element in self.Elements do
 		element:Init()
 	end
 end
 
 --[=[
 	@within Form
-	Sets Parent for all elements inside Form.elements table.
+	Sets Parent for all Elements inside Form.Elements table.
 ]=]
 
 function Form:AppendAll(where: any) -- random order
-	for index, element in self.elements do
+	for index, element in self.Elements do
 		element:Append(where)
 	end
 end
@@ -98,7 +98,7 @@ end
 
 function Form:CollectData() -- collect and return all data
 	table.clear(self.Data)
-	for index, element in self.elements do
+	for index, element in self.Elements do
 		local value, Name = element:ReturnValues()
 		self.Data[Name] = value
 	end

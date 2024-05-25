@@ -18,7 +18,7 @@ Slider.__index = Slider
 	Constructor for Slider object.
 ]=]
 
-function Slider.new(model: any, elements: {GuiObject}, idName: string, settings: Mtypes.Slider?)
+function Slider.new(model: any, elements: {GuiObject}, IdName: string, settings: Mtypes.Slider?)
 	local self = setmetatable({}, Slider)
 
 	if settings == nil then settings = {} end
@@ -80,9 +80,9 @@ function Slider.new(model: any, elements: {GuiObject}, idName: string, settings:
 	self.ElementType = "Slider"
 	self.SubType = settings.ElementType
 	self.Actions = {}
-	self.Model = model
-	self.Model.Name = idName
-	self.IdName = idName
+	self._Model = model
+	self._Model.Name = IdName
+	self.IdName = IdName
 
 	self.CooldownTime = settings.Cooldown
 	self.Value = settings.StartingValue
@@ -129,11 +129,11 @@ function Slider:Init() -- should be called only via Form:InitAll()
 			local total:GuiObject = self._ModelElements.Total
 			local mousePos = UserInputService:GetMouseLocation()
 			local legitimatePositions = {
-				from = total.AbsolutePosition.X,
-				to = total.AbsolutePosition.X + total.AbsoluteSize.X
+				From = total.AbsolutePosition.X,
+				To = total.AbsolutePosition.X + total.AbsoluteSize.X
 			}
-			if mousePos.X > legitimatePositions.from and mousePos.X < legitimatePositions.to then
-				local legitimateValue = math.clamp((mousePos.X - legitimatePositions.from) / (legitimatePositions.to - legitimatePositions.from),0,1)
+			if mousePos.X > legitimatePositions.From and mousePos.X < legitimatePositions.To then
+				local legitimateValue = math.clamp((mousePos.X - legitimatePositions.From) / (legitimatePositions.To - legitimatePositions.From),0,1)
 				legitimateValue = legitimateValue * (self._MaxValue - self._MinValue) + self._MinValue
 				if legitimateValue < 0.5 then
 					legitimateValue = math.floor(legitimateValue)
@@ -152,10 +152,10 @@ function Slider:Init() -- should be called only via Form:InitAll()
 						Change(legitimateValue)
 					end
 				end
-			elseif mousePos.X < legitimatePositions.from then
+			elseif mousePos.X < legitimatePositions.From then
 				local LegitimateValue = self._MinValue
 				Change(LegitimateValue)
-			elseif mousePos.X > legitimatePositions.to then
+			elseif mousePos.X > legitimatePositions.To then
 				local LegitimateValue = self._MaxValue
 				Change(LegitimateValue)
 			end
@@ -231,8 +231,8 @@ end
 
 --[=[
 	@within Slider
-	@return <boolean,string> -- [value and idName of the object]
-	Returns value and idName of the object.
+	@return <boolean,string> -- [value and IdName of the object]
+	Returns value and IdName of the object.
 ]=]
 
 function Slider:ReturnValues()
@@ -256,7 +256,7 @@ end
 ]=]
 
 function Slider:Append(where: any)
-	self.Model.Parent = where
+	self._Model.Parent = where
 end
 
 --[=[
@@ -291,7 +291,7 @@ end
 ]=]
 
 function Slider:Destroy()
-	self.Model:Destroy()
+	self._Model:Destroy()
 	for index, value in self do
 		value = nil
 	end

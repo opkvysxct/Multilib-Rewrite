@@ -15,7 +15,7 @@ RadioButton.__index = RadioButton
 	Constructor for RadioButton object.
 ]=]
 
-function RadioButton.new(model: any, elements: {GuiObject}, idName: string, radioGroup: {any}, settings: Mtypes.RadioButton?)
+function RadioButton.new(model: any, elements: {GuiObject}, IdName: string, radioGroup: {any}, settings: Mtypes.RadioButton?)
 	local self = setmetatable({}, RadioButton)
 
 	if settings == nil then settings = {} end
@@ -36,9 +36,9 @@ function RadioButton.new(model: any, elements: {GuiObject}, idName: string, radi
 	self.ElementType = "RadioButton"
 	self.IsSelected = false
 
-	self.Model = model
-	self.Model.Name = idName
-	self.IdName = idName
+	self._Model = model
+	self._Model.Name = IdName
+	self.IdName = IdName
 	self.radioGroup = radioGroup
 
 	self.CooldownTime = settings.Cooldown
@@ -90,7 +90,7 @@ end
 ]=]
 
 function RadioButton:Append(where: any)
-	self.Model.Parent = where
+	self._Model.Parent = where
 end
 
 --[=[
@@ -120,7 +120,7 @@ end
 ]=]
 
 function RadioButton:Destroy()
-	self.Model:Destroy()
+	self._Model:Destroy()
 	for index, value in self do
 		value = nil
 	end

@@ -15,7 +15,7 @@ CheckBox.__index = CheckBox
 	Constructor for CheckBox object.
 ]=]
 
-function CheckBox.new(model: any, elements: {GuiObject}, idName: string, settings: Mtypes.CheckBox?)
+function CheckBox.new(model: any, elements: {GuiObject}, IdName: string, settings: Mtypes.CheckBox?)
 	local self = setmetatable({}, CheckBox)
 
 	if settings == nil then settings = {} end
@@ -36,9 +36,9 @@ function CheckBox.new(model: any, elements: {GuiObject}, idName: string, setting
 	self.ElementType = "Checkbox"
 	self.Actions = {}
 
-	self.Model = model
-	self.Model.Name = idName
-	self.IdName = idName
+	self._Model = model
+	self._Model.Name = IdName
+	self.IdName = IdName
 
 	self.CooldownTime = settings.Cooldown
 	self.Value = settings.StartingValue
@@ -78,8 +78,8 @@ end
 
 --[=[
 	@within CheckBox
-	@return <boolean,string> -- [value and idName of the object]
-	Returns value and idName of the object.
+	@return <boolean,string> -- [value and IdName of the object]
+	Returns value and IdName of the object.
 ]=]
 
 function CheckBox:ReturnValues()
@@ -103,7 +103,7 @@ end
 ]=]
 
 function CheckBox:Append(where: any)
-	self.Model.Parent = where
+	self._Model.Parent = where
 end
 
 --[=[
@@ -154,7 +154,7 @@ end
 ]=]
 
 function CheckBox:Destroy()
-	self.Model:Destroy()
+	self._Model:Destroy()
 	for index, value in self do
 		value = nil
 	end

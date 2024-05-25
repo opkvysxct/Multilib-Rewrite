@@ -26,8 +26,12 @@ function Lib:PerfectClone(trueModel: any, trueElements: {any})
 	for index, element in trueElements do
 		local path = string.split(element,"/")
 		local followedPath = model
-		for Index2, value in path do
-			followedPath = followedPath[value]
+		for _, value in path do
+			if followedPath:FindFirstChild(value) then
+				followedPath = followedPath[value]
+			else
+				error("[Multilib-" .. script.Name .. "]" .. " Path not found.")
+			end
 		end
 		elements[index] = followedPath
 	end

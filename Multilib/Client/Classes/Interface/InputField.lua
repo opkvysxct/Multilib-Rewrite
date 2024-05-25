@@ -15,7 +15,7 @@ InputField.__index = InputField
 	Constructor for InputField object.
 ]=]
 
-function InputField.new(model: any, elements: {GuiObject}, idName: string, settings: Mtypes.InputField?)
+function InputField.new(model: any, elements: {GuiObject}, IdName: string, settings: Mtypes.InputField?)
 	local self = setmetatable({}, InputField)
 
 	if settings == nil then settings = {} end
@@ -50,9 +50,9 @@ function InputField.new(model: any, elements: {GuiObject}, idName: string, setti
 	self.SubType = settings.ElementType
 	self.Actions = {}
 
-	self.Model = model
-	self.Model.Name = idName
-	self.IdName = idName
+	self._Model = model
+	self._Model.Name = IdName
+	self.IdName = IdName
 
 	self.CooldownTime = settings.Cooldown
 	self.Value = settings.StartingValue
@@ -107,8 +107,8 @@ end
 
 --[=[
 	@within InputField
-	@return <boolean,string> -- [value and idName of the object]
-	Returns value and idName of the object.
+	@return <boolean,string> -- [value and IdName of the object]
+	Returns value and IdName of the object.
 ]=]
 
 function InputField:ReturnValues()
@@ -133,7 +133,7 @@ end
 ]=]
 
 function InputField:Append(where: any)
-	self.Model.Parent = where
+	self._Model.Parent = where
 end
 
 --[=[
@@ -174,7 +174,7 @@ end
 ]=]
 
 function InputField:Destroy()
-	self.Model:Destroy()
+	self._Model:Destroy()
 	for index, value in self do
 		value = nil
 	end

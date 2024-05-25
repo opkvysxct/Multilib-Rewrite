@@ -17,7 +17,7 @@ DropDownMenu.__index = DropDownMenu
 	Constructor for DropDownMenu object.
 ]=]
 
-function DropDownMenu.new(model: any, elements: {GuiObject}, idName: string, DropDownOptions: {any}, settings: Mtypes.DropDownMenu?)
+function DropDownMenu.new(model: any, elements: {GuiObject}, IdName: string, DropDownOptions: {any}, settings: Mtypes.DropDownMenu?)
 	local self = setmetatable({}, DropDownMenu)
 
 	if settings == nil then settings = {} end
@@ -50,9 +50,9 @@ function DropDownMenu.new(model: any, elements: {GuiObject}, idName: string, Dro
 	self.SelectedValue = settings.SelectedValue
 	self.AnimSettings = settings.AnimSettings
 
-	self.Model = model
-	self.Model.Name = idName
-	self.IdName = idName
+	self._Model = model
+	self._Model.Name = IdName
+	self.IdName = IdName
 	self.DropDownOptionsSettings = DropDownOptions
 	self.DropDownOptions = {}
 
@@ -77,23 +77,25 @@ function DropDownMenu:Init() -- should be called only via Form:InitAll()
 		self.Initiated = true
 		local function CreateAndBind(value)
 			local DropDownOption = DropDownOption.new(
-				self.DropDownOptionsSettings.model,
-				self.DropDownOptionsSettings.elements,
+				self.DropDownOptionsSettings.Model,
+				self.DropDownOptionsSettings.Elements,
 				value,
 				self,
-				self.DropDownOptionsSettings.Settingsa
+				self.DropDownOptionsSettings.Settings
 			)
 			DropDownOption:Append(self._ModelElements.ScrollingFrame)
 			DropDownOption:Init()
 			table.insert(self.DropDownOptions,DropDownOption)
 		end
-		for index,value in pairs(self.Values) do
+		for _,value in pairs(self.Values) do
 			CreateAndBind(value)
 		end
+		local ScaleSub = self._ModelElements.UIListLayout.Padding.Scale / (#self.DropDownOptions * 0.1)
 		local ScrollingFrame = self._ModelElements.ScrollingFrame
-		for index,element in pairs(self.DropDownOptions) do
-			local SizeToSet = (1 / #self.DropDownOptions) - self._ModelElements.UIListLayout.Padding.Scale
-			element = element.model
+		for _,element in pairs(self.DropDownOptions) do
+			local SizeToSet = (1 / #self.DropDownOptions) - ScaleSub
+			element = element._Model
+
 			element.Size = UDim2.new(
 				element.Size.X.Scale,
 				element.Size.X.Offset,
@@ -101,8 +103,8 @@ function DropDownMenu:Init() -- should be called only via Form:InitAll()
 				element.Size.Y.Offset
 			)
 		end
-
 		local SizeToSet = (ScrollingFrame.CanvasSize.Y.Scale * (#self.DropDownOptions * 0.1))
+		self._ModelElements.UIListLayout.Padding = UDim.new(ScaleSub,0)
 		ScrollingFrame.CanvasSize = UDim2.new(
 			ScrollingFrame.CanvasSize.X.Scale,
 			ScrollingFrame.CanvasSize.X.Offset,
@@ -138,7 +140,7 @@ end
 ]=]
 
 function DropDownMenu:Append(where: any)
-	self.Model.Parent = where
+	self._Model.Parent = where
 end
 
 --[=[
@@ -213,7 +215,7 @@ end
 ]=]
 
 function DropDownMenu:InsertElement(element: {any})
-	self.RadioButtons[element.idName] = element
+	self.RadioButtons[element.IdName] = element
 end
 
 --[=[
@@ -223,7 +225,7 @@ end
 
 function DropDownMenu:InsertElements(elements: {any})
 	for index, element in pairs(elements) do
-		self.RadioButtons[element.idName] = element
+		self.RadioButtons[element.IdName] = element
 	end
 end
 
@@ -247,8 +249,8 @@ end
 
 --[=[
 	@within DropDownMenu
-	@return <boolean,string> -- [value and idName of the object]
-	Returns value and idName of the object.
+	@return <boolean,string> -- [value and IdName of the object]
+	Returns value and IdName of the object.
 ]=]
 
 function DropDownMenu:ReturnValues()
@@ -262,7 +264,7 @@ end
 ]=]
 
 function DropDownMenu:selectButton(DropDownObject: {any})
-	self.SelectedValue = DropDownObject.idName
+	self.SelectedValue = DropDownObject.IdName
 	self:_DisplayAnimFunc("ChangeLabel",self.SelectedValue)
 	self:_DisplayAnimFunc("Collapse")
 	self:_ExecuteActions()
@@ -274,7 +276,7 @@ end
 ]=]
 
 function DropDownMenu:Destroy()
-	self.Model:Destroy()
+	self._Model:Destroy()
 	for index, value in pairs(self) do
 		value = nil
 	end
