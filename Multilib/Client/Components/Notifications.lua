@@ -5,7 +5,6 @@ local Lib = {}
 -- Core
 function Lib:AppendBigNotif(title: string, description: string, imageID: number?)
 	if self.BigNotifConfig.WasConfigured == true then
-		print(self._Queue)
 		if #self._Queue == 0 then
 			table.insert(self._Queue,{Title = title, Description = description, ImageID = imageID})
 			self:_AppendBigNotifLogic(title, description, imageID)
@@ -52,7 +51,7 @@ function Lib:_AppendSmallNotifLogic(title: string, description: string, imageID:
 	local heightBase = model.Size.Y.Scale
 	table.insert(self._SmallNotifs,{Model = model, Elements = elements})
 	for index, notif in self._SmallNotifs do
-		local heighToUse = 1 - ((#self._SmallNotifs - index) * heightBase)
+		local heighToUse = self.SmallNotifConfig.PositionLogic(index,heightBase)
 		self.SmallNotifConfig.Animations.giveWay(notif.Model,notif.Elements, heighToUse)
 	end
 	elements.Title.Text = title
@@ -78,12 +77,15 @@ function Lib:SetBigNotifConfig(time: number, appearWhere: GuiObject, template: G
 	self.BigNotifConfig.WasConfigured = true
 end
 
-function Lib:SetSmallNotifConfig(time: number, appearWhere: GuiObject, template: GuiObject, templatePathes: {GuiObject})
+function Lib:SetSmallNotifConfig(time: number, appearWhere: GuiObject, template: GuiObject, templatePathes: {GuiObject}, positionLogic: any?)
 	self.SmallNotifConfig.Time = time
 	self.SmallNotifConfig.AppearWhere = appearWhere
 	self.SmallNotifConfig.Template = template
 	self.SmallNotifConfig.TemplatePathes = templatePathes
 	self.SmallNotifConfig.WasConfigured = true
+	if positionLogic then
+		self.SmallNotifConfig.PositionLogic = positionLogic
+	end
 end
 
 function Lib:SetBigNotifAnimations(anims: {any})
@@ -94,8 +96,13 @@ function Lib:SetSmallNotifAnimations(anims: {any})
 	self.SmallNotifConfig.Animations = anims
 end
 
+function Lib:SetPadding(padding: number)
+	self.Padding = padding
+end
+
 -- End
 function Lib:Init(comments: boolean)
+	self.Padding = 0.01
 	self._Queue = {}
 	self.BigNotifConfig = {
 		WasConfigured = false,
@@ -124,6 +131,7 @@ function Lib:Init(comments: boolean)
 		TemplatePathes = {},
 		Animations = {
 			appear = function(model: GuiObject, elements: {GuiObject})
+				model.Position = UDim2.fromScale(0,1)
 				elements.Wrapper.Position = UDim2.fromScale(-1,0)
 				TweenService:Create(elements.Wrapper,TweenInfo.new(0.1,Enum.EasingStyle.Quad,Enum.EasingDirection.InOut),{Position = UDim2.fromScale(0,0)}):Play()
 				task.wait(0.1)
@@ -135,7 +143,10 @@ function Lib:Init(comments: boolean)
 			giveWay = function(model: GuiObject, elements: {GuiObject}, height: number)
 				TweenService:Create(model,TweenInfo.new(0.1,Enum.EasingStyle.Quad,Enum.EasingDirection.InOut),{Position = UDim2.fromScale(0,height)}):Play()
 			end
-		}
+		},
+		PositionLogic = function(index: number, heightBase: number)
+			return 1 - (((#self._SmallNotifs - index) * heightBase) + (self.Padding * (#self._SmallNotifs - index)))
+		end
 	}
 	if comments then
 		warn("[Multilib-" .. script.Name .. "]", script.Name, "Lib Loaded & safe to use.")
