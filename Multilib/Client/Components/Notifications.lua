@@ -52,7 +52,7 @@ function Lib:_AppendSmallNotifLogic(title: string, description: string, imageID:
 	local heightBase = model.Size.Y.Scale
 	table.insert(self._SmallNotifs,{Model = model, Elements = elements})
 	for index, notif in ipairs(self._SmallNotifs) do
-		local heighToUse = (#self._SmallNotifs - index) * heightBase
+		local heighToUse = 1 - ((#self._SmallNotifs - index) * heightBase)
 		self.SmallNotifConfig.Animations.giveWay(notif.Model,notif.Elements, heighToUse)
 	end
 	elements.Title.Text = title
@@ -66,10 +66,6 @@ function Lib:_AppendSmallNotifLogic(title: string, description: string, imageID:
 		table.remove(self._SmallNotifs,1)
 		self.SmallNotifConfig.Animations.disappear(model,elements)
 		model:Destroy()
-		for index, notif in ipairs(self._SmallNotifs) do
-			local heighToUse = (#self._SmallNotifs - index) * heightBase
-			self.SmallNotifConfig.Animations.giveWay(notif.Model,notif.Elements, heighToUse)
-		end
 	end)
 end
 
@@ -134,12 +130,12 @@ function Lib:Init(comments: boolean)
 		Animations = {
 			appear = function(model: GuiObject, elements: {GuiObject})
 				elements.Wrapper.Position = UDim2.fromScale(-1,0)
-				TweenService:Create(elements.Wrapper,TweenInfo.new(0.5,Enum.EasingStyle.Quad,Enum.EasingDirection.InOut),{Position = UDim2.fromScale(0,0)}):Play()
-				task.wait(0.5)
+				TweenService:Create(elements.Wrapper,TweenInfo.new(0.1,Enum.EasingStyle.Quad,Enum.EasingDirection.InOut),{Position = UDim2.fromScale(0,0)}):Play()
+				task.wait(0.1)
 			end,
 			disappear = function(model: GuiObject, elements: {GuiObject})
-				TweenService:Create(elements.Wrapper,TweenInfo.new(0.5,Enum.EasingStyle.Quad,Enum.EasingDirection.InOut),{Position = UDim2.fromScale(-1,0)}):Play()
-				task.wait(0.5)
+				TweenService:Create(elements.Wrapper,TweenInfo.new(0.1,Enum.EasingStyle.Quad,Enum.EasingDirection.InOut),{Position = UDim2.fromScale(-1,0)}):Play()
+				task.wait(0.1)
 			end,
 			giveWay = function(model: GuiObject, elements: {GuiObject}, height: number)
 				TweenService:Create(model,TweenInfo.new(0.1,Enum.EasingStyle.Quad,Enum.EasingDirection.InOut),{Position = UDim2.fromScale(0,height)}):Play()
