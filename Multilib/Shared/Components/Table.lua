@@ -2,17 +2,9 @@ local Lib = {}
 
 -- Core
 
-function Lib:DictionaryFind(dictionary: {any}, requiredValue: any)
-	for index, value in dictionary do
-		if value == requiredValue then
-			return index
-		end
-	end
-end
-
-function Lib:DeepCopy(table: {any})
+function Lib:DeepCopy(tableToCopy: {any})
 	local copy = {}
-	for k, v in table do
+	for k, v in tableToCopy do
 		if type(v) == "table" then
 			v = self:DeepCopy(v)
 		end

@@ -20,6 +20,7 @@ local Multilib = {}
 	Multilib.Shared.C.Marketplace = require(script.Shared.Components.Marketplace)
 	Multilib.Shared.C.Math = require(script.Shared.Components.Math)
 	Multilib.Shared.C.Parallel = require(script.Shared.Components.Parallel)
+	Multilib.Shared.C.Player = require(script.Shared.Components.Player)
 	Multilib.Shared.C.Raycast = require(script.Shared.Components.Raycast)
 	Multilib.Shared.C.String = require(script.Shared.Components.String)
 	Multilib.Shared.C.Table = require(script.Shared.Components.Table)
@@ -30,6 +31,7 @@ local Multilib = {}
 	Multilib.Shared.CC = {}
 	Multilib.Shared.CC.DampedSpring = require(script.Shared.Classes.DampedSpring)
 	Multilib.Shared.CC.Observer = require(script.Shared.Classes.Observer)
+	Multilib.Shared.CC.ReasonTo = require(script.Shared.Classes.ReasonTo)
 	Multilib.Shared.CC.SimpleSpring = require(script.Shared.Classes.SimpleSpring)
 
 	--SERVER COMPONENTS

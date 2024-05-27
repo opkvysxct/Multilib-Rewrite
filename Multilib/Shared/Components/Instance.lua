@@ -125,7 +125,7 @@ function Lib:SetMinSoundTime(time: number)
 	self.MinSoundTime = time
 end
 
-function Lib:MinParticleTime(time: number)
+function Lib:SetMinParticleTime(time: number)
 	self.MinParticleTime = time
 end
 

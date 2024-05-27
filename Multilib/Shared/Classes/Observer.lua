@@ -22,6 +22,10 @@ function Observer:Set(value: any)
 	end
 end
 
+function Observer:ReturnValue()
+	return self.Value
+end
+
 function Observer:Connect(ConName: string, ConFunc: any)
 	if ConName == nil or ConFunc == nil then
 		warn("[Observer]", "No Name or Function passed")

@@ -113,12 +113,12 @@ function Lib:Init(comments: boolean)
 		Animations = {
 			appear = function(model: GuiObject, elements: {GuiObject})
 				model.GroupTransparency = 1
-				TweenService:Create(model,TweenInfo.new(0.5,Enum.EasingStyle.Quad,Enum.EasingDirection.InOut),{GroupTransparency = 0}):Play()
-				task.wait(0.5)
+				TweenService:Create(model,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.InOut),{GroupTransparency = 0}):Play()
+				task.wait(0.25)
 			end,
 			disappear = function(model: GuiObject, elements: {GuiObject})
-				TweenService:Create(model,TweenInfo.new(0.5,Enum.EasingStyle.Quad,Enum.EasingDirection.InOut),{GroupTransparency = 1}):Play()
-				task.wait(0.5)
+				TweenService:Create(model,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.InOut),{GroupTransparency = 1}):Play()
+				task.wait(0.25)
 			end
 		}
 	}
