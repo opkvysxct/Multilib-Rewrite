@@ -15,10 +15,10 @@ RadioGroup.__index = RadioGroup
 
 function RadioGroup.new(IdName: string)
 	local self = setmetatable({}, RadioGroup)
-	self.radioButtons = {}
+	self.RadioButtons = {}
 	self.Actions = {}
 	self.IdName = IdName
-	self.selected = nil
+	self.Selected = nil
 	return self
 end
 
@@ -29,20 +29,20 @@ end
 ]=]
 
 function RadioGroup:Init() -- should be called only via Form:InitAll()
-	for index, radioButton in self.radioButtons do
+	for index, radioButton in self.RadioButtons do
 		radioButton:Init()
 	end
 end
 
 --[=[
 	@within RadioGroup
-	@return <string,string> -- [IdName of selected and IdName of the object]
-	Returns IdName of selected and IdName of the object.
+	@return <string,string> -- [IdName of Selected and IdName of the object]
+	Returns IdName of Selected and IdName of the object.
 ]=]
 
 function RadioGroup:ReturnValues()
-	if self.selected ~= nil then
-		return self.selected, self.IdName
+	if self.Selected ~= nil then
+		return self.Selected, self.IdName
 	else
 		return false, self.IdName
 	end
@@ -54,7 +54,7 @@ end
 ]=]
 
 function RadioGroup:InsertElement(element: {any})
-	self.radioButtons[element.IdName] = element
+	self.RadioButtons[element.IdName] = element
 end
 
 --[=[
@@ -64,7 +64,7 @@ end
 
 function RadioGroup:InsertElements(elements: {any})
 	for index, element in elements do
-		self.radioButtons[element.IdName] = element
+		self.RadioButtons[element.IdName] = element
 	end
 end
 
@@ -74,7 +74,7 @@ end
 ]=]
 
 function RadioGroup:ClearElement(ElementName: string)
-	table.remove(self.radioButtons,ElementName)
+	table.remove(self.RadioButtons,ElementName)
 end
 
 --[=[
@@ -83,7 +83,7 @@ end
 ]=]
 
 function RadioGroup:ClearAllElements()
-	table.clear(self.radioButtons)
+	table.clear(self.RadioButtons)
 end
 
 --[=[
@@ -92,7 +92,7 @@ end
 ]=]
 
 function RadioGroup:Append(where: any)
-	for index, radioButton in self.radioButtons do
+	for index, radioButton in self.RadioButtons do
 		radioButton:Append(where)
 	end
 end
@@ -137,8 +137,8 @@ end
 ]=]
 
 function RadioGroup:selectButton(radioButtonObject: {any})
-	self.selected = radioButtonObject.IdName
-	for index, radioButton in self.radioButtons do
+	self.Selected = radioButtonObject.IdName
+	for index, radioButton in self.RadioButtons do
 		if radioButton.isSelected == true and radioButton ~= radioButtonObject then
 			radioButton:selectionStatus(false)
 		end

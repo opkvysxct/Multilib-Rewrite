@@ -20,7 +20,7 @@ function Lib:ReturnCharacterByPart(part: Instance)
 end
 
 
--- settings
+-- useSettings
 function Lib:SetCustomValue(value: string)
 	self.CustomValue = value
 end

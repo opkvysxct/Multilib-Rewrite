@@ -15,13 +15,13 @@ CheckBox.__index = CheckBox
 	Constructor for CheckBox object.
 ]=]
 
-function CheckBox.new(model: any, elements: {GuiObject}, IdName: string, settings: Mtypes.CheckBox?)
+function CheckBox.new(model: any, elements: {GuiObject}, IdName: string, useSettings: Mtypes.CheckBox?)
 	local self = setmetatable({}, CheckBox)
 
-	if settings == nil then settings = {} end
-	if settings.Locked == nil then settings.Locked = false end
-	if settings.Cooldown == nil then settings.Cooldown = 0.25 end
-	if settings.OverrideDisplayAnimation ~= nil then self._DisplayAnimFunc = settings.OverrideDisplayAnimation end
+	if useSettings == nil then useSettings = {} end
+	if useSettings.Locked == nil then useSettings.Locked = false end
+	if useSettings.Cooldown == nil then useSettings.Cooldown = 0.25 end
+	if useSettings.OverrideDisplayAnimation ~= nil then self._DisplayAnimFunc = useSettings.OverrideDisplayAnimation end
 
 	local model, elements = MInstance:PerfectClone(model,elements)
 
@@ -40,9 +40,9 @@ function CheckBox.new(model: any, elements: {GuiObject}, IdName: string, setting
 	self._Model.Name = IdName
 	self.IdName = IdName
 
-	self.CooldownTime = settings.Cooldown
-	self.Value = settings.StartingValue
-	self.Locked = settings.Locked
+	self.CooldownTime = useSettings.Cooldown
+	self.Value = useSettings.StartingValue
+	self.Locked = useSettings.Locked
 
 	return self
 end

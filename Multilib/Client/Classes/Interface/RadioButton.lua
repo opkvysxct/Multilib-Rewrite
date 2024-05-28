@@ -15,13 +15,13 @@ RadioButton.__index = RadioButton
 	Constructor for RadioButton object.
 ]=]
 
-function RadioButton.new(model: any, elements: {GuiObject}, IdName: string, radioGroup: {any}, settings: Mtypes.RadioButton?)
+function RadioButton.new(model: any, elements: {GuiObject}, IdName: string, radioGroup: {any}, useSettings: Mtypes.RadioButton?)
 	local self = setmetatable({}, RadioButton)
 
-	if settings == nil then settings = {} end
-	if settings.Locked == nil then settings.Locked = false end
-	if settings.Cooldown == nil then settings.Cooldown = 0.25 end
-	if settings.OverrideDisplayAnimation ~= nil then self._DisplayAnimFunc = settings.OverrideDisplayAnimation end
+	if useSettings == nil then useSettings = {} end
+	if useSettings.Locked == nil then useSettings.Locked = false end
+	if useSettings.Cooldown == nil then useSettings.Cooldown = 0.25 end
+	if useSettings.OverrideDisplayAnimation ~= nil then self._DisplayAnimFunc = useSettings.OverrideDisplayAnimation end
 
 	local model, elements = MInstance:PerfectClone(model,elements)
 
@@ -41,8 +41,8 @@ function RadioButton.new(model: any, elements: {GuiObject}, IdName: string, radi
 	self.IdName = IdName
 	self.radioGroup = radioGroup
 
-	self.CooldownTime = settings.Cooldown
-	self.Locked = settings.Locked
+	self.CooldownTime = useSettings.Cooldown
+	self.Locked = useSettings.Locked
 
 	self.radioGroup:InsertElement(self)
 	self:_DisplayAnimFunc(false)

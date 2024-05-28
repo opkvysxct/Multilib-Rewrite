@@ -39,7 +39,7 @@ function Lib:Ray(from: any, to: any, strength: number, params: any)
 	end
 end
 
--- settings
+-- useSettings
 function Lib:SetDefaultParams(params: any)
 	local typeofParams = typeof(params)
 	local newParams

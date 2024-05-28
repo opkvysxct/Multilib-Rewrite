@@ -120,7 +120,7 @@ function Lib:Animation(id: number, animator: Instance)
 	return animator:LoadAnimation(Animation)
 end
 
--- settings
+-- useSettings
 function Lib:SetMinSoundTime(time: number)
 	self.MinSoundTime = time
 end

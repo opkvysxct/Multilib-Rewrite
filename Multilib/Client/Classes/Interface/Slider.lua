@@ -18,56 +18,56 @@ Slider.__index = Slider
 	Constructor for Slider object.
 ]=]
 
-function Slider.new(model: any, elements: {GuiObject}, IdName: string, settings: Mtypes.Slider?)
+function Slider.new(model: any, elements: {GuiObject}, IdName: string, useSettings: Mtypes.Slider?)
 	local self = setmetatable({}, Slider)
 
-	if settings == nil then settings = {} end
-	if settings.ElementType == nil then settings.ElementType = "Numeric" end
-	if settings.SliderArea == nil then settings.SliderArea = 1.25 end
-	if settings.ElementType == "Numeric" then
-		if settings.StartingValue == nil then
-			settings.StartingValue = 50
-			self.startingValue = settings.StartingValue
+	if useSettings == nil then useSettings = {} end
+	if useSettings.Type == nil then useSettings.Type = "Numeric" end
+	if useSettings.SliderArea == nil then useSettings.SliderArea = 1.25 end
+	if useSettings.Type == "Numeric" then
+		if useSettings.StartingValue == nil then
+			useSettings.StartingValue = 50
+			self.startingValue = useSettings.StartingValue
 		else
-			self.startingValue = settings.StartingValue
+			self.startingValue = useSettings.StartingValue
 		end
-		if settings.MinValue == nil then
-			settings.MinValue = 0
-			self._MinValue = settings.MinValue
+		if useSettings.MinValue == nil then
+			useSettings.MinValue = 0
+			self._MinValue = useSettings.MinValue
 		else
-			self._MinValue = settings.MinValue
+			self._MinValue = useSettings.MinValue
 		end
-		if settings.MaxValue == nil then
-			settings.MaxValue = 100
-			self._MaxValue = settings.MaxValue
+		if useSettings.MaxValue == nil then
+			useSettings.MaxValue = 100
+			self._MaxValue = useSettings.MaxValue
 		else
-			self._MaxValue = settings.MaxValue
+			self._MaxValue = useSettings.MaxValue
 		end
-		if settings.StepBy == nil then
-			settings.StepBy = 5
-			self._StepBy = settings.StepBy
+		if useSettings.StepBy == nil then
+			useSettings.StepBy = 5
+			self._StepBy = useSettings.StepBy
 		else
-			self._StepBy = settings.StepBy
+			self._StepBy = useSettings.StepBy
 		end
-	elseif settings.ElementType == "Text" then
-		if settings.TextValues == nil then
-			settings.TextValues = {"FirstValue","startingValue","LastValue"}
-			self._TextValues = settings.TextValues
+	elseif useSettings.Type == "Text" then
+		if useSettings.TextValues == nil then
+			useSettings.TextValues = {"FirstValue","startingValue","LastValue"}
+			self._TextValues = useSettings.TextValues
 		else
-			self._TextValues = settings.TextValues
+			self._TextValues = useSettings.TextValues
 		end
-		if settings.StartingValue == nil then
-			settings.StartingValue = settings.TextValues[1]
-			self.startingValue = settings.StartingValue
+		if useSettings.StartingValue == nil then
+			useSettings.StartingValue = useSettings.TextValues[1]
+			self.startingValue = useSettings.StartingValue
 		else
-			self.startingValue = settings.StartingValue
+			self.startingValue = useSettings.StartingValue
 		end
 		self._StepBy =  1
 		self._MinValue = 0
-		self._MaxValue = #settings.TextValues - 1
+		self._MaxValue = #useSettings.TextValues - 1
 	end
 
-	if settings.Locked == nil then settings.Locked = false end
+	if useSettings.Locked == nil then useSettings.Locked = false end
 
 	local model, elements = MInstance:PerfectClone(model,elements)
 
@@ -78,15 +78,15 @@ function Slider.new(model: any, elements: {GuiObject}, IdName: string, settings:
 
 	self.Initiated = false
 	self.ElementType = "Slider"
-	self.SubType = settings.ElementType
+	self.SubType = useSettings.Type
 	self.Actions = {}
 	self._Model = model
 	self._Model.Name = IdName
 	self.IdName = IdName
 
-	self.CooldownTime = settings.Cooldown
-	self.Value = settings.StartingValue
-	self.Locked = settings.Locked
+	self.CooldownTime = useSettings.Cooldown
+	self.Value = useSettings.StartingValue
+	self.Locked = useSettings.Locked
 	self.IsActive = false
 
 	self._ModelElements.Drag.AnchorPoint = Vector2.new(0.5,0.5)
@@ -94,7 +94,7 @@ function Slider.new(model: any, elements: {GuiObject}, IdName: string, settings:
 	self._ModelElements.MobileDetect = Instance.new("Frame")
 	self._ModelElements.MobileDetect.AnchorPoint = Vector2.new(0.5,0.5)
 	self._ModelElements.MobileDetect.Position = UDim2.fromScale(0.5,0.5)
-	self._ModelElements.MobileDetect.Size = UDim2.fromScale(settings.SliderArea,settings.SliderArea)
+	self._ModelElements.MobileDetect.Size = UDim2.fromScale(useSettings.SliderArea,useSettings.SliderArea)
 	self._ModelElements.MobileDetect.BackgroundTransparency = 1
 	self._ModelElements.MobileDetect.ZIndex = math.huge
 	self._ModelElements.MobileDetect.Name = "MobileDetect"
@@ -170,7 +170,7 @@ function Slider:Init() -- should be called only via Form:InitAll()
 		self._ModelElements.Drag.InputBegan:Connect(function(input)
 			if Allow(input) then
 				self.IsActive = true
-				RunService:BindToRenderStep(self.IdName .. "SliderFunc",Enum.RenderPriority.Input.value,Update)
+				RunService:BindToRenderStep(self.IdName .. "SliderFunc",Enum.RenderPriority.Input.Value,Update)
 			end
 		end)
 
@@ -184,7 +184,7 @@ function Slider:Init() -- should be called only via Form:InitAll()
 		self._ModelElements.MobileDetect.InputBegan:Connect(function(input)
 			if Allow(input) then
 				self.IsActive = true
-				RunService:BindToRenderStep(self.IdName .. "SliderFunc",Enum.RenderPriority.Input.value,Update)
+				RunService:BindToRenderStep(self.IdName .. "SliderFunc",Enum.RenderPriority.Input.Value,Update)
 			end
 		end)
 
@@ -276,7 +276,7 @@ function Slider:_DisplayAnimFunc(value: number) -- internal private function, do
 	local progressBar:GuiObject = self._ModelElements.ProgressBar
 	local showText:GuiObject = self._ModelElements.ShowText
 	local tweenInfoToUse = TweenInfo.new(0.05,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut)
-	TweenService:Create(drag,tweenInfoToUse,{position = UDim2.fromScale(ConvertToAbsolute(value) / 100,0.5)}):Play()
+	TweenService:Create(drag,tweenInfoToUse,{Position = UDim2.fromScale(ConvertToAbsolute(value) / 100,0.5)}):Play()
 	TweenService:Create(progressBar,tweenInfoToUse,{Size = UDim2.fromScale(ConvertToAbsolute(value	) / 100,1)}):Play()
 	if self.SubType == "Numeric" then
 		showText.Text = value

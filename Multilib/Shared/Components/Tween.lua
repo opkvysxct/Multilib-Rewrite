@@ -58,7 +58,7 @@ function Lib:TweenAndReturn(element: any, time: number, style, direction, funcAf
 	self:TweenOnce({element[1], InitData}, time, style, direction, funcAfter)
 end]]--
 
--- settings
+-- useSettings
 function Lib:SetDefaultStyle(style: any)
 	self.DefaultStyle = style
 end

@@ -5,7 +5,7 @@ function Lib:ReturnCustomValue()
 	return self.CustomValue
 end
 
--- settings
+-- useSettings
 function Lib:SetCustomValue(value: string)
 	self.CustomValue = value
 end

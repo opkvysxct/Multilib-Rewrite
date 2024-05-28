@@ -28,7 +28,7 @@ function Lib:Error(Script: Script, Content: any, Force: boolean?)
 	end
 end
 
--- settings
+-- useSettings
 function Lib:LoggerSetter(value: boolean)
 	self.IsEnabled = value
 end

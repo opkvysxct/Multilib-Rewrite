@@ -16,12 +16,12 @@ DropDownOption.__index = DropDownOption
 	Constructor for DropDownOption object.
 ]=]
 
-function DropDownOption.new(model: any, elements: {GuiObject}, IdName: string, DropDownMenu: {any}, settings: Mtypes.DropDownOption?)
+function DropDownOption.new(model: any, elements: {GuiObject}, IdName: string, DropDownMenu: {any}, useSettings: Mtypes.DropDownOption?)
 	local self = setmetatable({}, DropDownOption)
 
-	if settings == nil then settings = {} end
-	if settings.Locked == nil then settings.Locked = false end
-	if settings.Cooldown == nil then settings.Cooldown = 0.25 end
+	if useSettings == nil then useSettings = {} end
+	if useSettings.Locked == nil then useSettings.Locked = false end
+	if useSettings.Cooldown == nil then useSettings.Cooldown = 0.25 end
 
 	local model, elements = MInstance:PerfectClone(model,elements)
 
@@ -41,8 +41,8 @@ function DropDownOption.new(model: any, elements: {GuiObject}, IdName: string, D
 	self.IdName = IdName
 	self.DropDownMenu = DropDownMenu
 
-	self.CooldownTime = settings.Cooldown
-	self.Locked = settings.Locked
+	self.CooldownTime = useSettings.Cooldown
+	self.Locked = useSettings.Locked
 
 	self._ModelElements.TextLabel.Text = IdName
 

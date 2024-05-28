@@ -15,15 +15,15 @@ InputField.__index = InputField
 	Constructor for InputField object.
 ]=]
 
-function InputField.new(model: any, elements: {GuiObject}, IdName: string, settings: Mtypes.InputField?)
+function InputField.new(model: any, elements: {GuiObject}, IdName: string, useSettings: Mtypes.InputField?)
 	local self = setmetatable({}, InputField)
 
-	if settings == nil then settings = {} end
-	if settings.Locked == nil then settings.Locked = false end
-	if settings.Cooldown == nil then settings.Cooldown = 0.25 end
-	if settings.ElementType == nil then settings.ElementType = "Numeric" end
-	if settings.PlaceholderText == nil then settings.PlaceholderText = "Input" end
-	if settings.Lenght == nil then settings.Lenght = 10 end
+	if useSettings == nil then useSettings = {} end
+	if useSettings.Locked == nil then useSettings.Locked = false end
+	if useSettings.Cooldown == nil then useSettings.Cooldown = 0.25 end
+	if useSettings.ElementType == nil then useSettings.ElementType = "Numeric" end
+	if useSettings.PlaceholderText == nil then useSettings.PlaceholderText = "Input" end
+	if useSettings.Lenght == nil then useSettings.Lenght = 10 end
 
 	local model, elements = MInstance:PerfectClone(model,elements)
 
@@ -32,31 +32,31 @@ function InputField.new(model: any, elements: {GuiObject}, IdName: string, setti
 		self._ModelElements[index] = value
 	end
 
-	if settings.ElementType == "Numeric" then
+	if useSettings.ElementType == "Numeric" then
 		self.allowedCharacters = "1234567890"
-	elseif settings.ElementType == "Text" then
+	elseif useSettings.ElementType == "Text" then
 		self.allowedCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	else
-		if settings.customCharacters == nil then settings.customCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890" end
-		self.allowedCharacters = settings.customCharacters
+		if useSettings.CustomCharacters == nil then useSettings.CustomCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890" end
+		self.allowedCharacters = useSettings.CustomCharacters
 	end
 
-	self._ModelElements.Input.placeholderText = settings.PlaceholderText
+	self._ModelElements.Input.placeholderText = useSettings.PlaceholderText
 
 	self._IsCooldown = false
 	self.Initiated = false
 	self.ElementType = "InputField"
-	self.lenght = settings.Lenght
-	self.SubType = settings.ElementType
+	self.Lenght = useSettings.Lenght
+	self.SubType = useSettings.ElementType
 	self.Actions = {}
 
 	self._Model = model
 	self._Model.Name = IdName
 	self.IdName = IdName
 
-	self.CooldownTime = settings.Cooldown
-	self.Value = settings.StartingValue
-	self.Locked = settings.Locked
+	self.CooldownTime = useSettings.Cooldown
+	self.Value = useSettings.StartingValue
+	self.Locked = useSettings.Locked
 
 	return self
 end
@@ -77,9 +77,9 @@ function InputField:Init() -- should be called only via Form:InitAll()
 			if Property == "Text" then
 				local Text = self._ModelElements.Input.Text
 				Text = string.split(Text,"")
-				if #Text > self.lenght then -- lenght Checker
+				if #Text > self.Lenght then -- Lenght Checker
 					local NewText = {}
-					for index = 1, self.lenght do
+					for index = 1, self.Lenght do
 						NewText[index] = Text[index]
 					end
 					Text = NewText

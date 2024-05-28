@@ -17,21 +17,21 @@ DropDownMenu.__index = DropDownMenu
 	Constructor for DropDownMenu object.
 ]=]
 
-function DropDownMenu.new(model: any, elements: {GuiObject}, IdName: string, DropDownOptions: {any}, settings: Mtypes.DropDownMenu?)
+function DropDownMenu.new(model: any, elements: {GuiObject}, IdName: string, DropDownOptions: {any}, useSettings: Mtypes.DropDownMenu?)
 	local self = setmetatable({}, DropDownMenu)
 
-	if settings == nil then settings = {} end
-	if settings.Locked == nil then settings.Locked = false end
-	if settings.Cooldown == nil then settings.Cooldown = 0.25 end
-	if settings.Values == nil then settings.Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+	if useSettings == nil then useSettings = {} end
+	if useSettings.Locked == nil then useSettings.Locked = false end
+	if useSettings.Cooldown == nil then useSettings.Cooldown = 0.25 end
+	if useSettings.Values == nil then useSettings.Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
 	"eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen",
 	"eighteen", "nineteen", "twenty", "twenty-one", "twenty-two", "twenty-three",
 	"twenty-four", "twenty-five", "twenty-six", "twenty-seven", "twenty-eight",
 	"twenty-nine", "thirty"} end
-	if settings.SelectedValue == nil then settings.SelectedValue = settings.Values[1] end
-	if settings.AnimSettings == nil then settings.AnimSettings = {Time = 0.25,Height = 2} end
+	if useSettings.SelectedValue == nil then useSettings.SelectedValue = useSettings.Values[1] end
+	if useSettings.AnimSettings == nil then useSettings.AnimSettings = {Time = 0.25,Height = 2} end
 
-	if settings.OverrideDisplayAnimation ~= nil then self._DisplayAnimFunc = settings.OverrideDisplayAnimation end
+	if useSettings.OverrideDisplayAnimation ~= nil then self._DisplayAnimFunc = useSettings.OverrideDisplayAnimation end
 
 	local model, elements = MInstance:PerfectClone(model,elements)
 
@@ -39,16 +39,16 @@ function DropDownMenu.new(model: any, elements: {GuiObject}, IdName: string, Dro
 	for index, value in pairs(elements) do
 		self._ModelElements[index] = value
 	end
-	if settings.CanvasSize == nil then settings.CanvasSize = self._ModelElements.ScrollingFrame.Size.Y.Scale * 2 end
-	self._ModelElements.ScrollingFrame.CanvasSize = UDim2.fromScale(0,settings.CanvasSize)
+	if useSettings.CanvasSize == nil then useSettings.CanvasSize = self._ModelElements.ScrollingFrame.Size.Y.Scale * 2 end
+	self._ModelElements.ScrollingFrame.CanvasSize = UDim2.fromScale(0,useSettings.CanvasSize)
 
 	self.Actions = {}
 	self._IsCooldown = false
 	self.Initiated = false
 	self.IsOpen = false
 	self.ElementType = "DropDownMenu"
-	self.SelectedValue = settings.SelectedValue
-	self.AnimSettings = settings.AnimSettings
+	self.SelectedValue = useSettings.SelectedValue
+	self.AnimSettings = useSettings.AnimSettings
 
 	self._Model = model
 	self._Model.Name = IdName
@@ -56,9 +56,9 @@ function DropDownMenu.new(model: any, elements: {GuiObject}, IdName: string, Dro
 	self.DropDownOptionsSettings = DropDownOptions
 	self.DropDownOptions = {}
 
-	self.CooldownTime = settings.Cooldown
-	self.Locked = settings.Locked
-	self.Values = settings.Values
+	self.CooldownTime = useSettings.Cooldown
+	self.Locked = useSettings.Locked
+	self.Values = useSettings.Values
 
 	self:_DisplayAnimFunc("ChangeLabel",self.SelectedValue)
 	self:_DisplayAnimFunc("Collapse",nil,true)
