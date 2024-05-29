@@ -27,9 +27,9 @@ function Slider.new(model: any, elements: {GuiObject}, IdName: string, useSettin
 	if useSettings.Type == "Numeric" then
 		if useSettings.StartingValue == nil then
 			useSettings.StartingValue = 50
-			self.startingValue = useSettings.StartingValue
+			self._StartingValue = useSettings.StartingValue
 		else
-			self.startingValue = useSettings.StartingValue
+			self._StartingValue = useSettings.StartingValue
 		end
 		if useSettings.MinValue == nil then
 			useSettings.MinValue = 0
@@ -58,9 +58,9 @@ function Slider.new(model: any, elements: {GuiObject}, IdName: string, useSettin
 		end
 		if useSettings.StartingValue == nil then
 			useSettings.StartingValue = useSettings.TextValues[1]
-			self.startingValue = useSettings.StartingValue
+			self._StartingValue = useSettings.StartingValue
 		else
-			self.startingValue = useSettings.StartingValue
+			self._StartingValue = useSettings.StartingValue
 		end
 		self._StepBy =  1
 		self._MinValue = 0

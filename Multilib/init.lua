@@ -70,7 +70,7 @@ local Multilib = {}
 		for _, Component in self.Server.C do
 			Component:Init(comments)
 		end
-	end
+	 end
 
 	function Multilib:InitClient(comments: boolean)
 		for _, Component in self.Shared.C do

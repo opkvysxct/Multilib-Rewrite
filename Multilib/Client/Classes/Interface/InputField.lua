@@ -33,12 +33,12 @@ function InputField.new(model: any, elements: {GuiObject}, IdName: string, useSe
 	end
 
 	if useSettings.ElementType == "Numeric" then
-		self.allowedCharacters = "1234567890"
+		self.AllowedCharacters = "1234567890"
 	elseif useSettings.ElementType == "Text" then
-		self.allowedCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+		self.AllowedCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	else
 		if useSettings.CustomCharacters == nil then useSettings.CustomCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890" end
-		self.allowedCharacters = useSettings.CustomCharacters
+		self.AllowedCharacters = useSettings.CustomCharacters
 	end
 
 	self._ModelElements.Input.placeholderText = useSettings.PlaceholderText
@@ -84,7 +84,7 @@ function InputField:Init() -- should be called only via Form:InitAll()
 					end
 					Text = NewText
 				end
-				local Allowed = string.split(self.allowedCharacters,"")
+				local Allowed = string.split(self.AllowedCharacters,"")
 				local NewText = Text
 				for index, Letter in Text do
 					if not table.find(Allowed,Letter) then
