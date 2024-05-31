@@ -277,9 +277,7 @@ end
 
 function DropDownMenu:Destroy()
 	self._Model:Destroy()
-	for index, value in pairs(self) do
-		value = nil
-	end
+	self = nil
 end
 
 

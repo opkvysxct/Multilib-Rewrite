@@ -111,9 +111,7 @@ end
 ]=]
 
 function Form:Destroy()
-	for index, value in self do
-		value = nil
-	end
+	self = nil
 end
 
 

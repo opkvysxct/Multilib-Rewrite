@@ -42,7 +42,7 @@ function ReasonTo:CanProceed()
 end
 
 function ReasonTo:Destroy()
-	
+	self = nil
 end
 
 

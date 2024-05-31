@@ -46,6 +46,7 @@ local Multilib = {}
 	--CLIENT COMPONENTS
 	Multilib.Client = {}
 	Multilib.Client.C = {}
+	Multilib.Client.C.Alers = require(script.Client.Components.Alerts)
 	Multilib.Client.C.CustomClient = require(script.Client.Components.CustomClient)
 	Multilib.Client.C.Notifications = require(script.Client.Components.Notifications)
 	Multilib.Client.C.PlayerAdditions = require(script.Client.Components.PlayerAdditions)

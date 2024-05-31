@@ -292,9 +292,7 @@ end
 
 function Slider:Destroy()
 	self._Model:Destroy()
-	for index, value in self do
-		value = nil
-	end
+	self = nil
 end
 
 

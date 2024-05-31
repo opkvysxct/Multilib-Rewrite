@@ -191,9 +191,7 @@ end
 
 function ArrowChange:Destroy()
 	self._Model:Destroy()
-	for _, value in self do
-		value = nil
-	end
+	self = nil
 end
 
 

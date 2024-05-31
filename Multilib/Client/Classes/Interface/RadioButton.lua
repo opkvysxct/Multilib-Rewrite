@@ -121,9 +121,7 @@ end
 
 function RadioButton:Destroy()
 	self._Model:Destroy()
-	for index, value in self do
-		value = nil
-	end
+	self = nil
 end
 
 
