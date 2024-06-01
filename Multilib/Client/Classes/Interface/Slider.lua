@@ -291,6 +291,7 @@ end
 ]=]
 
 function Slider:Destroy()
+	RunService:UnbindFromRenderStep(self.IdName .. "SliderFunc")
 	self._Model:Destroy()
 	self = nil
 end

@@ -56,6 +56,7 @@ local Multilib = {}
 	Multilib.Client.CC.Interface = {}
 	Multilib.Client.CC.Interface.ArrowChange = require(script.Client.Classes.Interface.ArrowChange)
 	Multilib.Client.CC.Interface.CheckBox = require(script.Client.Classes.Interface.CheckBox)
+	Multilib.Client.CC.Interface.Draggable = require(script.Client.Classes.Interface.Draggable)
 	Multilib.Client.CC.Interface.DropDownMenu = require(script.Client.Classes.Interface.DropDownMenu)
 	Multilib.Client.CC.Interface.DropDownOption = require(script.Client.Classes.Interface.DropDownOption)
 	Multilib.Client.CC.Interface.Form = require(script.Client.Classes.Interface.Form)

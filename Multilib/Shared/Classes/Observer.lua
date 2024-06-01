@@ -1,46 +1,47 @@
 local Observer = {}
 Observer.__index = Observer
 
-function Observer.new(valueIndex : any, value: any?, conName: string?, ConFunc: any?)
+function Observer:new(Value: any)
 	local self = setmetatable({}, Observer)
-	self.Values = {}
-	self._LastValues = {}
-	self._Connections = {}
-	if conName ~= nil and ConFunc ~= nil then
-		self._Connections[conName] = ConFunc
-	end
-	setmetatable(self.Values,{
-		__newindex = function(_: {any}, index, value)
-			if not self._LastValues[index] or self._LastValues[index] ~= value then
-				self._LastValues[index] = value
-				for _, ConFunc in self._Connections do
-					ConFunc(index, value)
-				end
-			end
-		end
-	})
-	self.Values[valueIndex] = value
-	self._LastValues[valueIndex] = value
+	self.Value = Value
+	self.Connections = {}
 	return self
 end
 
-function Observer:Connect(conName: string, ConFunc: any)
-	if conName == nil or ConFunc == nil then
+function Observer:Set(Value: any)
+	if Value == nil then
+		warn("[Observer]", "No value passed")
+		return
+	end
+	self.Value = Value
+	for index, ConFunc in pairs(self.Connections) do
+		ConFunc(self)
+	end
+end
+
+function Observer:Connect(ConName: string, ConFunc: any)
+	if ConName == nil or ConFunc == nil then
 		warn("[Observer]", "No Name or Function passed")
 		return
 	end
-	self._Connections[conName] = ConFunc
+	self.Connections[ConName] = ConFunc
 end
 
-function Observer:Disconnect(conName: string?)
-	if conName == nil then
-		table.clear(self._Connections)
+function Observer:Disconnect(ConName: string)
+	if ConName == nil then
+		warn("[Observer]", "No Name passed")
 		return
 	end
-	self._Connections[conName] = nil
+	self.Connections[ConName] = nil
+end
+
+function Observer:DisconnectAll()
+	table.clear(self.Connections)
 end
 
 function Observer:Destroy()
+	table.clear(self.Connections)
+	self.Value = nil
 	self = nil
 end
 
