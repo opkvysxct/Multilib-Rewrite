@@ -1,5 +1,5 @@
-local Mtypes = require(game:GetService("ReplicatedStorage").Multilib.Types)
-local MInstance = require(game:GetService("ReplicatedStorage").Multilib.Shared.Components.Instance)
+local Mtypes = require(script.Parent.Parent.Parent.Parent.Types)
+local MInstance = require(script.Parent.Parent.Parent.Parent.Shared.Components.Instance)
 local DropDownOption = {}
 DropDownOption.__index = DropDownOption
 

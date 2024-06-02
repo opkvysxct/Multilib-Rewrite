@@ -1,4 +1,4 @@
-local MInstance = require(game:GetService("ReplicatedStorage").Multilib.Shared.Components.Instance)
+local MInstance = require(script.Parent.Parent.Parent.Shared.Components.Instance)
 local TweenService = game:GetService("TweenService")
 local Lib = {}
 

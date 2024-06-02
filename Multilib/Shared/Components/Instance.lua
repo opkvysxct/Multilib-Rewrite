@@ -1,5 +1,5 @@
 local Debris = game:GetService("Debris")
-local Mtypes = require(game:GetService("ReplicatedStorage").Multilib.Types)
+local Mtypes = require(script.Parent.Parent.Parent.Types)
 
 local Lib = {}
 
