@@ -54,8 +54,7 @@ export type RadioButton = {
 export type Slider = {
 	Locked: boolean,
 	Cooldown: number,
-	OverrideDisplayAnimation: () -> nil,
-	ElementType: string,
+	Type: string,
 	StartingValue: any,
 	MinValue: number,
 	MaxValue: number,
@@ -63,4 +62,78 @@ export type Slider = {
 	TextValues: {string}?,
 }
 
-return nil
+local Templates = {}
+
+local SoundSpecs: SoundSpecs = {
+	Name = "SoundSpecTemplate",
+	SoundId = 0,
+	Volume = 1,
+	PlaybackSpeed = 1,
+	MaxDistance = 1000,
+	MinDistance = 0,
+	SoundGroup = nil
+}
+Templates.SoundSpecs = SoundSpecs
+
+local ArrowChange: ArrowChange = {
+	Locked = false,
+	Cooldown = 1,
+	OverrideDisplayAnimation = nil,
+	Values = {"One","Two","Three"},
+	StartingIndex = 1
+}
+Templates.ArrowChange = ArrowChange
+
+local CheckBox: CheckBox = {
+	Locked = false,
+	Cooldown = 1,
+	OverrideDisplayAnimation = nil,
+}
+Templates.CheckBox = CheckBox
+
+local DropDownMenu: DropDownMenu = {
+	Locked = false,
+	Cooldown = 1,
+	OverrideDisplayAnimation = nil,
+	Values = string,
+	SelectedValue = string,
+	AnimSettings = {Time = 1, Height = 2}
+}
+Templates.DropDownMenu = DropDownMenu
+
+local DropDownOption: DropDownOption = {
+	Locked = false,
+	Cooldown = 1,
+}
+Templates.DropDownOption = DropDownOption
+
+local InputField: InputField = {
+	Locked = false,
+	Cooldown = 1,
+	OverrideDisplayAnimation = nil,
+	ElementType = "Numeric",
+	PlaceholderText = "Change me!",
+	Lenght = 50
+}
+Templates.InputField = InputField
+
+local RadioButton: RadioButton = {
+	Locked = false,
+	Cooldown = 1,
+	OverrideDisplayAnimation = nil
+}
+Templates.RadioButton = RadioButton
+
+local Slider: Slider = {
+	Locked = false,
+	Cooldown = 1,
+	Type = "Numeric",
+	StartingValue = 50,
+	MinValue = 1,
+	MaxValue = 100,
+	StepBy = 5,
+	TextValues = {"One","Two","Three"},
+}
+Templates.Slider = Slider
+
+return Templates

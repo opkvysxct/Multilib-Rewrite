@@ -9,7 +9,8 @@
 
 local Multilib = {}
 
-	Multilib.Types = require(script.Types)
+	Multilib.TypesPath = script.Types
+	Multilib.Types = require(Multilib.TypesPath)
 
 	--SHARED COMPONENTS
 	Multilib.Shared = {}
