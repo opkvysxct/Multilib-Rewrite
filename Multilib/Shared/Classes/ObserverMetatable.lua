@@ -1,3 +1,4 @@
+--! DO NOT USE, DOES NOT WORK AS INTENDED, CREATED ONLY FOR TESTS
 local HttpService = game:GetService("HttpService")
 local Observer = {}
 Observer.__index = Observer

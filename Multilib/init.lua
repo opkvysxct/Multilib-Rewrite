@@ -30,7 +30,9 @@ local Multilib = {}
 
 	--SHARED CLASSES
 	Multilib.Shared.CC = {}
+	Multilib.Shared.CC.AnimContainer = require(script.Shared.Classes.AnimContainer)
 	Multilib.Shared.CC.DampedSpring = require(script.Shared.Classes.DampedSpring)
+	Multilib.Shared.CC.NumberComputer = require(script.Shared.Classes.NumberComputer)
 	Multilib.Shared.CC.Observer = require(script.Shared.Classes.Observer)
 	Multilib.Shared.CC.ReasonTo = require(script.Shared.Classes.ReasonTo)
 	Multilib.Shared.CC.SimpleSpring = require(script.Shared.Classes.SimpleSpring)

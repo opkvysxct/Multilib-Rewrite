@@ -24,7 +24,7 @@ function Lib:PerfectClone(trueModel: any, trueElements: {any})
 	local model = trueModel:Clone()
 	local elements = {}
 	for index, element in trueElements do
-		local path = string.split(element,"/")
+		local path = string.split(element,".")
 		local followedPath = model
 		for _, value in path do
 			if followedPath:FindFirstChild(value) then

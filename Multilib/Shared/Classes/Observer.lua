@@ -1,48 +1,99 @@
 local Observer = {}
 Observer.__index = Observer
 
-function Observer:new(Value: any)
+function Observer.new(value: any)
+	assert(value, "[Observer] No value provided for value variable.")
 	local self = setmetatable({}, Observer)
-	self.Value = Value
-	self.Connections = {}
+	self.Value = value
+	self._Connections = {}
+	self._Middleware = {}
 	return self
 end
 
-function Observer:Set(Value: any)
-	if Value == nil then
-		warn("[Observer]", "No value passed")
-		return
+function Observer:Set(value: any)
+	assert(value, "[Observer] No value provided for value variable.")
+	for _, mConnection in self._Middleware do
+		local res = mConnection.ConFunc(value)
+		if res ~= nil then
+			value = res
+		end
 	end
-	self.Value = Value
-	for index, ConFunc in pairs(self.Connections) do
-		ConFunc(self)
+	self.Value = value
+	for _, cConnection in self._Connections do
+		cConnection.ConFunc(self.Value)
 	end
+	return true
 end
 
-function Observer:Connect(ConName: string, ConFunc: any)
-	if ConName == nil or ConFunc == nil then
-		warn("[Observer]", "No Name or Function passed")
-		return
+function Observer:Connect(conName: string, ConFunc: (any) -> nil)
+	assert(typeof(conName) == "string", "[Observer] Wrong type or no value provided for conName.")
+	assert(typeof(ConFunc) == "function", "[Observer] Wrong type or no value provided for ConFunc.")
+	for _, cConnection in self._Connections do
+		if cConnection.ConName == conName then
+			warn("[Observer]", "Connection with same name already exists.")
+			return false
+		end
 	end
-	self.Connections[ConName] = ConFunc
+	table.insert(self._Connections,{ConName = conName,ConFunc = ConFunc})
+	return true
 end
 
-function Observer:Disconnect(ConName: string)
-	if ConName == nil then
-		warn("[Observer]", "No Name passed")
-		return
+function Observer:Disconnect(conName: string)
+	assert(typeof(conName) == "string", "[Observer] Wrong type or no value provided for conName.")
+	local toDelete
+	for index, cConnection in self._Connections do
+		if cConnection.ConName == conName then
+			toDelete = index
+			break
+		end
 	end
-	self.Connections[ConName] = nil
+	if toDelete == nil then
+		warn("[Observer]", "Didn't found connection with that name")
+		return false
+	end
+	table.remove(self._Connections,toDelete)
+	return true
+end
+
+function Observer:MiddlewareConnect(conName: string, ConFunc: (any) -> any | nil)
+	assert(typeof(conName) == "string", "[Observer] Wrong type or no value provided for conName.")
+	assert(typeof(ConFunc) == "function", "[Observer] Wrong type or no value provided for ConFunc.")
+	for _, mConnection in self._Middleware do
+		if mConnection.ConName == conName then
+			warn("[Observer]", "MiddlewareConnection with same name already exists.")
+			return false
+		end
+	end
+	table.insert(self._Middleware,{ConName = conName,ConFunc = ConFunc})
+	return true
+end
+
+function Observer:MiddelwareDisconnect(conName: string)
+	assert(typeof(conName) == "string", "[Observer] Wrong type or no value provided for conName.")
+	local toDelete
+	for index, mConnection in self._Middleware do
+		if mConnection.ConName == conName then
+			toDelete = index
+			break
+		end
+	end
+	if toDelete == nil then
+		warn("[Observer]", "Didn't found MiddelwareConnection with that name")
+		return false
+	end
+	table.remove(self._Connections,toDelete)
+	return true
 end
 
 function Observer:DisconnectAll()
-	table.clear(self.Connections)
+	table.clear(self._Connections)
+	table.clear(self._Middleware)
+	return true
 end
 
 function Observer:Destroy()
-	table.clear(self.Connections)
-	self.Value = nil
 	self = nil
+	return true
 end
 
 return Observer
