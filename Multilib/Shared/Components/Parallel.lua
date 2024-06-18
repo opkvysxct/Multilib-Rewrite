@@ -5,11 +5,13 @@ local Lib = {}
 -- Core
 function Lib:PutToParallel(Script: Script, where: any)
 	if not ReplicatedStorage:FindFirstChild(where) then
-		local Folder = Instance.new("Folder",ReplicatedStorage)
+		local Folder = Instance.new("Folder")
+		Folder.Parent = ReplicatedStorage
 		Folder.Name = where
 	end
-	local Actor = Instance.new("Actor",ReplicatedStorage[where])
+	local Actor = Instance.new("Actor")
 	Actor.Name = Script.Name .. "_Actor"
+	Actor.Parent = ReplicatedStorage[where]
 	Script = Script:Clone()
 	Script.Parent = Actor
 	return Script, Actor

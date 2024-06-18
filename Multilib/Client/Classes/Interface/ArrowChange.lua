@@ -101,7 +101,7 @@ end
 ]=]
 
 function ArrowChange:UpdateValues(values: any, index: number?)
-	if index == nil then index = self.ActualIndex end
+	index = index or self.ActualIndex
 
 	if index < 1 or index > #values then
 		index = 1
@@ -182,7 +182,7 @@ end
 ]=]
 
 function ArrowChange:_ExecuteActions()
-	for index, action in self.Actions do
+	for _, action in self.Actions do
 		action()
 	end
 end

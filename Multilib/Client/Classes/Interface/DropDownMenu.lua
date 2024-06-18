@@ -74,16 +74,16 @@ function DropDownMenu:Init() -- should be called only via Form:InitAll()
 	if self.Initiated == false then
 		self.Initiated = true
 		local function CreateAndBind(value)
-			local DropDownOption = DropDownOption.new(
+			local DropDownOptionObject = DropDownOption.new(
 				self.DropDownOptionsSettings.Model,
 				self.DropDownOptionsSettings.Elements,
 				value,
 				self,
 				self.DropDownOptionsSettings.Settings
 			)
-			DropDownOption:Append(self._ModelElements.ScrollingFrame)
-			DropDownOption:Init()
-			table.insert(self.DropDownOptions,DropDownOption)
+			DropDownOptionObject:Append(self._ModelElements.ScrollingFrame)
+			DropDownOptionObject:Init()
+			table.insert(self.DropDownOptions,DropDownOptionObject)
 		end
 		for _,value in pairs(self.Values) do
 			CreateAndBind(value)
@@ -126,8 +126,8 @@ end
 
 function DropDownMenu:LockStatus(status: boolean)
 	self.Locked = status
-	for _, DropDownOption in pairs(self.DropDownOptions) do
-		DropDownOption:LockStatus(status)
+	for _, DropDownOptionObject in pairs(self.DropDownOptions) do
+		DropDownOptionObject:LockStatus(status)
 	end
 end
 

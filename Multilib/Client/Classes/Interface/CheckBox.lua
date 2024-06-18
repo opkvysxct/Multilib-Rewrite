@@ -146,7 +146,7 @@ end
 ]=]
 
 function CheckBox:_ExecuteActions()
-	for index, action in self.Actions do
+	for _, action in self.Actions do
 		action()
 	end
 end

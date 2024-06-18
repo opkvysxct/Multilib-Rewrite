@@ -4,19 +4,13 @@ local Mtypes = require(script.Parent.Parent.Parent.Types)
 local Lib = {}
 
 -- Core
-function Lib:Create(instanceName: string, parent: Instance, proporties: {any}, parentAfter: boolean?)
+function Lib:Create(instanceName: string, parent: Instance, proporties: {any})
 	local instanceCreated
-	if parentAfter then
-		instanceCreated = Instance.new(instanceName)
-	else
-		instanceCreated = Instance.new(instanceName, parent)
-	end
+	instanceCreated = Instance.new(instanceName)
 	for prop, value in proporties do
 		instanceCreated[prop] = value
 	end
-	if parentAfter then
-		instanceCreated.Parent = parent
-	end
+	instanceCreated.Parent = parent
 	return instanceCreated
 end
 
@@ -88,7 +82,7 @@ function Lib:ParticleFX(particle: Instance, strength: number, where: any, WhereS
 		})
 		toDelete = where
 	end
-	local particle = particle:Clone()
+	particle = particle:Clone()
 	particle.Parent = where
 	particle:Emit(strength)
 	if toDelete ~= nil then

@@ -73,7 +73,7 @@ local SoundSpecs: SoundSpecs = {
 	MinDistance = 0,
 	SoundGroup = nil
 }
-Templates.SoundSpecs = SoundSpecs
+Templates.TSoundSpecs = SoundSpecs
 
 local ArrowChange: ArrowChange = {
 	Locked = false,
@@ -82,14 +82,14 @@ local ArrowChange: ArrowChange = {
 	Values = {"One","Two","Three"},
 	StartingIndex = 1
 }
-Templates.ArrowChange = ArrowChange
+Templates.TArrowChange = ArrowChange
 
 local CheckBox: CheckBox = {
 	Locked = false,
 	Cooldown = 1,
 	OverrideDisplayAnimation = nil,
 }
-Templates.CheckBox = CheckBox
+Templates.TCheckBox = CheckBox
 
 local DropDownMenu: DropDownMenu = {
 	Locked = false,
@@ -99,13 +99,13 @@ local DropDownMenu: DropDownMenu = {
 	SelectedValue = string,
 	AnimSettings = {Time = 1, Height = 2}
 }
-Templates.DropDownMenu = DropDownMenu
+Templates.TDropDownMenu = DropDownMenu
 
 local DropDownOption: DropDownOption = {
 	Locked = false,
 	Cooldown = 1,
 }
-Templates.DropDownOption = DropDownOption
+Templates.TDropDownOption = DropDownOption
 
 local InputField: InputField = {
 	Locked = false,
@@ -115,14 +115,14 @@ local InputField: InputField = {
 	PlaceholderText = "Change me!",
 	Lenght = 50
 }
-Templates.InputField = InputField
+Templates.TInputField = InputField
 
 local RadioButton: RadioButton = {
 	Locked = false,
 	Cooldown = 1,
 	OverrideDisplayAnimation = nil
 }
-Templates.RadioButton = RadioButton
+Templates.TRadioButton = RadioButton
 
 local Slider: Slider = {
 	Locked = false,
@@ -134,6 +134,6 @@ local Slider: Slider = {
 	StepBy = 5,
 	TextValues = {"One","Two","Three"},
 }
-Templates.Slider = Slider
+Templates.TSlider = Slider
 
 return Templates

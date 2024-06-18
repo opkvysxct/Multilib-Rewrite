@@ -1,3 +1,4 @@
+--!native
 local Lib = {}
 
 -- Core
@@ -62,6 +63,9 @@ end
 -- End
 function Lib:Init(comments: boolean)
 	self.DefParams = RaycastParams.new()
+	if comments then
+		warn("[Multilib-" .. script.Name .. "]", script.Name, "Lib Loaded & safe to use.")
+	end
 end
 
 return Lib

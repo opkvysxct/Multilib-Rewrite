@@ -21,9 +21,10 @@ Slider.__index = Slider
 function Slider.new(model: any, elements: {GuiObject}, IdName: string, useSettings: Mtypes.Slider?)
 	local self = setmetatable({}, Slider)
 
-	if useSettings == nil then useSettings = {} end
-	if useSettings.Type == nil then useSettings.Type = "Numeric" end
-	if useSettings.SliderArea == nil then useSettings.SliderArea = 1.25 end
+	useSettings = useSettings or {}
+	useSettings.Locked = useSettings.Locked or false
+	useSettings.Type = useSettings.Type or "Numeric"
+	useSettings.SliderArea = useSettings.SliderArea or 1.25
 	if useSettings.Type == "Numeric" then
 		if useSettings.StartingValue == nil then
 			useSettings.StartingValue = 50
@@ -66,8 +67,6 @@ function Slider.new(model: any, elements: {GuiObject}, IdName: string, useSettin
 		self._MinValue = 0
 		self._MaxValue = #useSettings.TextValues - 1
 	end
-
-	if useSettings.Locked == nil then useSettings.Locked = false end
 
 	model, elements = MInstance:PerfectClone(model,elements)
 
