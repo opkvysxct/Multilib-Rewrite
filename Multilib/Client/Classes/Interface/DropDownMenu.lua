@@ -20,26 +20,24 @@ DropDownMenu.__index = DropDownMenu
 function DropDownMenu.new(model: any, elements: {GuiObject}, IdName: string, DropDownOptions: {any}, useSettings: Mtypes.DropDownMenu?)
 	local self = setmetatable({}, DropDownMenu)
 
-	if useSettings == nil then useSettings = {} end
-	if useSettings.Locked == nil then useSettings.Locked = false end
-	if useSettings.Cooldown == nil then useSettings.Cooldown = 0.25 end
-	if useSettings.Values == nil then useSettings.Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
-	"eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen",
-	"eighteen", "nineteen", "twenty", "twenty-one", "twenty-two", "twenty-three",
-	"twenty-four", "twenty-five", "twenty-six", "twenty-seven", "twenty-eight",
-	"twenty-nine", "thirty"} end
-	if useSettings.SelectedValue == nil then useSettings.SelectedValue = useSettings.Values[1] end
-	if useSettings.AnimSettings == nil then useSettings.AnimSettings = {Time = 0.25,Height = 2} end
+	useSettings = useSettings or {}
+	useSettings.Locked = useSettings.Locked or false
+	useSettings.Cooldown = useSettings.Cooldown or 0.25
+	useSettings.Values = useSettings.Values or {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"}
+	useSettings.SelectedValue = useSettings.SelectedValue or useSettings.Values[1]
+	useSettings.AnimSettings = useSettings.SelectedValue or {Time = 0.25,Height = 2}
 
-	if useSettings.OverrideDisplayAnimation ~= nil then self._DisplayAnimFunc = useSettings.OverrideDisplayAnimation end
+	if useSettings.OverrideDisplayAnimation ~= nil then
+		self._DisplayAnimFunc = useSettings.OverrideDisplayAnimation 
+	end
 
-	local model, elements = MInstance:PerfectClone(model,elements)
+	model, elements = MInstance:PerfectClone(model,elements)
 
 	self._ModelElements = {}
 	for index, value in pairs(elements) do
 		self._ModelElements[index] = value
 	end
-	if useSettings.CanvasSize == nil then useSettings.CanvasSize = self._ModelElements.ScrollingFrame.Size.Y.Scale * 2 end
+	useSettings.CanvasSize = useSettings.CanvasSize or self._ModelElements.ScrollingFrame.Size.Y.Scale * 2
 	self._ModelElements.ScrollingFrame.CanvasSize = UDim2.fromScale(0,useSettings.CanvasSize)
 
 	self.Actions = {}
@@ -128,7 +126,7 @@ end
 
 function DropDownMenu:LockStatus(status: boolean)
 	self.Locked = status
-	for index, DropDownOption in pairs(self.DropDownOptions) do
+	for _, DropDownOption in pairs(self.DropDownOptions) do
 		DropDownOption:LockStatus(status)
 	end
 end
@@ -204,7 +202,7 @@ end
 ]=]
 
 function DropDownMenu:_ExecuteActions()
-	for index, action in pairs(self.Actions) do
+	for _, action in pairs(self.Actions) do
 		action()
 	end
 end
@@ -224,7 +222,7 @@ end
 ]=]
 
 function DropDownMenu:InsertElements(elements: {any})
-	for index, element in pairs(elements) do
+	for _, element in pairs(elements) do
 		self.RadioButtons[element.IdName] = element
 	end
 end

@@ -69,7 +69,7 @@ function Slider.new(model: any, elements: {GuiObject}, IdName: string, useSettin
 
 	if useSettings.Locked == nil then useSettings.Locked = false end
 
-	local model, elements = MInstance:PerfectClone(model,elements)
+	model, elements = MInstance:PerfectClone(model,elements)
 
 	self._ModelElements = {}
 	for index, value in elements do
@@ -224,7 +224,7 @@ end
 ]=]
 
 function Slider:_ExecuteActions()
-	for index, action in self.Actions do
+	for _, action in self.Actions do
 		action()
 	end
 end
@@ -266,7 +266,7 @@ end
 ]=]
 
 function Slider:_DisplayAnimFunc(value: number) -- internal private function, do not call
-	local function ConvertToAbsolute(value: number)
+	local function ConvertToAbsolute()
 		local clampedValue = math.clamp(value, self._MinValue, self._MaxValue)
 		local rangeCustom = self._MaxValue - self._MinValue
 		local proportion = (clampedValue - self._MinValue) / rangeCustom
@@ -276,8 +276,8 @@ function Slider:_DisplayAnimFunc(value: number) -- internal private function, do
 	local progressBar:GuiObject = self._ModelElements.ProgressBar
 	local showText:GuiObject = self._ModelElements.ShowText
 	local tweenInfoToUse = TweenInfo.new(0.05,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut)
-	TweenService:Create(drag,tweenInfoToUse,{Position = UDim2.fromScale(ConvertToAbsolute(value) / 100,0.5)}):Play()
-	TweenService:Create(progressBar,tweenInfoToUse,{Size = UDim2.fromScale(ConvertToAbsolute(value	) / 100,1)}):Play()
+	TweenService:Create(drag,tweenInfoToUse,{Position = UDim2.fromScale(ConvertToAbsolute() / 100,0.5)}):Play()
+	TweenService:Create(progressBar,tweenInfoToUse,{Size = UDim2.fromScale(ConvertToAbsolute() / 100,1)}):Play()
 	if self.SubType == "Numeric" then
 		showText.Text = value
 	elseif self.SubType == "Text" then

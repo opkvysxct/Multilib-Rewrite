@@ -18,12 +18,15 @@ RadioButton.__index = RadioButton
 function RadioButton.new(model: any, elements: {GuiObject}, IdName: string, radioGroup: {any}, useSettings: Mtypes.RadioButton?)
 	local self = setmetatable({}, RadioButton)
 
-	if useSettings == nil then useSettings = {} end
-	if useSettings.Locked == nil then useSettings.Locked = false end
-	if useSettings.Cooldown == nil then useSettings.Cooldown = 0.25 end
-	if useSettings.OverrideDisplayAnimation ~= nil then self._DisplayAnimFunc = useSettings.OverrideDisplayAnimation end
+	useSettings = useSettings or {}
+	useSettings.Locked = useSettings.Locked or false
+	useSettings.Cooldown = useSettings.Cooldown or 0.25
 
-	local model, elements = MInstance:PerfectClone(model,elements)
+	if useSettings.OverrideDisplayAnimation ~= nil then
+		self._DisplayAnimFunc = useSettings.OverrideDisplayAnimation 
+	end
+
+	model, elements = MInstance:PerfectClone(model,elements)
 
 	self._ModelElements = {}
 	for index, value in elements do

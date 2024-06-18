@@ -33,6 +33,14 @@ function Lib:Lerp(a: number, b: number, t: number)
 	return a + ((b - a) * t)
 end
 
+function Lib:LerpVector3(v3: Vector3, goal: Vector3, alpha: number)
+	return Vector3.new(
+		self:Lerp(v3.X, goal.X, alpha),
+		self:Lerp(v3.Y, goal.Y, alpha),
+		self:Lerp(v3.Z, goal.Z, alpha)
+	)
+end
+
 -- End
 function Lib:Init(comments: boolean)
 	if comments then

@@ -19,11 +19,11 @@ DropDownOption.__index = DropDownOption
 function DropDownOption.new(model: any, elements: {GuiObject}, IdName: string, DropDownMenu: {any}, useSettings: Mtypes.DropDownOption?)
 	local self = setmetatable({}, DropDownOption)
 
-	if useSettings == nil then useSettings = {} end
-	if useSettings.Locked == nil then useSettings.Locked = false end
-	if useSettings.Cooldown == nil then useSettings.Cooldown = 0.25 end
+	useSettings = useSettings or {}
+	useSettings.Locked = useSettings.Locked or false
+	useSettings.Cooldown = useSettings.Cooldown or 0.25
 
-	local model, elements = MInstance:PerfectClone(model,elements)
+	model, elements = MInstance:PerfectClone(model,elements)
 
 	self._ModelElements = {}
 	for index, value in elements do

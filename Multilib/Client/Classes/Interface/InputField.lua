@@ -18,14 +18,14 @@ InputField.__index = InputField
 function InputField.new(model: any, elements: {GuiObject}, IdName: string, useSettings: Mtypes.InputField?)
 	local self = setmetatable({}, InputField)
 
-	if useSettings == nil then useSettings = {} end
-	if useSettings.Locked == nil then useSettings.Locked = false end
-	if useSettings.Cooldown == nil then useSettings.Cooldown = 0.25 end
-	if useSettings.ElementType == nil then useSettings.ElementType = "Numeric" end
-	if useSettings.PlaceholderText == nil then useSettings.PlaceholderText = "Input" end
-	if useSettings.Lenght == nil then useSettings.Lenght = 10 end
+	useSettings = useSettings or {}
+	useSettings.Locked = useSettings.Locked or false
+	useSettings.Cooldown = useSettings.Cooldown or 0.25
+	useSettings.ElementType = useSettings.ElementType or "Numeric"
+	useSettings.PlaceholderText = useSettings.PlaceholderText or "Input"
+	useSettings.Lenght = useSettings.Lenght or 10
 
-	local model, elements = MInstance:PerfectClone(model,elements)
+	model, elements = MInstance:PerfectClone(model,elements)
 
 	self._ModelElements = {}
 	for index, value in elements do
@@ -37,7 +37,7 @@ function InputField.new(model: any, elements: {GuiObject}, IdName: string, useSe
 	elseif useSettings.ElementType == "Text" then
 		self.AllowedCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	else
-		if useSettings.CustomCharacters == nil then useSettings.CustomCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890" end
+		useSettings.CustomCharacters = useSettings.CustomCharacters or "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
 		self.AllowedCharacters = useSettings.CustomCharacters
 	end
 
@@ -86,14 +86,14 @@ function InputField:Init() -- should be called only via Form:InitAll()
 				end
 				local Allowed = string.split(self.AllowedCharacters,"")
 				local NewText = Text
-				for index, Letter in Text do
+				for _, Letter in Text do
 					if not table.find(Allowed,Letter) then
 						table.remove(NewText,table.find(NewText,Letter))
 					end
 				end
 				Text = NewText
 				NewText = ""
-				for index, Letter in Text do
+				for _, Letter in Text do
 					NewText ..= Letter
 				end
 				Text = NewText
@@ -163,7 +163,7 @@ end
 ]=]
 
 function InputField:_ExecuteActions()
-	for index, action in self.Actions do
+	for _, action in self.Actions do
 		action()
 	end
 end

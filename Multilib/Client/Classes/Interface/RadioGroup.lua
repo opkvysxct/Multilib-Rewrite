@@ -29,7 +29,7 @@ end
 ]=]
 
 function RadioGroup:Init() -- should be called only via Form:InitAll()
-	for index, radioButton in self.RadioButtons do
+	for _, radioButton in self.RadioButtons do
 		radioButton:Init()
 	end
 end
@@ -63,7 +63,7 @@ end
 ]=]
 
 function RadioGroup:InsertElements(elements: {any})
-	for index, element in elements do
+	for _, element in elements do
 		self.RadioButtons[element.IdName] = element
 	end
 end
@@ -92,7 +92,7 @@ end
 ]=]
 
 function RadioGroup:Append(where: any)
-	for index, radioButton in self.RadioButtons do
+	for _, radioButton in self.RadioButtons do
 		radioButton:Append(where)
 	end
 end
@@ -124,7 +124,7 @@ end
 ]=]
 
 function RadioGroup:_ExecuteActions()
-	for index, action in self.Actions do
+	for _, action in self.Actions do
 		action()
 	end
 end
@@ -138,7 +138,7 @@ end
 
 function RadioGroup:selectButton(radioButtonObject: {any})
 	self.Selected = radioButtonObject.IdName
-	for index, radioButton in self.RadioButtons do
+	for _, radioButton in self.RadioButtons do
 		if radioButton.isSelected == true and radioButton ~= radioButtonObject then
 			radioButton:selectionStatus(false)
 		end
