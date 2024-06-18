@@ -3,8 +3,20 @@ local Mtypes = require(script.Parent.Parent.Parent.Types)
 
 local Lib = {}
 
+--[=[
+	@class Instance Package
+	Instance Utils.
+]=]
+
 -- Core
-function Lib:Create(instanceName: string, parent: Instance, proporties: {any})
+
+--[=[
+	@within Instance Package
+	@return <Instance>
+	Creates and returns object.
+]=]
+
+function Lib:Create(instanceName: string, parent: Instance, proporties: {})
 	local instanceCreated
 	instanceCreated = Instance.new(instanceName)
 	for prop, value in proporties do
@@ -14,7 +26,13 @@ function Lib:Create(instanceName: string, parent: Instance, proporties: {any})
 	return instanceCreated
 end
 
-function Lib:PerfectClone(trueModel: any, trueElements: {any})
+--[=[
+	@within Instance Package
+	@return <Instance, {string = Instance}>
+	Clones and returns provided paths.
+]=]
+
+function Lib:PerfectClone(trueModel: any, trueElements: {})
 	local model = trueModel:Clone()
 	local elements = {}
 	for index, element in trueElements do
@@ -35,7 +53,13 @@ end
 
 -- Misc
 
-function Lib:SoundFX(where: any, specs: Mtypes.SoundSpecs)
+--[=[
+	@within Instance Package
+	@return <Sound>
+	Creates and returns sound.
+]=]
+
+function Lib:SoundFX(where: Instance | Vector3, specs: Mtypes.SoundSpecs)
 	local toDelete
 	if typeof(where) == "Vector3" then
 		where = self:Create("Part", workspace, {
@@ -70,7 +94,13 @@ function Lib:SoundFX(where: any, specs: Mtypes.SoundSpecs)
 	return sound
 end
 
-function Lib:ParticleFX(particle: Instance, strength: number, where: any, WhereSize: Vector3?)
+--[=[
+	@within Instance Package
+	@return <ParticleEmitter>
+	Copies already existing particle emitter and puts it in given location, then emits it and deletes after emit is done.
+]=]
+
+function Lib:ParticleFX(particle: Instance, strength: number, where: Instance | Vector3, WhereSize: Vector3?)
 	local toDelete
 	if typeof(where) == "Vector3" then
 		where = self:Create("Part", workspace, {
@@ -97,6 +127,12 @@ function Lib:ParticleFX(particle: Instance, strength: number, where: any, WhereS
 	return particle
 end
 
+--[=[
+	@within Instance Package
+	@return <Motor6D>
+	Returns Motor6D.
+]=]
+
 function Lib:Motor6D(first: Instance, second: Instance, parent: Instance)
 	return self:Create(
 		"Motor6D",
@@ -107,17 +143,34 @@ function Lib:Motor6D(first: Instance, second: Instance, parent: Instance)
 	)
 end
 
-function Lib:Animation(id: number, animator: Instance)
-	local Animation = self:Create("Animation", nil, {
+--[=[
+	@within Instance Package
+	@return <Animation>
+	Returns Animation.
+]=]
+
+function Lib:Animation(id: number, animator: Animator)
+	local animation = self:Create("Animation", nil, {
 		AnimationId = "rbxassetid://" .. id,
 	})
-	return animator:LoadAnimation(Animation)
+	return animator:LoadAnimation(animation)
 end
 
 -- useSettings
+
+--[=[
+	@within Instance Package
+	Sets MinSoundTime.
+]=]
+
 function Lib:SetMinSoundTime(time: number)
 	self.MinSoundTime = time
 end
+
+--[=[
+	@within Instance Package
+	Sets MinParticleTime.
+]=]
 
 function Lib:SetMinParticleTime(time: number)
 	self.MinParticleTime = time

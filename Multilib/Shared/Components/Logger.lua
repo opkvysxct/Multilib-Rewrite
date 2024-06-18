@@ -1,34 +1,67 @@
 local RunService = game:GetService("RunService")
 local Lib = {}
 
+--[=[
+	@class Logger Package
+	Logger Utils.
+]=]
+
 -- Core
 
-function Lib:Checker()
+--[=[
+	@within Logger Package
+	@private
+	@return <true | false>
+	Internal function for checking if logger should log logs.
+]=]
+
+function Lib:_Checker()
 	if self.IsEnabled == true or RunService:IsStudio() then
 		return true
 	end
 	return false
 end
 
-function Lib:Print(Script: Script, Content: any, Force: boolean?)
-	if self:Checker() or Force == true then
-		print("[".. Script.Name .. "]", Content)
+--[=[
+	@within Logger Package
+	Prints given message, can be forced to do even if logger is disabled for some reason.
+]=]
+
+function Lib:Print(parentScript: Script, content: any, force: boolean?)
+	if self:_Checker() or force == true then
+		print("[".. parentScript.Name .. "]", content)
 	end
 end
 
-function Lib:Warn(Script: Script, Content: any, Force: boolean?)
-	if self:Checker() or Force == true  then
-		warn("[".. Script.Name .. "]", Content)
+--[=[
+	@within Logger Package
+	Warns given message, can be forced to do even if logger is disabled for some reason.
+]=]
+
+function Lib:Warn(parentScript: Script, content: any, force: boolean?)
+	if self:_Checker() or force == true  then
+		warn("[".. parentScript.Name .. "]", content)
 	end
 end
 
-function Lib:Error(Script: Script, Content: any, Force: boolean?)
-	if self:Checker() or Force == true  then
-		error("[".. Script.Name .. "]", Content)
+--[=[
+	@within Logger Package
+	Errors given message, can be forced to do even if logger is disabled for some reason.
+]=]
+
+function Lib:Error(parentScript: Script, content: any, force: boolean?)
+	if self:_Checker() or force == true  then
+		error("[".. parentScript.Name .. "]", content)
 	end
 end
 
 -- useSettings
+
+--[=[
+	@within Logger Package
+	Changes IsEnabled status.
+]=]
+
 function Lib:LoggerSetter(value: boolean)
 	self.IsEnabled = value
 end

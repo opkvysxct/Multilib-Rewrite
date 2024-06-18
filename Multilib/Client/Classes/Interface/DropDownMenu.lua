@@ -17,7 +17,7 @@ DropDownMenu.__index = DropDownMenu
 	Constructor for DropDownMenu object.
 ]=]
 
-function DropDownMenu.new(model: any, elements: {GuiObject}, IdName: string, DropDownOptions: {any}, useSettings: Mtypes.DropDownMenu?)
+function DropDownMenu.new(model: any, elements: {GuiObject}, IdName: string, DropDownOptions: {}, useSettings: Mtypes.DropDownMenu?)
 	local self = setmetatable({}, DropDownMenu)
 
 	useSettings = useSettings or {}
@@ -212,7 +212,7 @@ end
 	Inserts element into the DropDownMenu.RadioButtons table.
 ]=]
 
-function DropDownMenu:InsertElement(element: {any})
+function DropDownMenu:InsertElement(element: {})
 	self.RadioButtons[element.IdName] = element
 end
 
@@ -221,7 +221,7 @@ end
 	Inserts multiple elements into the DropDownMenu.RadioButtons table.
 ]=]
 
-function DropDownMenu:InsertElements(elements: {any})
+function DropDownMenu:InsertElements(elements: {})
 	for _, element in pairs(elements) do
 		self.RadioButtons[element.IdName] = element
 	end
@@ -261,7 +261,7 @@ end
 	Selects one button and deselects all the others.
 ]=]
 
-function DropDownMenu:selectButton(DropDownObject: {any})
+function DropDownMenu:selectButton(DropDownObject: {})
 	self.SelectedValue = DropDownObject.IdName
 	self:_DisplayAnimFunc("ChangeLabel",self.SelectedValue)
 	self:_DisplayAnimFunc("Collapse")

@@ -1,6 +1,19 @@
 local Players = game:GetService("Players")
 local Lib = {}
 
+--[=[
+	@class Shared Player Package
+	SharedPlayer Utils.
+]=]
+
+-- Core
+
+--[=[
+	@within Shared Player Package
+	@return <Player | false>
+	Tries to find Player by part.
+]=]
+
 -- Core
 function Lib:ReturnPlayerByPart(part: Instance)
 	if part.Parent:FindFirstChild("Humanoid") then
@@ -12,6 +25,12 @@ function Lib:ReturnPlayerByPart(part: Instance)
 	return false
 end
 
+--[=[
+	@within Shared Player Package
+	@return <Instance | false>
+	Tries to find Character by part.
+]=]
+
 function Lib:ReturnCharacterByPart(part: Instance)
 	if part.Parent:FindFirstChild("Humanoid") then
 		return part.Parent
@@ -19,15 +38,8 @@ function Lib:ReturnCharacterByPart(part: Instance)
 	return false
 end
 
-
--- useSettings
-function Lib:SetCustomValue(value: string)
-	self.CustomValue = value
-end
-
 -- End
 function Lib:Init(comments: boolean)
-	self.CustomValue = "Change Me!"
 	if comments then
 		warn("[Multilib-" .. script.Name .. "]", script.Name, "Lib Loaded & safe to use.")
 	end

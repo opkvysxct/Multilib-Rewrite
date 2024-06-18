@@ -88,11 +88,11 @@ function Lib:SetSmallNotifConfig(time: number, appearWhere: GuiObject, template:
 	end
 end
 
-function Lib:SetBigNotifAnimations(anims: {any})
+function Lib:SetBigNotifAnimations(anims: {})
 	self.BigNotifConfig.Animations = anims
 end
 
-function Lib:SetSmallNotifAnimations(anims: {any})
+function Lib:SetSmallNotifAnimations(anims: {})
 	self.SmallNotifConfig.Animations = anims
 end
 

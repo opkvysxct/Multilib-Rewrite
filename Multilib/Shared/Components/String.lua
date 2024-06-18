@@ -1,5 +1,19 @@
 local Lib = {}
 
+--[=[
+	@class String Package
+	String Utils.
+]=]
+
+-- Core
+
+--[=[
+	@within String Package
+	@return <string>
+	Splits string by capital letters.
+	Provided by https://github.com/NiceAssasin123
+]=]
+
 function Lib:SplitStringByCapitalLetters(string: string)
     local result = {}
     local pattern = "%u%l*"

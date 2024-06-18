@@ -2,14 +2,21 @@ local TweenService = game:GetService("TweenService")
 
 local Lib = {}
 
+--[=[
+	@class Tween Package
+	Tween Utils.
+]=]
+
 -- Core
-function Lib:TweenTable(table: {any}, time: number, style: Enum.EasingStyle, direction: Enum.EasingDirection, funcAfter: any?)
-	if style == nil then
-		style = self.DefaultStyle
-	end
-	if direction == nil then
-		direction = self.DefaultDirection
-	end
+
+--[=[
+	@within Tween Package
+	Tweens given table.
+]=]
+
+function Lib:TweenTable(table: {}, time: number, style: Enum.EasingStyle?, direction: Enum.EasingDirection?, funcAfter: any?)
+	style = style or self.DefaultStyle
+	direction = direction or self.DefaultDirection
 	for index, value in table do
 		TweenService:Create(index, TweenInfo.new(time, style, direction), value):Play()
 	end
@@ -18,45 +25,19 @@ function Lib:TweenTable(table: {any}, time: number, style: Enum.EasingStyle, dir
 	end
 end
 
-function Lib:TweenOnce(element: any, time: number, style: Enum.EasingStyle, direction: Enum.EasingDirection, funcAfter: any?)
-	if style == nil then
-		style = self.DefaultStyle
-	end
-	if direction == nil then
-		direction = self.DefaultDirection
-	end
+--[=[
+	@within Tween Package
+	Tweens given element.
+]=]
+
+function Lib:TweenOnce(element: any, time: number, style: Enum.EasingStyle?, direction: Enum.EasingDirection?, funcAfter: any?)
+	style = style or self.DefaultStyle
+	direction = direction or self.DefaultDirection
 	TweenService:Create(element[1], TweenInfo.new(time, style, direction), element[2]):Play()
 	if funcAfter ~= nil then
 		task.delay(time, funcAfter)
 	end
 end
-
---[[
-function Lib:TweenMethod(element: instance, time: number, initialValue: any, finalValue: any, methodName: string)
-	task.spawn(function()
-		local tweenRunning = true
-		local increaseValue = (finalValue - initialValue) / (time / 0.015)
-		local progress = initialValue
-		while tweenRunning and task.wait() do
-			progress += increaseValue
-			element[methodName](element, progress)
-			if progress >= finalValue then
-				tweenRunning = false
-			end
-			-- print(progress)
-		end
-	end)
-end
-
-function Lib:TweenAndReturn(element: any, time: number, style, direction, funcAfter: any)
-	local InitData = {}
-	for Attribute: string, _ in element[2]) do
-		InitData[Attribute] = element[1][Attribute]
-	end
-	self:TweenOnce(element, time, style, direction)
-	task.wait(time)
-	self:TweenOnce({element[1], InitData}, time, style, direction, funcAfter)
-end]]--
 
 -- useSettings
 function Lib:SetDefaultStyle(style: any)

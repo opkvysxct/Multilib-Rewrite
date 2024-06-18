@@ -2,19 +2,31 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Lib = {}
 
+--[=[
+	@class Parallel Package
+	Parallel Utils.
+]=]
+
 -- Core
-function Lib:PutToParallel(Script: Script, where: any)
+
+--[=[
+	@within Parallel Package
+	@return <Script, Actor>
+	Puts given script for later usage as a Parallel script.
+]=]
+
+function Lib:PutToParallel(scriptToUse: Script, where: Instance)
 	if not ReplicatedStorage:FindFirstChild(where) then
-		local Folder = Instance.new("Folder")
-		Folder.Parent = ReplicatedStorage
-		Folder.Name = where
+		local folder = Instance.new("Folder")
+		folder.Parent = ReplicatedStorage
+		folder.Name = where
 	end
-	local Actor = Instance.new("Actor")
-	Actor.Name = Script.Name .. "_Actor"
-	Actor.Parent = ReplicatedStorage[where]
-	Script = Script:Clone()
-	Script.Parent = Actor
-	return Script, Actor
+	local actor = Instance.new("Actor")
+	actor.Name = scriptToUse.Name .. "_Actor"
+	actor.Parent = ReplicatedStorage[where]
+	scriptToUse = scriptToUse:Clone()
+	scriptToUse.Parent = actor
+	return scriptToUse, actor
 end
 
 -- End

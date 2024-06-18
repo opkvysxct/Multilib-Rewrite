@@ -16,7 +16,7 @@ DropDownOption.__index = DropDownOption
 	Constructor for DropDownOption object.
 ]=]
 
-function DropDownOption.new(model: any, elements: {GuiObject}, IdName: string, DropDownMenu: {any}, useSettings: Mtypes.DropDownOption?)
+function DropDownOption.new(model: any, elements: {GuiObject}, IdName: string, DropDownMenu: {}, useSettings: Mtypes.DropDownOption?)
 	local self = setmetatable({}, DropDownOption)
 
 	useSettings = useSettings or {}

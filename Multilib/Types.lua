@@ -64,7 +64,7 @@ export type Slider = {
 
 local Templates = {}
 
-local SoundSpecs: SoundSpecs = {
+local soundSpecs: SoundSpecs = {
 	Name = "SoundSpecTemplate",
 	SoundId = 0,
 	Volume = 1,
@@ -73,25 +73,25 @@ local SoundSpecs: SoundSpecs = {
 	MinDistance = 0,
 	SoundGroup = nil
 }
-Templates.TSoundSpecs = SoundSpecs
+Templates.TSoundSpecs = soundSpecs
 
-local ArrowChange: ArrowChange = {
+local arrowChange: ArrowChange = {
 	Locked = false,
 	Cooldown = 1,
 	OverrideDisplayAnimation = nil,
 	Values = {"One","Two","Three"},
 	StartingIndex = 1
 }
-Templates.TArrowChange = ArrowChange
+Templates.TArrowChange = arrowChange
 
-local CheckBox: CheckBox = {
+local checkBox: CheckBox = {
 	Locked = false,
 	Cooldown = 1,
 	OverrideDisplayAnimation = nil,
 }
-Templates.TCheckBox = CheckBox
+Templates.TCheckBox = checkBox
 
-local DropDownMenu: DropDownMenu = {
+local dropDownMenu: DropDownMenu = {
 	Locked = false,
 	Cooldown = 1,
 	OverrideDisplayAnimation = nil,
@@ -99,15 +99,15 @@ local DropDownMenu: DropDownMenu = {
 	SelectedValue = string,
 	AnimSettings = {Time = 1, Height = 2}
 }
-Templates.TDropDownMenu = DropDownMenu
+Templates.TDropDownMenu = dropDownMenu
 
-local DropDownOption: DropDownOption = {
+local dropDownOption: DropDownOption = {
 	Locked = false,
 	Cooldown = 1,
 }
-Templates.TDropDownOption = DropDownOption
+Templates.TDropDownOption = dropDownOption
 
-local InputField: InputField = {
+local inputField: InputField = {
 	Locked = false,
 	Cooldown = 1,
 	OverrideDisplayAnimation = nil,
@@ -115,16 +115,16 @@ local InputField: InputField = {
 	PlaceholderText = "Change me!",
 	Lenght = 50
 }
-Templates.TInputField = InputField
+Templates.TInputField = inputField
 
-local RadioButton: RadioButton = {
+local radioButton: RadioButton = {
 	Locked = false,
 	Cooldown = 1,
 	OverrideDisplayAnimation = nil
 }
-Templates.TRadioButton = RadioButton
+Templates.TRadioButton = radioButton
 
-local Slider: Slider = {
+local slider: Slider = {
 	Locked = false,
 	Cooldown = 1,
 	Type = "Numeric",
@@ -134,6 +134,6 @@ local Slider: Slider = {
 	StepBy = 5,
 	TextValues = {"One","Two","Three"},
 }
-Templates.TSlider = Slider
+Templates.TSlider = slider
 
 return Templates

@@ -15,7 +15,7 @@ RadioButton.__index = RadioButton
 	Constructor for RadioButton object.
 ]=]
 
-function RadioButton.new(model: any, elements: {GuiObject}, IdName: string, radioGroup: {any}, useSettings: Mtypes.RadioButton?)
+function RadioButton.new(model: any, elements: {GuiObject}, IdName: string, radioGroup: {}, useSettings: Mtypes.RadioButton?)
 	local self = setmetatable({}, RadioButton)
 
 	useSettings = useSettings or {}

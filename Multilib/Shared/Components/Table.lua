@@ -1,8 +1,19 @@
 local Lib = {}
 
+--[=[
+	@class Table Package
+	Table Utils.
+]=]
+
 -- Core
 
-function Lib:DeepCopy(tableToCopy: {any})
+--[=[
+	@within Table Package
+	@return <{}>
+	Deep copy of given table.
+]=]
+
+function Lib:DeepCopy(tableToCopy: {})
 	local copy = {}
 	for k, v in tableToCopy do
 		if type(v) == "table" then

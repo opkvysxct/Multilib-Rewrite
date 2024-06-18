@@ -6,6 +6,12 @@
 --CLASSES, TYPES, PUBLIC FUNCTIONS/PROPORTIES - PascalCase
 --PRIVATE FUNCTIONS/PROPORTIES - _PascalCase
 
+--[=[
+	@class Main Package
+	Container for loaders and all Packages pathes.
+]=]
+
+-- Core
 
 local Multilib = {}
 
@@ -68,6 +74,11 @@ local Multilib = {}
 	Multilib.Client.CC.Interface.RadioGroup = require(script.Client.Classes.Interface.RadioGroup)
 	Multilib.Client.CC.Interface.Slider = require(script.Client.Classes.Interface.Slider)
 
+	--[=[
+		@within Main Package
+		Initializes Server Packages
+	]=]
+
 	function Multilib:InitServer(comments: boolean)
 		for _, Component in self.Shared.C do
 			Component:Init(comments)
@@ -75,7 +86,12 @@ local Multilib = {}
 		for _, Component in self.Server.C do
 			Component:Init(comments)
 		end
-	 end
+	end
+
+	--[=[
+		@within Main Package
+		Initializes Client Packages
+	]=]
 
 	function Multilib:InitClient(comments: boolean)
 		for _, Component in self.Shared.C do

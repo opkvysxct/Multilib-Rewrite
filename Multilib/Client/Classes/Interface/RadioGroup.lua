@@ -53,7 +53,7 @@ end
 	Inserts element into the RadioGroup.RadioButtons table.
 ]=]
 
-function RadioGroup:InsertElement(element: {any})
+function RadioGroup:InsertElement(element: {})
 	self.RadioButtons[element.IdName] = element
 end
 
@@ -62,7 +62,7 @@ end
 	Inserts multiple elements into the RadioGroup.RadioButtons table.
 ]=]
 
-function RadioGroup:InsertElements(elements: {any})
+function RadioGroup:InsertElements(elements: {})
 	for _, element in elements do
 		self.RadioButtons[element.IdName] = element
 	end
@@ -136,7 +136,7 @@ end
 	Selects one button and deselects all the others.
 ]=]
 
-function RadioGroup:selectButton(radioButtonObject: {any})
+function RadioGroup:selectButton(radioButtonObject: {})
 	self.Selected = radioButtonObject.IdName
 	for _, radioButton in self.RadioButtons do
 		if radioButton.isSelected == true and radioButton ~= radioButtonObject then
