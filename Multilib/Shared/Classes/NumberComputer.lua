@@ -166,7 +166,9 @@ function NumberComputer:Disconnect(conName: string)
 end
 
 function NumberComputer:Destroy()
-	self = nil
+	setmetatable(self, nil)
+	table.clear(self)
+	table.freeze(self)
 	return true
 end
 

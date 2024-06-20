@@ -153,7 +153,9 @@ end
 ]=]
 
 function RadioGroup:Destroy()
-	self = nil
+	setmetatable(self, nil)
+	table.clear(self)
+	table.freeze(self)
 end
 
 

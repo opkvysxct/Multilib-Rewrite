@@ -46,7 +46,9 @@ function ReasonTo:CanProceed()
 end
 
 function ReasonTo:Destroy()
-	self = nil
+	setmetatable(self, nil)
+	table.clear(self)
+	table.freeze(self)
 	return true
 end
 

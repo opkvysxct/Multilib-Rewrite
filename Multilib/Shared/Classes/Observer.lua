@@ -92,7 +92,9 @@ function Observer:DisconnectAll()
 end
 
 function Observer:Destroy()
-	self = nil
+	setmetatable(self, nil)
+	table.clear(self)
+	table.freeze(self)
 	return true
 end
 

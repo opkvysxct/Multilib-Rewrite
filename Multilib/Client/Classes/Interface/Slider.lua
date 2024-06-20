@@ -292,7 +292,9 @@ end
 function Slider:Destroy()
 	RunService:UnbindFromRenderStep(self.IdName .. "SliderFunc")
 	self._Model:Destroy()
-	self = nil
+	setmetatable(self, nil)
+	table.clear(self)
+	table.freeze(self)
 end
 
 

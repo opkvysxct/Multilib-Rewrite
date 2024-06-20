@@ -54,7 +54,9 @@ function AnimContainer:RemoveAnim(animName: string, categoryName: string?)
 end
 
 function AnimContainer:Destroy()
-	self = nil
+	setmetatable(self, nil)
+	table.clear(self)
+	table.freeze(self)
 end
 
 

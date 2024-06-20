@@ -58,7 +58,9 @@ end
 function Draggable:Destroy()
 	self.Draggable:Destroy()
 	self.Movable:Destroy()
-	self = nil
+	setmetatable(self, nil)
+	table.clear(self)
+	table.freeze(self)
 end
 
 

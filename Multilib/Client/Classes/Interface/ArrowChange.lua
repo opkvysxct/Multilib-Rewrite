@@ -194,7 +194,9 @@ end
 
 function ArrowChange:Destroy()
 	self._Model:Destroy()
-	self = nil
+	setmetatable(self, nil)
+	table.clear(self)
+	table.freeze(self)
 end
 
 
