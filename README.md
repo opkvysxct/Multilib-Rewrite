@@ -17,11 +17,15 @@ Then in your wally.toml put
  for Multilib or
 ### Multilib:
 [WALLY LINK MULTILIB](https://wally.run/package/opkvysxct/multilib)
+```toml
 Multilib = "opkvysxct/multilib@NEWEST.VERSION"
+```
 
 ### MultiUI
 [WALLY LINK MULTIUI](https://wally.run/package/opkvysxct/multiui),
+```toml
 MultiUI = "opkvysxct/multiui@NEWEST.VERSION" for MultiUI
+```
 
 ## How do i use it?
 You can find everything in the [docs](https://opkvysxct.github.io/Multilib-Rewrite/).
