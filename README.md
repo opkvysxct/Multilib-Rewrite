@@ -12,9 +12,8 @@ I just found out that I use the same elements repeatedly across all my projects,
 
 ## Installation
 ### Lets make it clear, it's meant to be used with [rojo](https://rojo.space/)!
-For help installing wally see [WALLY INSTALLATION TUTORIAL.](https://wally.run/install)
+For help installing wally see [WALLY INSTALLATION TUTORIAL.](https://wally.run/install)\
 Then in your wally.toml put
- for Multilib or
 ### Multilib:
 [WALLY LINK MULTILIB](https://wally.run/package/opkvysxct/multilib)
 ```toml
@@ -24,12 +23,12 @@ Multilib = "opkvysxct/multilib@NEWEST.VERSION"
 ### MultiUI
 [WALLY LINK MULTIUI](https://wally.run/package/opkvysxct/multiui),
 ```toml
-MultiUI = "opkvysxct/multiui@NEWEST.VERSION" for MultiUI
+MultiUI = "opkvysxct/multiui@NEWEST.VERSION"
 ```
 
 ## How do i use it?
 You can find everything in the [docs](https://opkvysxct.github.io/Multilib-Rewrite/).
 
 ## Last note
-Remember to use newest version only, as older version may contain serious bugs.
+Remember to use newest version only, as older version may contain serious bugs.\
 Special thanks to [Fengee](https://github.com/NiceAssasin123) & [Sani](https://github.com/AlwaysSunnySani) for help.
