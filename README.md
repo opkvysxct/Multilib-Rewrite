@@ -12,16 +12,20 @@ I just found out that I use the same elements repeatedly across all my projects,
 
 ## Installation
 ### Lets make it clear, it's meant to be used with [rojo](https://rojo.space/)!
-### First Way:
-[WALLY LINK MULTILIB](https://wally.run/package/opkvysxct/multilib)
-[WALLY LINK MULTIUI](https://wally.run/package/opkvysxct/multiui), remember to use newest version only, as older version may contain serious bugs.
 For help installing wally see [WALLY INSTALLATION TUTORIAL.](https://wally.run/install)
 Then in your wally.toml put
-Multilib = "opkvysxct/multilib@NEWEST.VERSION" for Multilib or
+ for Multilib or
+### Multilib:
+[WALLY LINK MULTILIB](https://wally.run/package/opkvysxct/multilib)
+Multilib = "opkvysxct/multilib@NEWEST.VERSION"
+
+### MultiUI
+[WALLY LINK MULTIUI](https://wally.run/package/opkvysxct/multiui),
 MultiUI = "opkvysxct/multiui@NEWEST.VERSION" for MultiUI
 
 ## How do i use it?
 You can find everything in the [docs](https://opkvysxct.github.io/Multilib-Rewrite/).
 
 ## Last note
+Remember to use newest version only, as older version may contain serious bugs.
 Special thanks to [Fengee](https://github.com/NiceAssasin123) & [Sani](https://github.com/AlwaysSunnySani) for help.
