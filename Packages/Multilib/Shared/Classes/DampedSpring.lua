@@ -32,4 +32,11 @@ function DampedSpring:Update(deltaTime: number)
 	self.Position = self.Position + self._Velocity
 end
 
+function DampedSpring:Destroy()
+	setmetatable(self, nil)
+	table.clear(self)
+	table.freeze(self)
+	return true
+end
+
 return DampedSpring

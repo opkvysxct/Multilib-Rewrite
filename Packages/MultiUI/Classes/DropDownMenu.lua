@@ -1,5 +1,6 @@
-local Mtypes = require(script.Parent.Parent.Parent.Parent.Types)
-local MInstance = require(script.Parent.Parent.Parent.Parent.Shared.Components.Instance)
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Mtypes = require(script.Parent.Parent.Types)
+local MInstance = require(ReplicatedStorage.Packages.Multilib).Shared.C.Instance
 local TweenService = game:GetService("TweenService")
 local DropDownOption = require(script.Parent.DropDownOption)
 local DropDownMenu = {}
@@ -25,7 +26,7 @@ function DropDownMenu.new(model: any, elements: {GuiObject}, IdName: string, Dro
 	useSettings.Cooldown = useSettings.Cooldown or 0.25
 	useSettings.Values = useSettings.Values or {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"}
 	useSettings.SelectedValue = useSettings.SelectedValue or useSettings.Values[1]
-	useSettings.AnimSettings = useSettings.SelectedValue or {Time = 0.25,Height = 2}
+	useSettings.AnimSettings = useSettings.AnimSettings or {Time = 0.25,Height = 2}
 
 	if useSettings.OverrideDisplayAnimation ~= nil then
 		self._DisplayAnimFunc = useSettings.OverrideDisplayAnimation 

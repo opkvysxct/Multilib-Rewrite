@@ -1,5 +1,6 @@
-local Mtypes = require(script.Parent.Parent.Parent.Parent.Types)
-local MInstance = require(script.Parent.Parent.Parent.Parent.Shared.Components.Instance)
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Mtypes = require(script.Parent.Parent.Types)
+local MInstance = require(ReplicatedStorage.Packages.Multilib).Shared.C.Instance
 local CheckBox = {}
 CheckBox.__index = CheckBox
 

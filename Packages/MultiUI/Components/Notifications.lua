@@ -1,4 +1,5 @@
-local MInstance = require(script.Parent.Parent.Parent.Shared.Components.Instance)
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local MInstance = require(ReplicatedStorage.Packages.Multilib).Shared.C.Instance
 local TweenService = game:GetService("TweenService")
 local Lib = {}
 
@@ -12,7 +13,7 @@ function Lib:AppendBigNotif(title: string, description: string, imageID: number?
 			table.insert(self._Queue,{Title = title, Description = description, ImageID = imageID})
 		end
 	else
-		warn("[Multilib-" .. script.Name .. "]", "No config provided for Big Notification.")
+		warn("[MultiUI-" .. script.Name .. "]", "No config provided for Big Notification.")
 	end
 end
 
@@ -20,7 +21,7 @@ function Lib:AppendSmallNotif(title: string, description: string, imageID: numbe
 	if self.SmallNotifConfig.WasConfigured == true then
 		self:_AppendSmallNotifLogic(title, description, imageID)
 	else
-		warn("[Multilib-" .. script.Name .. "]", "No config provided for Small Notification.")
+		warn("[MultiUI-" .. script.Name .. "]", "No config provided for Small Notification.")
 	end
 end
 
@@ -101,7 +102,7 @@ function Lib:SetPadding(padding: number)
 end
 
 -- End
-function Lib:Init(comments: boolean)
+function Lib:Init()
 	self.Padding = 0.01
 	self._Queue = {}
 	self.BigNotifConfig = {
@@ -148,9 +149,6 @@ function Lib:Init(comments: boolean)
 			return 1 - (((#self._SmallNotifs - index) * heightBase) + (self.Padding * (#self._SmallNotifs - index)))
 		end
 	}
-	if comments then
-		warn("[Multilib-" .. script.Name .. "]", script.Name, "Lib Loaded & safe to use.")
-	end
 end
 
 return Lib

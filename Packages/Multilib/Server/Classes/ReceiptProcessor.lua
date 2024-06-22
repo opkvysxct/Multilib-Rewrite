@@ -3,7 +3,7 @@ local Players = game:GetService("Players")
 local RecipeProcessor = {}
 RecipeProcessor.__index = RecipeProcessor
 
-function RecipeProcessor:new()
+function RecipeProcessor.new()
 	local self = setmetatable({}, RecipeProcessor)
 	self.Producs = {}
 	return self
@@ -43,6 +43,13 @@ function RecipeProcessor:Run()
 			end
 		end
 	end)
+end
+
+function RecipeProcessor:Destroy()
+	setmetatable(self, nil)
+	table.clear(self)
+	table.freeze(self)
+	return true
 end
 
 return RecipeProcessor

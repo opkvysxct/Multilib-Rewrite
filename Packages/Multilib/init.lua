@@ -57,22 +57,12 @@ local Multilib = {}
 	Multilib.Client.C = {}
 	Multilib.Client.C.Alerts = require(script.Client.Components.Alerts)
 	Multilib.Client.C.CustomClient = require(script.Client.Components.CustomClient)
-	Multilib.Client.C.Notifications = require(script.Client.Components.Notifications)
 	Multilib.Client.C.PlayerAdditions = require(script.Client.Components.PlayerAdditions)
 
 	--CLIENT CLASSES
 	Multilib.Client.CC = {}
-	Multilib.Client.CC.Interface = {}
-	Multilib.Client.CC.Interface.ArrowChange = require(script.Client.Classes.Interface.ArrowChange)
-	Multilib.Client.CC.Interface.CheckBox = require(script.Client.Classes.Interface.CheckBox)
-	Multilib.Client.CC.Interface.Draggable = require(script.Client.Classes.Interface.Draggable)
-	Multilib.Client.CC.Interface.DropDownMenu = require(script.Client.Classes.Interface.DropDownMenu)
-	Multilib.Client.CC.Interface.DropDownOption = require(script.Client.Classes.Interface.DropDownOption)
-	Multilib.Client.CC.Interface.Form = require(script.Client.Classes.Interface.Form)
-	Multilib.Client.CC.Interface.InputField = require(script.Client.Classes.Interface.InputField)
-	Multilib.Client.CC.Interface.RadioButton = require(script.Client.Classes.Interface.RadioButton)
-	Multilib.Client.CC.Interface.RadioGroup = require(script.Client.Classes.Interface.RadioGroup)
-	Multilib.Client.CC.Interface.Slider = require(script.Client.Classes.Interface.Slider)
+	Multilib.Client.CC.Draggable = require(script.Client.Classes.Draggable)
+
 
 	--[=[
 		@within Main Package

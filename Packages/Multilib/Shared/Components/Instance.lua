@@ -50,7 +50,6 @@ function Lib:PerfectClone(trueModel: any, trueElements: {})
 	return model, elements
 end
 
-
 -- Misc
 
 --[=[

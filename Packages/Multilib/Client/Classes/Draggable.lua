@@ -1,3 +1,4 @@
+local HttpService = game:GetService("HttpService")
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
 local Draggable = {}
@@ -8,7 +9,7 @@ function Draggable.new(movable: GuiObject, draggable: GuiObject, ui: ScreenGui)
 	self.Movable = movable
 	self.Draggable = draggable
 	self.Ui = ui
-	self._Id = math.random(10000,99999)
+	self._Id = HttpService:GenerateGUID(false)
 	self._LastMousePosition = nil
 	self.Movable.Position = UDim2.new(
 		0,

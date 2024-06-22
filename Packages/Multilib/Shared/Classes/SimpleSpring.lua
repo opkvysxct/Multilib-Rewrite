@@ -24,8 +24,15 @@ function Spring:Update(deltaTime: number)
 	else
 		xDistance = 0
 	end
-	local Force = (-self._KConstant * xDistance) * self._Speed
-	self.Position -= Force * deltaTime
+	local force = (-self._KConstant * xDistance) * self._Speed
+	self.Position -= force * deltaTime
+end
+
+function Spring:Destroy()
+	setmetatable(self, nil)
+	table.clear(self)
+	table.freeze(self)
+	return true
 end
 
 return Spring

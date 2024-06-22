@@ -1,4 +1,5 @@
-local MInstance = require(script.Parent.Parent.Parent.Shared.Components.Instance)
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local MInstance = require(ReplicatedStorage.Packages.Multilib).Shared.C.Instance
 local TweenService = game:GetService("TweenService")
 local Lib = {}
 
@@ -22,7 +23,7 @@ function Lib:AppendInfoAlert(title: string, description: string, imageID: number
 		repeat task.wait()
 		until canProceed
 	else
-		warn("[Multilib-" .. script.Name .. "]", "No config provided for Info Alert.")
+		warn("[MultiUI-" .. script.Name .. "]", "No config provided for Info Alert.")
 		return false
 	end
 	return true
@@ -88,7 +89,7 @@ end
 
 
 -- End
-function Lib:Init(comments: boolean)
+function Lib:Init()
 	self.InfoAlertConfig = {
 		WasConfigured = false,
 		Template = nil,
@@ -123,9 +124,6 @@ function Lib:Init(comments: boolean)
 			end
 		}
 	}
-	if comments then
-		warn("[Multilib-" .. script.Name .. "]", script.Name, "Lib Loaded & safe to use.")
-	end
 end
 
 return Lib

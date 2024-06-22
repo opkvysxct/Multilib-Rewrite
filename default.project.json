@@ -3,8 +3,8 @@
 	"tree": {
 		"$className": "DataModel",
 		"ReplicatedStorage": {
-			"Multilib": {
-				"$path": "Multilib"
+			"Packages": {
+				"$path": "Packages"
 			}
 		},
 		"ServerScriptService": {
