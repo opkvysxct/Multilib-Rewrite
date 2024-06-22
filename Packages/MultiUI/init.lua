@@ -30,7 +30,7 @@ local MultiUI = {}
 	MultiUI.CC.RadioGroup = require(script.Classes.RadioGroup)
 	MultiUI.CC.Slider = require(script.Classes.Slider)
 
-	for _, component in script.Components:GetChildren() do
+	for _, component in MultiUI.C do
 		component:Init()
 	end
 	
