@@ -1,25 +1,31 @@
 local MarketplaceService = game:GetService("MarketplaceService")
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
 local Lib = {}
 
 local function IsPlayer(player)
-	if player == nil then
-		if player ~= nil then
-			return player
-		else
-			warn("[Multilib-" .. script.Name .. "]", "No player specified.")
-			return false
-		end
+	if RunService:IsClient() and player == nil then
+		return Players.LocalPlayer
 	else
 		return player
 	end
 end
 
+--[=[
+	@class Marketplace Package
+	Marketplace Utils.
+]=]
+
 -- Core
-function Lib:CheckPlayerGamepass(id : number, Prompt : boolean, player : Player)
+
+--[=[
+	@within Marketplace Package
+	@return <true | false>
+	Checks if given player have given gamepass.
+]=]
+
+function Lib:CheckPlayerGamepass(id : number, prompt : boolean, player : Player?)
 	player = IsPlayer(player)
-	if player == false then
-		return false
-	end
 	local hasPass = false
 	local success, message = pcall(function()
 		hasPass = MarketplaceService:UserOwnsGamePassAsync(player.UserId, id)
@@ -30,25 +36,29 @@ function Lib:CheckPlayerGamepass(id : number, Prompt : boolean, player : Player)
 	end
 	if hasPass == true then
 		return true
-	elseif Prompt == true then
+	elseif prompt == true then
 		MarketplaceService:PromptGamePassPurchase(player,id)
 	end
 	return false
 end
 
+--[=[
+	@within Marketplace Package
+	Prompts given product to given player.
+]=]
+
 function Lib:PromptProductPurchase(id : number, player : Player)
 	player = IsPlayer(player)
-	if player == false then
-		return false
-	end
 	MarketplaceService:PromptProductPurchase(player, id)
 end
 
+--[=[
+	@within Marketplace Package
+	Prompts Roblox Premium to given player.
+]=]
+
 function Lib:PromptPremiumPurchase(player : Player)
 	player = IsPlayer(player)
-	if player == false then
-		return false
-	end
 	MarketplaceService:PromptPremiumPurchase(player)
 end
 

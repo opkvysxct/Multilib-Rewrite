@@ -3,7 +3,18 @@ local MInstance = require(ReplicatedStorage.Packages.Multilib).Shared.C.Instance
 local TweenService = game:GetService("TweenService")
 local Lib = {}
 
+--[=[
+	@class Notifications Package
+	Notifications Utils.
+]=]
+
 -- Core
+
+--[=[
+	@within Notifications Package
+	Appends big notification on screen.
+]=]
+
 function Lib:AppendBigNotif(title: string, description: string, imageID: number?)
 	if self.BigNotifConfig.WasConfigured == true then
 		if #self._Queue == 0 then
@@ -17,6 +28,11 @@ function Lib:AppendBigNotif(title: string, description: string, imageID: number?
 	end
 end
 
+--[=[
+	@within Notifications Package
+	Appends small notification on screen.
+]=]
+
 function Lib:AppendSmallNotif(title: string, description: string, imageID: number?)
 	if self.SmallNotifConfig.WasConfigured == true then
 		self:_AppendSmallNotifLogic(title, description, imageID)
@@ -24,6 +40,12 @@ function Lib:AppendSmallNotif(title: string, description: string, imageID: numbe
 		warn("[MultiUI-" .. script.Name .. "]", "No config provided for Small Notification.")
 	end
 end
+
+--[=[
+	@within Notifications Package
+	@private
+	Logic for big notification.
+]=]
 
 function Lib:_AppendBigNotifLogic(title: string, description: string, imageID: number?)
 	local model, elements = MInstance:PerfectClone(self.BigNotifConfig.Template,self.BigNotifConfig.TemplatePathes)
@@ -46,6 +68,12 @@ function Lib:_AppendBigNotifLogic(title: string, description: string, imageID: n
 		end
 	end)
 end
+
+--[=[
+	@within Notifications Package
+	@private
+	Logic for small notification.
+]=]
 
 function Lib:_AppendSmallNotifLogic(title: string, description: string, imageID: number?)
 	local model, elements = MInstance:PerfectClone(self.SmallNotifConfig.Template,self.SmallNotifConfig.TemplatePathes)
@@ -70,6 +98,12 @@ function Lib:_AppendSmallNotifLogic(title: string, description: string, imageID:
 end
 
 -- Settings
+
+--[=[
+	@within Notifications Package
+	Sets config for big notification.
+]=]
+
 function Lib:SetBigNotifConfig(time: number, appearWhere: GuiObject, template: GuiObject, templatePathes: {GuiObject})
 	self.BigNotifConfig.Time = time
 	self.BigNotifConfig.AppearWhere = appearWhere
@@ -77,6 +111,11 @@ function Lib:SetBigNotifConfig(time: number, appearWhere: GuiObject, template: G
 	self.BigNotifConfig.TemplatePathes = templatePathes
 	self.BigNotifConfig.WasConfigured = true
 end
+
+--[=[
+	@within Notifications Package
+	Sets config for small notification.
+]=]
 
 function Lib:SetSmallNotifConfig(time: number, appearWhere: GuiObject, template: GuiObject, templatePathes: {GuiObject}, positionLogic: any?)
 	self.SmallNotifConfig.Time = time
@@ -89,13 +128,28 @@ function Lib:SetSmallNotifConfig(time: number, appearWhere: GuiObject, template:
 	end
 end
 
+--[=[
+	@within Notifications Package
+	Sets animations for big notification.
+]=]
+
 function Lib:SetBigNotifAnimations(anims: {})
 	self.BigNotifConfig.Animations = anims
 end
 
+--[=[
+	@within Notifications Package
+	Sets animations for small notification.
+]=]
+
 function Lib:SetSmallNotifAnimations(anims: {})
 	self.SmallNotifConfig.Animations = anims
 end
+
+--[=[
+	@within Notifications Package
+	Sets padding for small notification.
+]=]
 
 function Lib:SetPadding(padding: number)
 	self.Padding = padding

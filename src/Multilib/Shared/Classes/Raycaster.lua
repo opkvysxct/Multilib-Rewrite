@@ -1,12 +1,12 @@
 --!native
 
+local Raycaster = {}
+Raycaster.__index = Raycaster
+
 --[=[
 	@class Raycaster Class
 	Raycaster Class, used for raycasting.
 ]=]
-
-local Raycaster = {}
-Raycaster.__index = Raycaster
 
 --[=[
 	@within Raycaster Class

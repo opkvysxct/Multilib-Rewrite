@@ -3,17 +3,40 @@ local Players = game:GetService("Players")
 local RecipeProcessor = {}
 RecipeProcessor.__index = RecipeProcessor
 
+--[=[
+	@class ReceiptProcessor Class
+	ReceiptProcessor Class.
+]=]
+
+--[=[
+	@within ReceiptProcessor Class	
+	@return <ReceiptProcessorClass>
+	Creates ReceiptProcessor Class.
+]=]
+
 function RecipeProcessor.new()
 	local self = setmetatable({}, RecipeProcessor)
 	self.Producs = {}
+	self:_Run()
 	return self
 end
+
+--[=[
+	@within ReceiptProcessor Class	
+	Adds listener and a function connected to it.
+]=]
 
 function RecipeProcessor:AddListener(id: number, funcAfter: any)
 	self.Producs[id] = funcAfter
 end
 
-function RecipeProcessor:Run()
+--[=[
+	@within ReceiptProcessor Class	
+	@private
+	Runs the class logic.
+]=]
+
+function RecipeProcessor:_Run()
 	MarketplaceService.ProcessReceipt = function(receiptInfo)
 		local userId = receiptInfo.PlayerId
 		local productId = receiptInfo.ProductId
@@ -45,11 +68,15 @@ function RecipeProcessor:Run()
 	end)
 end
 
+--[=[
+	@within ReceiptProcessor Class	
+	Destroys ReceiptProcessor Class.
+]=]
+
 function RecipeProcessor:Destroy()
 	setmetatable(self, nil)
 	table.clear(self)
 	table.freeze(self)
-	return true
 end
 
 return RecipeProcessor

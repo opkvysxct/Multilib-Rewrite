@@ -6,7 +6,6 @@ Observer.__index = Observer
 	Observer Class.
 ]=]
 
-
 --[=[
 	@within Observer Class
 	@return <ObserverClass>

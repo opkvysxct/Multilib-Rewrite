@@ -2,9 +2,16 @@ title = "Multilib"
 
 [[classOrder]]
 section = "Shared"
-classes = ["Instance Package","Logger Package","Math Package","Parallel Package","Shared Player Package","String Package","Table Package","Tweener Class","SimpleSpring Class","ReasonTo Class","Raycaster Class","Observer Class","NumberComputer Class","DampedSpring Class","Animator Class"]
+classes = ["Instance Package","Logger Package","Marketplace Package","Math Package","Parallel Package","Shared Player Package","String Package","Table Package","Tweener Class","SimpleSpring Class","ReasonTo Class","Raycaster Class","Observer Class","NumberComputer Class","DampedSpring Class","Animator Class"]
 
+[[classOrder]]
+section = "Server"
+classes = ["ReceiptProcessor Class"]
+
+[[classOrder]]
+section = "Client"
+classes = ["PlayerAdditions Package","Dragable Class"]
 
 [[classOrder]]
 section = "MultiUI"
-classes = ["ArrowChange","CheckBox","DropDownMenu","DropDownOption","Form","InputField","RadioButton","RadioGroup","Slider"]
+classes = ["ArrowChange","CheckBox","DropDownMenu","DropDownOption","Form","InputField","RadioButton","RadioGroup","Slider","Alerts Package","Notifications Package"]

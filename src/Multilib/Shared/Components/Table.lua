@@ -9,8 +9,8 @@ local Lib = {}
 
 --[=[
 	@within Table Package
-	@return <{}>
-	Deep copy of given table.
+	@return <table>
+	Deep copy of a given table.
 ]=]
 
 function Lib:DeepCopy(tableToCopy: {})

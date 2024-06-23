@@ -4,6 +4,20 @@ local UserInputService = game:GetService("UserInputService")
 local Draggable = {}
 Draggable.__index = Draggable
 
+--[=[
+	@class Dragable Class
+	@client
+	Dragable Class.
+]=]
+
+-- Core
+
+--[=[
+	@within Dragable Class
+	@return <DraggableClass>
+	Creates Dragable Class.
+]=]
+
 function Draggable.new(movable: GuiObject, draggable: GuiObject, ui: ScreenGui)
 	local self = setmetatable({}, Draggable)
 	self.Movable = movable
@@ -20,6 +34,12 @@ function Draggable.new(movable: GuiObject, draggable: GuiObject, ui: ScreenGui)
 	self:_Activate()
 	return self
 end
+
+--[=[
+	@within Dragable Class
+	@private
+	Runs the class logic.
+]=]
 
 function Draggable:_Activate()
 	local function Move()
@@ -55,6 +75,13 @@ function Draggable:_Activate()
 		end
 	end)
 end
+
+--[=[
+	@within Dragable Class
+	@private
+	Destroys Dragable Class.
+]=]
+
 
 function Draggable:Destroy()
 	self.Draggable:Destroy()

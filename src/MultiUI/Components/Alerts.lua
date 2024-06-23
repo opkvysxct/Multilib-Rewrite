@@ -3,7 +3,18 @@ local MInstance = require(ReplicatedStorage.Packages.Multilib).Shared.C.Instance
 local TweenService = game:GetService("TweenService")
 local Lib = {}
 
+--[=[
+	@class Alerts Package
+	Alerts Utils.
+]=]
+
 -- Core
+
+--[=[
+	@within Alerts Package
+	Appends info alert on screen with given proporties, then yields until player input is provided.
+]=]
+
 function Lib:AppendInfoAlert(title: string, description: string, imageID: number?)
 	if self.InfoAlertConfig.WasConfigured == true then
 		local canProceed = false
@@ -24,10 +35,15 @@ function Lib:AppendInfoAlert(title: string, description: string, imageID: number
 		until canProceed
 	else
 		warn("[MultiUI-" .. script.Name .. "]", "No config provided for Info Alert.")
-		return false
+		return
 	end
-	return true
 end
+
+--[=[
+	@within Alerts Package
+	@return <true | false>
+	Appends choice alert on screen with given proporties, then yields until player input is provided.
+]=]
 
 function Lib:AppendChoiceAlert(title: string, description: string, imageID: number?)
 	local valueToReturn = nil
@@ -60,10 +76,15 @@ function Lib:AppendChoiceAlert(title: string, description: string, imageID: numb
 		until canProceed
 	else
 		warn("[Multilib-" .. script.Name .. "]", "No config provided for Choice Alert.")
-		return false
+		return
 	end
 	return valueToReturn
 end
+
+--[=[
+	@within Alerts Package
+	Sets config for info alert.
+]=]
 
 function Lib:SetInfoAlertConfig(appearWhere: GuiObject, template: GuiObject, templatePathes: {GuiObject})
 	self.InfoAlertConfig.AppearWhere = appearWhere
@@ -72,9 +93,19 @@ function Lib:SetInfoAlertConfig(appearWhere: GuiObject, template: GuiObject, tem
 	self.InfoAlertConfig.WasConfigured = true
 end
 
+--[=[
+	@within Alerts Package
+	Sets anims for info config.
+]=]
+
 function Lib:SetInfoAlertAnims(anims: {()-> nil})
 	self.InfoAlertConfig.Animations = anims
 end
+
+--[=[
+	@within Alerts Package
+	Sets config for choice alert.
+]=]
 
 function Lib:SetChoiceAlertConfig(appearWhere: GuiObject, template: GuiObject, templatePathes: {GuiObject})
 	self.ChoiceAlertConfig.AppearWhere = appearWhere
@@ -83,10 +114,14 @@ function Lib:SetChoiceAlertConfig(appearWhere: GuiObject, template: GuiObject, t
 	self.ChoiceAlertConfig.WasConfigured = true
 end
 
+--[=[
+	@within Alerts Package
+	Sets anims for choice config.
+]=]
+
 function Lib:SetChoiceAlertAnims(anims: {()-> nil})
 	self.ChoiceAlertConfig.Animations = anims
 end
-
 
 -- End
 function Lib:Init()

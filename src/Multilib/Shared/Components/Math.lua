@@ -1,4 +1,5 @@
 local Lib = {}
+
 --[=[
 	@class Math Package
 	Math Utils.

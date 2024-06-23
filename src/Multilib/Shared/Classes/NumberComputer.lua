@@ -7,7 +7,6 @@ NumberComputer.__index = NumberComputer
 	NumberComputer Class.
 ]=]
 
-
 --[=[
 	@within NumberComputer Class
 	@return <NumberComputerClass>
