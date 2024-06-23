@@ -1,7 +1,7 @@
 <div align="center">
-  <h1>
-    Multilib Rewrite
-  </h1>
+	<h1>
+		Multilib Rewrite
+	</h1>
 </div>
 
 A Roblox library that allows you to perform *simple* task even *simplier*. See ->
@@ -12,9 +12,9 @@ I just found out that I use the same elements repeatedly across all my projects,
 
 ## Installation
 ### Lets make it clear, it's meant to be used with [rojo](https://rojo.space/)!
-For help installing wally see [WALLY INSTALLATION TUTORIAL.](https://wally.run/install)\
+For help installing wally see [WALLY INSTALLATION TUTORIAL.](https://wally.run/install) <br/>
 Then in your wally.toml put
-### Multilib:
+### Multilib
 [WALLY LINK MULTILIB](https://wally.run/package/opkvysxct/multilib)
 ```toml
 Multilib = "opkvysxct/multilib@NEWEST.VERSION"

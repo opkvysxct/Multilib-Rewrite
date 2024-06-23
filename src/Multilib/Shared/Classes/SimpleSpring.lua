@@ -1,6 +1,18 @@
 local Spring = {}
 Spring.__index = Spring
 
+--[=[
+	@class SimpleSpring Class
+	SimpleSpring Class.
+	Note: Its very simple implementation of a spring, its better to use other better classes for it, like Spring from NevermoreEngine created by Quenty.
+]=]
+
+--[=[
+	@within SimpleSpring Class
+	@return <SimpleSpring>
+	Creates SimpleSpring Class.
+]=]
+
 function Spring.new(position: number, target: number, speed: number, constant: number)
 	local self = setmetatable({}, Spring)
 	self.time = os.clock()
@@ -11,9 +23,19 @@ function Spring.new(position: number, target: number, speed: number, constant: n
 	return self
 end
 
+--[=[
+	@within SimpleSpring Class
+	Sets target for spring.
+]=]
+
 function Spring:SetTarget(target: number)
 	self.Target = target
 end
+
+--[=[
+	@within SimpleSpring Class
+	Updates the spring position.
+]=]
 
 function Spring:Update(deltaTime: number)
 	local xDistance
@@ -28,11 +50,15 @@ function Spring:Update(deltaTime: number)
 	self.Position -= force * deltaTime
 end
 
+--[=[
+	@within SimpleSpring Class
+	Deletes SimpleSpring Class.
+]=]
+
 function Spring:Destroy()
 	setmetatable(self, nil)
 	table.clear(self)
 	table.freeze(self)
-	return true
 end
 
 return Spring

@@ -40,7 +40,6 @@ end
 
 --[=[
 	@within Raycaster Class
-	@return <Raycaster>
 	Destroys Raycaster Class.
 ]=]
 

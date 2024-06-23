@@ -1,9 +1,20 @@
 local MInstance = require(script.Parent.Parent.Components.Instance)
-local AnimContainer = {}
-AnimContainer.__index = AnimContainer
+local Animator = {}
+Animator.__index = Animator
 
-function AnimContainer.new(animator: Animator)
-	local self = setmetatable({}, AnimContainer)
+--[=[
+	@class Animator Class
+	Animator Class.
+]=]
+
+--[=[
+	@within Animator Class	
+	@return <Animator>
+	Creates Animator Class.
+]=]
+
+function Animator.new(animator: Animator)
+	local self = setmetatable({}, Animator)
 	self.Anims = {
 		Uncategorized = {},
 		Categorized = {}
@@ -12,11 +23,11 @@ function AnimContainer.new(animator: Animator)
 	return self
 end
 
-function AnimContainer:NewCategory(categoryName: string)
+function Animator:NewCategory(categoryName: string)
 	self.Anims.Categorized[categoryName] = {}
 end
 
-function AnimContainer:InsertNew(anim: any, animName: string, categoryName: string?)
+function Animator:InsertNew(anim: any, animName: string, categoryName: string?)
 	local function DoLogic(animFianl)
 		if categoryName ~= nil then
 			if self.Anims.Categorized[categoryName] ~= nil then
@@ -36,7 +47,7 @@ function AnimContainer:InsertNew(anim: any, animName: string, categoryName: stri
 	end
 end
 
-function AnimContainer:GetRandom(categoryName: string)
+function Animator:GetRandom(categoryName: string)
 	local category = self.Anims.Categorized[categoryName]
 	local allFromCategory = {}
 	for _, anim in category do
@@ -45,7 +56,7 @@ function AnimContainer:GetRandom(categoryName: string)
 	return allFromCategory[math.random(1,#allFromCategory)]
 end
 
-function AnimContainer:RemoveAnim(animName: string, categoryName: string?)
+function Animator:RemoveAnim(animName: string, categoryName: string?)
 	if categoryName ~= nil then
 		self.Anims[categoryName][animName] = nil
 	else
@@ -53,11 +64,15 @@ function AnimContainer:RemoveAnim(animName: string, categoryName: string?)
 	end
 end
 
-function AnimContainer:Destroy()
+--[=[
+	@within Animator Class
+	Destroys Animator Class.
+]=]
+
+function Animator:Destroy()
 	setmetatable(self, nil)
 	table.clear(self)
 	table.freeze(self)
 end
 
-
-return AnimContainer
+return Animator

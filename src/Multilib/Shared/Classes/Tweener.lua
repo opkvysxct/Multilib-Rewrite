@@ -3,6 +3,11 @@ local Tweener = {}
 Tweener.__index = Tweener
 
 --[=[
+	@class Tweener Class
+	Tweener Class.
+]=]
+
+--[=[
 	@within Tweener Class
 	@return <Tweener>
 	Creates Tweener Class.

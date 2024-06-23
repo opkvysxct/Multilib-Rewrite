@@ -2,6 +2,18 @@ local HttpService = game:GetService("HttpService")
 local NumberComputer = {}
 NumberComputer.__index = NumberComputer
 
+--[=[
+	@class NumberComputer Class
+	NumberComputer Class.
+]=]
+
+
+--[=[
+	@within NumberComputer Class
+	@return <NumberComputer>
+	Creates NumberComputer Class.
+]=]
+
 function NumberComputer.new(baseValue: number)
 	assert(typeof(baseValue) == "number", "[NumberComputer] Wrong type or no value provided for baseValue.")
 	local self = setmetatable({}, NumberComputer)
@@ -33,11 +45,10 @@ function NumberComputer:UpdateOperation(operationName: string, operationBaseNumb
 	end
 	if operationFounded == nil then
 		warn("[NumberComputer]", "Didn't found operation with that name")
-		return false
+		return
 	end
 	operationFounded.OperationBaseNumber = operationBaseNumber
 	self:_Compute()
-	return true
 end
 
 function NumberComputer:_Compute()
@@ -89,7 +100,6 @@ function NumberComputer:_Compute()
 	for _, cConnection in self._Connections do
 		cConnection.ConFunc(self.ComputedValue, self._LastComputedValue)
 	end
-	return true
 end
 
 function NumberComputer:InsertOperation(operationName: string, operationBaseNumber: number, operationType: string)
@@ -101,7 +111,7 @@ function NumberComputer:InsertOperation(operationName: string, operationBaseNumb
 	for _, operation in self._Operations do
 		if operation.OperationName == operationName then
 			warn("[NumberComputer]", "Operation with same name already exists.")
-			return false
+			return
 		end
 	end
 	table.insert(self._Operations,
@@ -113,7 +123,6 @@ function NumberComputer:InsertOperation(operationName: string, operationBaseNumb
 	)
 	self._CheckGUID = HttpService:GenerateGUID(false)
 	self:_Compute()
-	return true
 end
 
 function NumberComputer:RemoveOperation(operationName: string)
@@ -127,12 +136,11 @@ function NumberComputer:RemoveOperation(operationName: string)
 	end
 	if toDelete == nil then
 		warn("[NumberComputer]", "Didn't found connection with that name")
-		return false
+		return
 	end
 	table.remove(self._Operations,toDelete)
 	self._CheckGUID = HttpService:GenerateGUID(false)
 	self:_Compute()
-	return true
 end
 
 function NumberComputer:Connect(conName: string, ConFunc: (number, number) -> nil)
@@ -141,11 +149,10 @@ function NumberComputer:Connect(conName: string, ConFunc: (number, number) -> ni
 	for _, cConnection in self._Connections do
 		if cConnection.ConName == conName then
 			warn("[NumberComputer]", "Connection with same name already exists.")
-			return false
+			return
 		end
 	end
 	table.insert(self._Connections,{ConName = conName,ConFunc = ConFunc})
-	return true
 end
 
 function NumberComputer:Disconnect(conName: string)
@@ -159,17 +166,20 @@ function NumberComputer:Disconnect(conName: string)
 	end
 	if toDelete == nil then
 		warn("[NumberComputer]", "Didn't found connection with that name")
-		return false
+		return
 	end
 	table.remove(self._Connections,toDelete)
-	return true
 end
+
+--[=[
+	@within NumberComputer Class
+	Destroys NumberComputer Class.
+]=]
 
 function NumberComputer:Destroy()
 	setmetatable(self, nil)
 	table.clear(self)
 	table.freeze(self)
-	return true
 end
 
 return NumberComputer

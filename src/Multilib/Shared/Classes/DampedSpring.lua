@@ -1,6 +1,18 @@
 local DampedSpring = {}
 DampedSpring.__index = DampedSpring
 
+--[=[
+	@class DampedSpring Class
+	DampedSpring Class.
+	Note: Its very simple implementation of a spring, its better to use other better classes for it, like Spring from NevermoreEngine created by Quenty.
+]=]
+
+--[=[
+	@within DampedSpring Class
+	@return <DampedSpring>
+	Creates DampedSpring Class.
+]=]
+
 function DampedSpring.new(
 	position: number,
 	mass: number,
@@ -21,9 +33,19 @@ function DampedSpring.new(
 	return self
 end
 
+--[=[
+	@within DampedSpring Class
+	Sets target for DampedSpring Class.
+]=]
+
 function DampedSpring:SetTarget(target: number)
 	self.Target = target
 end
+
+--[=[
+	@within DampedSpring Class
+	Updates position for DampedSpring Class.
+]=]
 
 function DampedSpring:Update(deltaTime: number)
 	local acceleration = (-self._CDamping * self._Velocity - self._KConstant * (self.Position - self.Target)) / self._Mass
@@ -32,11 +54,15 @@ function DampedSpring:Update(deltaTime: number)
 	self.Position = self.Position + self._Velocity
 end
 
+--[=[
+	@within DampedSpring Class
+	Destroys DampedSpring Class.
+]=]
+
 function DampedSpring:Destroy()
 	setmetatable(self, nil)
 	table.clear(self)
 	table.freeze(self)
-	return true
 end
 
 return DampedSpring
