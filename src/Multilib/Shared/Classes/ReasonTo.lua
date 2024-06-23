@@ -8,6 +8,7 @@ ReasonTo.__index = ReasonTo
 
 --[=[
 	@within ReasonTo Class
+	@return <ReasonToClass>
 	Creates ReasonTo Class.
 ]=]
 

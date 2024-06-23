@@ -9,7 +9,7 @@ Animator.__index = Animator
 
 --[=[
 	@within Animator Class	
-	@return <Animator>
+	@return <AnimatorClass>
 	Creates Animator Class.
 ]=]
 
@@ -23,11 +23,21 @@ function Animator.new(animator: Animator)
 	return self
 end
 
+--[=[
+	@within Animator Class	
+	Creates new category inside Animator Class.
+]=]
+
 function Animator:NewCategory(categoryName: string)
 	self.Anims.Categorized[categoryName] = {}
 end
 
-function Animator:InsertNew(anim: any, animName: string, categoryName: string?)
+--[=[
+	@within Animator Class	
+	Inserts new animation to Animator Class.
+]=]
+
+function Animator:InsertNew(anim: Animation | number, animName: string, categoryName: string?)
 	local function DoLogic(animFianl)
 		if categoryName ~= nil then
 			if self.Anims.Categorized[categoryName] ~= nil then
@@ -47,14 +57,10 @@ function Animator:InsertNew(anim: any, animName: string, categoryName: string?)
 	end
 end
 
-function Animator:GetRandom(categoryName: string)
-	local category = self.Anims.Categorized[categoryName]
-	local allFromCategory = {}
-	for _, anim in category do
-		table.insert(allFromCategory,anim)
-	end
-	return allFromCategory[math.random(1,#allFromCategory)]
-end
+--[=[
+	@within Animator Class
+	Removes animation from given category, if no categoryName is provided then will remove animation from Uncategorized category.
+]=]
 
 function Animator:RemoveAnim(animName: string, categoryName: string?)
 	if categoryName ~= nil then
@@ -62,6 +68,22 @@ function Animator:RemoveAnim(animName: string, categoryName: string?)
 	else
 		self.Anims.Uncategorized[animName] = nil
 	end
+end
+
+
+--[=[
+	@within Animator Class
+	@return <Animation>
+	Returns random animation from given category.
+]=]
+
+function Animator:GetRandom(categoryName: string)
+	local category = self.Anims.Categorized[categoryName]
+	local allFromCategory = {}
+	for _, anim in category do
+		table.insert(allFromCategory,anim)
+	end
+	return allFromCategory[math.random(1,#allFromCategory)]
 end
 
 --[=[

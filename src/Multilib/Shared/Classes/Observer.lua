@@ -9,7 +9,7 @@ Observer.__index = Observer
 
 --[=[
 	@within Observer Class
-	@return <Observer>
+	@return <ObserverClass>
 	Creates Observer Class.
 ]=]
 
@@ -82,6 +82,7 @@ end
 --[=[
 	@within Observer Class
 	Connects a function that will be executed on every value change from Observer:Set() function.
+	
 	the diffrence here is that Middleware function are executed before the value is set up, and they also allow for chaning the value via return.
 ]=]
 

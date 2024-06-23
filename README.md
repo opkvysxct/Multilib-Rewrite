@@ -30,5 +30,5 @@ MultiUI = "opkvysxct/multiui@NEWEST.VERSION"
 You can find everything in the [docs](https://opkvysxct.github.io/Multilib-Rewrite/).
 
 ## Last note
-Remember to use newest version only, as older version may contain serious bugs.\
+Remember to use newest version only, as older version may contain serious bugs. <br/>
 Special thanks to [Fengee](https://github.com/NiceAssasin123) & [Sani](https://github.com/AlwaysSunnySani) for help.

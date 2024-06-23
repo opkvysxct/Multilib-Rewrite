@@ -10,7 +10,7 @@ Raycaster.__index = Raycaster
 
 --[=[
 	@within Raycaster Class
-	@return <Raycaster>
+	@return <RaycasterClass>
 	Returns Raycaster Class.
 ]=]
 

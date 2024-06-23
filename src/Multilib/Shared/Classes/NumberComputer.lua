@@ -10,7 +10,7 @@ NumberComputer.__index = NumberComputer
 
 --[=[
 	@within NumberComputer Class
-	@return <NumberComputer>
+	@return <NumberComputerClass>
 	Creates NumberComputer Class.
 ]=]
 
@@ -27,12 +27,23 @@ function NumberComputer.new(baseValue: number)
 	return self
 end
 
+--[=[
+	@within NumberComputer Class
+	@return <number>
+	Returns computed value.
+]=]
+
 function NumberComputer:GetValue(reCompute: boolean?)
 	if self._CheckGUID ~= self._LastComputeGUID or reCompute == true then
 		self:_Compute()
 	end
 	return self.ComputedValue
 end
+
+--[=[
+	@within NumberComputer Class
+	Updates existing operation with new parameters.
+]=]
 
 function NumberComputer:UpdateOperation(operationName: string, operationBaseNumber: number)
 	assert(typeof(operationName) == "string", "[NumberComputer] Wrong type or no value provided for operationName.")
@@ -50,6 +61,12 @@ function NumberComputer:UpdateOperation(operationName: string, operationBaseNumb
 	operationFounded.OperationBaseNumber = operationBaseNumber
 	self:_Compute()
 end
+
+--[=[
+	@within NumberComputer Class
+	@private
+	Computes every operation that was added.
+]=]
 
 function NumberComputer:_Compute()
 	self._LastComputedValue = self.ComputedValue
@@ -102,6 +119,11 @@ function NumberComputer:_Compute()
 	end
 end
 
+--[=[
+	@within NumberComputer Class
+	Inserts new operation to be computed.
+]=]
+
 function NumberComputer:InsertOperation(operationName: string, operationBaseNumber: number, operationType: string)
 	assert(typeof(operationName) == "string", "[NumberComputer] Wrong type or no value provided for operationName.")
 	assert(typeof(operationBaseNumber) == "number", "[NumberComputer] Wrong type or no value provided for operationBaseNumber.")
@@ -125,6 +147,11 @@ function NumberComputer:InsertOperation(operationName: string, operationBaseNumb
 	self:_Compute()
 end
 
+--[=[
+	@within NumberComputer Class
+	Removes given operation.
+]=]
+
 function NumberComputer:RemoveOperation(operationName: string)
 	assert(typeof(operationName) == "string", "[NumberComputer] Wrong type or no value provided for operationName.")
 	local toDelete = nil
@@ -143,6 +170,11 @@ function NumberComputer:RemoveOperation(operationName: string)
 	self:_Compute()
 end
 
+--[=[
+	@within NumberComputer Class
+	Connects a function that will be executed after any change.
+]=]
+
 function NumberComputer:Connect(conName: string, ConFunc: (number, number) -> nil)
 	assert(typeof(conName) == "string", "[NumberComputer] Wrong type or no value provided for conName.")
 	assert(typeof(ConFunc) == "function", "[NumberComputer] Wrong type or no value provided for ConFunc.")
@@ -154,6 +186,12 @@ function NumberComputer:Connect(conName: string, ConFunc: (number, number) -> ni
 	end
 	table.insert(self._Connections,{ConName = conName,ConFunc = ConFunc})
 end
+
+
+--[=[
+	@within NumberComputer Class
+	Disconnects a function that would be executed after any change.
+]=]
 
 function NumberComputer:Disconnect(conName: string)
 	assert(typeof(conName) == "string", "[NumberComputer] Wrong type or no value provided for conName.")

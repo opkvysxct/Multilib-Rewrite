@@ -4,12 +4,13 @@ DampedSpring.__index = DampedSpring
 --[=[
 	@class DampedSpring Class
 	DampedSpring Class.
+
 	Note: Its very simple implementation of a spring, its better to use other better classes for it, like Spring from NevermoreEngine created by Quenty.
 ]=]
 
 --[=[
 	@within DampedSpring Class
-	@return <DampedSpring>
+	@return <DampedSpringClass>
 	Creates DampedSpring Class.
 ]=]
 

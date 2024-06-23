@@ -4,12 +4,13 @@ Spring.__index = Spring
 --[=[
 	@class SimpleSpring Class
 	SimpleSpring Class.
+
 	Note: Its very simple implementation of a spring, its better to use other better classes for it, like Spring from NevermoreEngine created by Quenty.
 ]=]
 
 --[=[
 	@within SimpleSpring Class
-	@return <SimpleSpring>
+	@return <SimpleSpringClass>
 	Creates SimpleSpring Class.
 ]=]
 

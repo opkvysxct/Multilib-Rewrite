@@ -9,7 +9,7 @@ Tweener.__index = Tweener
 
 --[=[
 	@within Tweener Class
-	@return <Tweener>
+	@return <TweenerClass>
 	Creates Tweener Class.
 ]=]
 
