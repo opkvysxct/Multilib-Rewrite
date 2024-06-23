@@ -67,11 +67,8 @@ function Lib:LoggerSetter(value: boolean)
 end
 
 -- End
-function Lib:Init(comments: boolean)
+function Lib:Init()
 	self.IsEnabled = true
-	if comments then
-		warn("[Multilib-" .. script.Name .. "]", script.Name, "Lib Loaded & safe to use.")
-	end
 end
 
 return Lib

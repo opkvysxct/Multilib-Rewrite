@@ -49,12 +49,9 @@ function Lib:SetDefaultDirection(direction: any)
 end
 
 -- End
-function Lib:Init(comments: boolean)
+function Lib:Init()
 	self.DefaultStyle = Enum.EasingStyle.Quad
 	self.DefaultDirection = Enum.EasingDirection.InOut
-	if comments then
-		warn("[Multilib-" .. script.Name .. "]", script.Name, "Lib Loaded & safe to use.")
-	end
 end
 
 return Lib

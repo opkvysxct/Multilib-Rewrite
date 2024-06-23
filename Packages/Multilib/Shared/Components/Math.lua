@@ -78,10 +78,8 @@ function Lib:LerpVector3(v3: Vector3, goal: Vector3, alpha: number)
 end
 
 -- End
-function Lib:Init(comments: boolean)
-	if comments then
-		warn("[Multilib-" .. script.Name .. "]", script.Name, "Lib Loaded & safe to use.")
-	end
+function Lib:Init()
+
 end
 
 return Lib

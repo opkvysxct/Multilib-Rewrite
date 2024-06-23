@@ -39,10 +39,8 @@ function Lib:ReturnCharacterByPart(part: Instance)
 end
 
 -- End
-function Lib:Init(comments: boolean)
-	if comments then
-		warn("[Multilib-" .. script.Name .. "]", script.Name, "Lib Loaded & safe to use.")
-	end
+function Lib:Init()
+
 end
 
 return Lib

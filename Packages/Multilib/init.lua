@@ -1,3 +1,4 @@
+local RunService = game:GetService("RunService")
 --Multilib Rewrite
 --VYSX/FENGEE 2024
 
@@ -28,7 +29,6 @@ local Multilib = {}
 	Multilib.Shared.C.Math = require(script.Shared.Components.Math)
 	Multilib.Shared.C.Parallel = require(script.Shared.Components.Parallel)
 	Multilib.Shared.C.Player = require(script.Shared.Components.Player)
-	Multilib.Shared.C.Raycast = require(script.Shared.Components.Raycast)
 	Multilib.Shared.C.String = require(script.Shared.Components.String)
 	Multilib.Shared.C.Table = require(script.Shared.Components.Table)
 	Multilib.Shared.C.Tween = require(script.Shared.Components.Tween)
@@ -65,29 +65,24 @@ local Multilib = {}
 
 	--[=[
 		@within Main Package
-		Initializes Server Packages
+		Initializes Packages.
 	]=]
 
-	function Multilib:InitServer(comments: boolean)
-		for _, Component in self.Shared.C do
-			Component:Init(comments)
-		end
-		for _, Component in self.Server.C do
-			Component:Init(comments)
-		end
-	end
-
-	--[=[
-		@within Main Package
-		Initializes Client Packages
-	]=]
-
-	function Multilib:InitClient(comments: boolean)
-		for _, Component in self.Shared.C do
-			Component:Init(comments)
-		end
-		for _, Component in self.Client.C do
-			Component:Init(comments)
+	function Multilib:Init()
+		if RunService:IsServer() then
+			for _, Component in self.Shared.C do
+				Component:Init()
+			end
+			for _, Component in self.Server.C do
+				Component:Init()
+			end
+		elseif RunService:IsClient() then
+			for _, Component in self.Shared.C do
+				Component:Init()
+			end
+			for _, Component in self.Client.C do
+				Component:Init()
+			end
 		end
 	end
 
