@@ -31,7 +31,6 @@ local Multilib = {}
 	Multilib.Shared.C.Player = require(script.Shared.Components.Player)
 	Multilib.Shared.C.String = require(script.Shared.Components.String)
 	Multilib.Shared.C.Table = require(script.Shared.Components.Table)
-	Multilib.Shared.C.Tween = require(script.Shared.Components.Tween)
 	Multilib.Shared.C.CustomShared = require(script.Shared.Components.CustomShared)
 
 	--SHARED CLASSES
@@ -40,8 +39,10 @@ local Multilib = {}
 	Multilib.Shared.CC.DampedSpring = require(script.Shared.Classes.DampedSpring)
 	Multilib.Shared.CC.NumberComputer = require(script.Shared.Classes.NumberComputer)
 	Multilib.Shared.CC.Observer = require(script.Shared.Classes.Observer)
+	Multilib.Shared.CC.Raycaster = require(script.Shared.Classes.Raycaster)
 	Multilib.Shared.CC.ReasonTo = require(script.Shared.Classes.ReasonTo)
 	Multilib.Shared.CC.SimpleSpring = require(script.Shared.Classes.SimpleSpring)
+	Multilib.Shared.CC.Tweener = require(script.Shared.Classes.Tweener)
 
 	--SERVER COMPONENTS
 	Multilib.Server = {}
