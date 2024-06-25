@@ -9,7 +9,7 @@ RecipeProcessor.__index = RecipeProcessor
 ]=]
 
 --[=[
-	@within ReceiptProcessor Class	
+	@within ReceiptProcessor Class
 	@return <ReceiptProcessorClass>
 	Creates ReceiptProcessor Class.
 ]=]
@@ -22,16 +22,16 @@ function RecipeProcessor.new()
 end
 
 --[=[
-	@within ReceiptProcessor Class	
+	@within ReceiptProcessor Class
 	Adds listener and a function connected to it.
 ]=]
 
-function RecipeProcessor:AddListener(id: number, funcAfter: any)
-	self.Producs[id] = funcAfter
+function RecipeProcessor:AddListener(id: number, FuncAfter: () -> nil)
+	self.Producs[id] = FuncAfter
 end
 
 --[=[
-	@within ReceiptProcessor Class	
+	@within ReceiptProcessor Class
 	@private
 	Runs the class logic.
 ]=]
@@ -69,7 +69,7 @@ function RecipeProcessor:_Run()
 end
 
 --[=[
-	@within ReceiptProcessor Class	
+	@within ReceiptProcessor Class
 	Destroys ReceiptProcessor Class.
 ]=]
 

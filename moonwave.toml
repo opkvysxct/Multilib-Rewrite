@@ -6,7 +6,7 @@ classes = ["Instance Package","Logger Package","Marketplace Package","Math Packa
 
 [[classOrder]]
 section = "Server"
-classes = ["ReceiptProcessor Class"]
+classes = ["GoogleSpreadsheetLogger Class","ReceiptProcessor Class"]
 
 [[classOrder]]
 section = "Client"

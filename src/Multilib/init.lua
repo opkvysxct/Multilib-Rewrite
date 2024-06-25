@@ -51,6 +51,7 @@ local Multilib = {}
 
 	--SERVER CLASSES
 	Multilib.Server.CC = {}
+	Multilib.Server.CC.GoogleSpreadsheetLogger = require(script.Server.Classes.GoogleSpreadsheetLogger)
 	Multilib.Server.CC.ReceiptProcessor = require(script.Server.Classes.ReceiptProcessor)
 	
 	--CLIENT COMPONENTS

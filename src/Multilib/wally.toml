@@ -1,6 +1,6 @@
 [package]
 name = "opkvysxct/multilib"
-version = "2.5.1"
+version = "2.6.0"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 license = "MIT"
