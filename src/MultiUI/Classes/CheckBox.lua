@@ -19,7 +19,8 @@ CheckBox.__index = CheckBox
 function CheckBox.new(model: any, elements: {GuiObject}, IdName: string, useSettings: Mtypes.CheckBox?)
 	local self = setmetatable({}, CheckBox)
 
-	useSettings = useSettings or {}
+	useSettings = useSettings or table.clone(Mtypes.TCheckBox)
+	if useSettings == nil then return end
 	useSettings.Locked = useSettings.Locked or false
 	useSettings.Cooldown = useSettings.Cooldown or 0.25
 
@@ -137,7 +138,7 @@ end
 ]=]
 
 function CheckBox:RemoveAction(actionName: string)
-	table.remove(self.Actions,actionName)
+	self.Actions[actionName] = nil
 end
 
 --[=[

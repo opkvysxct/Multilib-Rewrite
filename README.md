@@ -21,7 +21,7 @@ Multilib = "opkvysxct/multilib@NEWEST.VERSION"
 ```
 
 ### MultiUI
-[WALLY LINK MULTIUI](https://wally.run/package/opkvysxct/multiui),
+[WALLY LINK MULTIUI](https://wally.run/package/opkvysxct/multiui)
 ```toml
 MultiUI = "opkvysxct/multiui@NEWEST.VERSION"
 ```

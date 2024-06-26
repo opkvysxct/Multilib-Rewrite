@@ -20,7 +20,8 @@ DropDownOption.__index = DropDownOption
 function DropDownOption.new(model: any, elements: {GuiObject}, IdName: string, DropDownMenu: {}, useSettings: Mtypes.DropDownOption?)
 	local self = setmetatable({}, DropDownOption)
 
-	useSettings = useSettings or {}
+	useSettings = useSettings or table.clone(Mtypes.TDropDownOption)
+	if useSettings == nil then return end
 	useSettings.Locked = useSettings.Locked or false
 	useSettings.Cooldown = useSettings.Cooldown or 0.25
 

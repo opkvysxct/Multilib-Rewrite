@@ -19,7 +19,8 @@ ArrowChange.__index = ArrowChange
 function ArrowChange.new(model: any, elements: {GuiObject}, IdName: string, useSettings: Mtypes.ArrowChange?)
 	local self = setmetatable({}, ArrowChange)
 
-	useSettings = useSettings or {}
+	useSettings = useSettings or table.clone(Mtypes.TArrowChange)
+	if useSettings == nil then return end
 	useSettings.Locked = useSettings.Locked or false
 	useSettings.Cooldown = useSettings.Cooldown or 0.25
 	useSettings.Values = useSettings.Values or {"first","second","Third"}
@@ -35,9 +36,10 @@ function ArrowChange.new(model: any, elements: {GuiObject}, IdName: string, useS
 	for index, value in elements do
 		self._ModelElements[index] = value
 	end
-
-	if useSettings.StartingIndex < 1 or useSettings.StartingIndex > #useSettings.Values then
-		useSettings.StartingIndex = 1
+	if useSettings.Values ~= nil then
+		if useSettings.StartingIndex < 1 or useSettings.StartingIndex > #useSettings.Values then
+			useSettings.StartingIndex = 1
+		end
 	end
 
 	self.ActualIndex = useSettings.StartingIndex
@@ -53,7 +55,7 @@ function ArrowChange.new(model: any, elements: {GuiObject}, IdName: string, useS
 	self.IdName = IdName
 
 	self.CooldownTime = useSettings.Cooldown
-	self.Value = useSettings.StartingValue
+	self.Value = useSettings.StartingIndex
 	self.Locked = useSettings.Locked
 
 	self:_DisplayAnimFunc()
@@ -173,7 +175,7 @@ end
 ]=]
 
 function ArrowChange:RemoveAction(actionName: string)
-	table.remove(self.Actions,actionName)
+	self.Actions[actionName] = nil
 end
 
 --[=[

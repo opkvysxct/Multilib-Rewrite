@@ -21,10 +21,12 @@ DropDownMenu.__index = DropDownMenu
 function DropDownMenu.new(model: any, elements: {GuiObject}, IdName: string, DropDownOptions: {}, useSettings: Mtypes.DropDownMenu?)
 	local self = setmetatable({}, DropDownMenu)
 
-	useSettings = useSettings or {}
+	useSettings = useSettings or table.clone(Mtypes.TDropDownMenu)
+	if useSettings == nil then return end
 	useSettings.Locked = useSettings.Locked or false
 	useSettings.Cooldown = useSettings.Cooldown or 0.25
 	useSettings.Values = useSettings.Values or {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"}
+	if useSettings.Values == nil then return end
 	useSettings.SelectedValue = useSettings.SelectedValue or useSettings.Values[1]
 	useSettings.AnimSettings = useSettings.AnimSettings or {Time = 0.25,Height = 2}
 
@@ -39,6 +41,7 @@ function DropDownMenu.new(model: any, elements: {GuiObject}, IdName: string, Dro
 		self._ModelElements[index] = value
 	end
 	useSettings.CanvasSize = useSettings.CanvasSize or self._ModelElements.ScrollingFrame.Size.Y.Scale * 2
+	if useSettings.CanvasSize == nil then return end
 	self._ModelElements.ScrollingFrame.CanvasSize = UDim2.fromScale(0,useSettings.CanvasSize)
 
 	self.Actions = {}
@@ -193,7 +196,7 @@ end
 ]=]
 
 function DropDownMenu:RemoveAction(actionName: string)
-	table.remove(self.Actions,actionName)
+	self.Actions[actionName] = nil
 end
 
 --[=[
@@ -213,7 +216,7 @@ end
 	Inserts element into the DropDownMenu.RadioButtons table.
 ]=]
 
-function DropDownMenu:InsertElement(element: {})
+function DropDownMenu:InsertElement(element: {IdName: string})
 	self.RadioButtons[element.IdName] = element
 end
 
@@ -234,7 +237,7 @@ end
 ]=]
 
 function DropDownMenu:ClearElement(ElementName: string)
-	table.remove(self.RadioButtons,ElementName)
+	self.RadioButtons[ElementName] = nil
 end
 
 --[=[
@@ -262,7 +265,7 @@ end
 	Selects one button and deselects all the others.
 ]=]
 
-function DropDownMenu:selectButton(DropDownObject: {})
+function DropDownMenu:selectButton(DropDownObject: {IdName: string})
 	self.SelectedValue = DropDownObject.IdName
 	self:_DisplayAnimFunc("ChangeLabel",self.SelectedValue)
 	self:_DisplayAnimFunc("Collapse")

@@ -50,10 +50,10 @@ function Animator:InsertNew(anim: Animation | number, animName: string, category
 			self.Anims.Uncategorized[animName] = animFianl
 		end
 	end
-	if anim:IsA("Animation") then
-		DoLogic(anim)
-	elseif typeof(anim) == "number" then
+	if typeof(anim) == "number" then
 		DoLogic(MInstance:Animation(anim,self.Animator))
+	elseif anim:IsA("Animation") then
+		DoLogic(anim)
 	end
 end
 

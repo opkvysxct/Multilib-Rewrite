@@ -1,7 +1,7 @@
 export type ArrowChange = {
 	Locked: boolean?,
 	Cooldown: number?,
-	OverrideDisplayAnimation: () -> nil?,
+	OverrideDisplayAnimation: (() -> nil)?,
 	Values: {string}?,
 	StartingIndex: number?
 }
@@ -9,16 +9,18 @@ export type ArrowChange = {
 export type CheckBox = {
 	Locked: boolean?,
 	Cooldown: number?,
-	OverrideDisplayAnimation: () -> nil?,
+	OverrideDisplayAnimation: (() -> nil)?,
+	StartingValue: boolean?
 }
 
 export type DropDownMenu = {
 	Locked: boolean?,
 	Cooldown: number?,
-	OverrideDisplayAnimation: () -> nil?,
-	Values: string?,
+	OverrideDisplayAnimation: (() -> nil)?,
+	Values: {string}?,
 	SelectedValue: string?,
-	AnimSettings: {Time: number, Height: number}?
+	AnimSettings: {Time: number, Height: number}?,
+	CanvasSize: number?
 }
 
 export type DropDownOption = {
@@ -29,16 +31,18 @@ export type DropDownOption = {
 export type InputField = {
 	Locked: boolean?,
 	Cooldown: number?,
-	OverrideDisplayAnimation: () -> nil?,
+	OverrideDisplayAnimation: (() -> nil)?,
 	ElementType: string?,
+	StartingValue: string?,
 	PlaceholderText: string?,
-	Lenght: number?
+	Lenght: number?,
+	CustomCharacters: string?
 }
 
 export type RadioButton = {
 	Locked: boolean?,
 	Cooldown: number?,
-	OverrideDisplayAnimation: () -> nil?
+	OverrideDisplayAnimation: (() -> nil)?
 }
 
 export type Slider = {
@@ -67,6 +71,7 @@ local checkBox: CheckBox = {
 	Locked = false,
 	Cooldown = 1,
 	OverrideDisplayAnimation = nil,
+	StartingValue = false
 }
 Templates.TCheckBox = checkBox
 
@@ -74,9 +79,10 @@ local dropDownMenu: DropDownMenu = {
 	Locked = false,
 	Cooldown = 1,
 	OverrideDisplayAnimation = nil,
-	Values = string,
-	SelectedValue = string,
-	AnimSettings = {Time = 1, Height = 2}
+	Values = "string",
+	SelectedValue = "string",
+	AnimSettings = {Time = 1, Height = 2},
+	CanvasSize = 4,
 }
 Templates.TDropDownMenu = dropDownMenu
 
@@ -92,7 +98,9 @@ local inputField: InputField = {
 	OverrideDisplayAnimation = nil,
 	ElementType = "Numeric",
 	PlaceholderText = "Change me!",
-	Lenght = 50
+	StartingValue = "Change me!",
+	Lenght = 50,
+	CustomCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
 }
 Templates.TInputField = inputField
 

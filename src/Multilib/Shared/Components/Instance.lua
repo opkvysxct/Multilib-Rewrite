@@ -83,11 +83,11 @@ function Lib:SoundFX(where: Instance | Vector3, specs: Mtypes.SoundSpecs)
 
 	if toDelete ~= nil then
 		task.delay(self.MinSoundTime, function()
-			Debris:AddItem(where, specs.Duration or sound.TimeLength)
+			Debris:AddItem(where, sound.TimeLength)
 		end)
 	else
 		task.delay(self.MinSoundTime, function()
-			Debris:AddItem(sound, specs.Duration or sound.TimeLength)
+			Debris:AddItem(sound, sound.TimeLength)
 		end)
 	end
 	return sound
@@ -99,18 +99,20 @@ end
 	Copies already existing particle emitter and puts it in given location, then emits it and deletes after emit is done.
 ]=]
 
-function Lib:ParticleFX(particle: Instance, strength: number, where: Instance | Vector3, WhereSize: Vector3?)
+function Lib:ParticleFX(particle: ParticleEmitter, strength: number, where: Instance | Vector3, WhereSize: Vector3?)
 	local toDelete
 	if typeof(where) == "Vector3" then
-		where = self:Create("Part", workspace, {
+		local newWhere: Instance = self:Create("Part", workspace, {
 			Size = WhereSize or Vector3.new(1, 1, 1),
 			Position = where,
 			CanCollide = false,
 			Anchored = true,
 			Transparency = 1,
 		})
+		where = newWhere
 		toDelete = where
 	end
+	assert(typeof(where) == "Instance","")
 	particle = particle:Clone()
 	particle.Parent = where
 	particle:Emit(strength)

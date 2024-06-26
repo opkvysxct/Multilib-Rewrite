@@ -40,6 +40,7 @@ function Lib:Choose(table : {})
 			return table[i]
 		end
 	end
+	return false
 end 
 
 --[=[

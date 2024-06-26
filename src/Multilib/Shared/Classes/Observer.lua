@@ -55,6 +55,7 @@ function Observer:Connect(conName: string, ConFunc: (any) -> nil)
 		end
 	end
 	table.insert(self._Connections,{ConName = conName,ConFunc = ConFunc})
+	return true
 end
 
 --[=[
@@ -76,6 +77,7 @@ function Observer:Disconnect(conName: string)
 		return false
 	end
 	table.remove(self._Connections,toDelete)
+	return true
 end
 
 --[=[
@@ -95,6 +97,7 @@ function Observer:MiddlewareConnect(conName: string, ConFunc: (any) -> any | nil
 		end
 	end
 	table.insert(self._Middleware,{ConName = conName,ConFunc = ConFunc})
+	return true
 end
 
 --[=[
@@ -116,6 +119,7 @@ function Observer:MiddelwareDisconnect(conName: string)
 		return false
 	end
 	table.remove(self._Connections,toDelete)
+	return true
 end
 
 --[=[

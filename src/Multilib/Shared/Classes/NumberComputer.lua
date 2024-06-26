@@ -79,32 +79,38 @@ function NumberComputer:_Compute()
 			if Check(a,b) then
 				return a + b
 			end
+			return false
 		end,
 		["-"] = function(a: number, b: number)
 			if Check(a,b) then
 				return a - b
 			end
+			return false
 		end,
 		["*"] = function(a: number, b: number)
 			if Check(a,b) then
 				return a * b
 			end
+			return false
 		end,
 		["/"] = function(a: number, b: number)
 			if Check(a,b) then
 				assert(b ~= 0, "[NumberComputer] Cannot divide by 0.")
 				return a / b
 			end
+			return false
 		end,
 		["^"] = function(a: number, b: number)
 			if Check(a,b) then
 				return a ^ b
 			end
+			return false
 		end,
 		["%"] = function(a: number, b: number)
 			if Check(a,b) then
 				return a % b
 			end
+			return false
 		end,
 	}
 	local res = self._BaseValue

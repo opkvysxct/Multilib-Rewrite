@@ -26,6 +26,7 @@ end
 
 function Lib:CheckPlayerGamepass(id : number, prompt : boolean, player : Player?)
 	player = IsPlayer(player)
+	if player == nil then return false end
 	local hasPass = false
 	local success, message = pcall(function()
 		hasPass = MarketplaceService:UserOwnsGamePassAsync(player.UserId, id)

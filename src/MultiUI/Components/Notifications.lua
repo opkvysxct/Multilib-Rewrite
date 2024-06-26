@@ -52,7 +52,9 @@ function Lib:_AppendBigNotifLogic(title: string, description: string, imageID: n
 	elements.Title.Text = title
 	elements.Description.Text = description
 	if elements["Image"] then
-		elements.Image.Image = "rbxassetid://" .. imageID
+		if imageID then
+			elements.Image.Image = "rbxassetid://" .. imageID
+		end
 	end
 	model.Parent = self.BigNotifConfig.AppearWhere
 	self.BigNotifConfig.Animations.appear(model,elements)
@@ -86,7 +88,9 @@ function Lib:_AppendSmallNotifLogic(title: string, description: string, imageID:
 	elements.Title.Text = title
 	elements.Description.Text = description
 	if elements["Image"] then
-		elements.Image.Image = "rbxassetid://" .. imageID
+		if imageID then
+			elements.Image.Image = "rbxassetid://" .. imageID
+		end
 	end
 	model.Parent = self.SmallNotifConfig.AppearWhere
 	self.SmallNotifConfig.Animations.appear(model,elements)
@@ -166,7 +170,7 @@ function Lib:Init()
 		Template = nil,
 		TemplatePathes = {},
 		Animations = {
-			appear = function(model: GuiObject, elements: {GuiObject})
+			appear = function(model: CanvasGroup, elements: {GuiObject})
 				model.GroupTransparency = 1
 				TweenService:Create(model,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.InOut),{GroupTransparency = 0}):Play()
 				task.wait(0.25)
@@ -185,13 +189,13 @@ function Lib:Init()
 		Template = nil,
 		TemplatePathes = {},
 		Animations = {
-			appear = function(model: GuiObject, elements: {GuiObject})
+			appear = function(model: GuiObject, elements: any)
 				model.Position = UDim2.fromScale(0,1)
 				elements.Wrapper.Position = UDim2.fromScale(-1,0)
 				TweenService:Create(elements.Wrapper,TweenInfo.new(0.1,Enum.EasingStyle.Quad,Enum.EasingDirection.InOut),{Position = UDim2.fromScale(0,0)}):Play()
 				task.wait(0.1)
 			end,
-			disappear = function(model: GuiObject, elements: {GuiObject})
+			disappear = function(model: GuiObject, elements: any)
 				TweenService:Create(elements.Wrapper,TweenInfo.new(0.1,Enum.EasingStyle.Quad,Enum.EasingDirection.InOut),{Position = UDim2.fromScale(-1,0)}):Play()
 				task.wait(0.1)
 			end,

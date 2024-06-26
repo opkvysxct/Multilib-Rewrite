@@ -7,4 +7,4 @@ license = "MIT"
 description = "Sub library of Multilib for premade UI elements."
 
 [dependencies]
-Multilib = "opkvysxct/multilib@^2.5.1"
+Multilib = "opkvysxct/multilib@^2.6.1"

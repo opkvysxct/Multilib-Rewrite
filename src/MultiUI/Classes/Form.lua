@@ -25,7 +25,7 @@ end
 	Inserts element into the Form.Elements table.
 ]=]
 
-function Form:InsertElement(element: {})
+function Form:InsertElement(element: any)
 	self.Elements[element.IdName] = element
 end
 
@@ -46,7 +46,7 @@ end
 ]=]
 
 function Form:ClearElement(ElementName: string)
-	table.remove(self.Elements,ElementName)
+	self.Elements[ElementName] = nil
 end
 
 --[=[

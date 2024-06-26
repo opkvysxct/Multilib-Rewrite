@@ -16,10 +16,12 @@ local Lib = {}
 
 -- Core
 function Lib:ReturnPlayerByPart(part: Instance)
-	if part.Parent:FindFirstChild("Humanoid") then
-		local character = part.Parent
-		if Players:GetPlayerFromCharacter(character) then
-			return Players:GetPlayerFromCharacter(character)
+	if part.Parent then
+		if part.Parent:FindFirstChild("Humanoid") then
+			local character = part.Parent
+			if Players:GetPlayerFromCharacter(character) then
+				return Players:GetPlayerFromCharacter(character)
+			end
 		end
 	end
 	return false
@@ -32,8 +34,10 @@ end
 ]=]
 
 function Lib:ReturnCharacterByPart(part: Instance)
-	if part.Parent:FindFirstChild("Humanoid") then
-		return part.Parent
+	if part.Parent then
+		if part.Parent:FindFirstChild("Humanoid") then
+			return part.Parent
+		end
 	end
 	return false
 end

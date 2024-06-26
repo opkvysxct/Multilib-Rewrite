@@ -19,7 +19,8 @@ InputField.__index = InputField
 function InputField.new(model: any, elements: {GuiObject}, IdName: string, useSettings: Mtypes.InputField?)
 	local self = setmetatable({}, InputField)
 
-	useSettings = useSettings or {}
+	useSettings = useSettings or table.clone(Mtypes.TInputField)
+	if useSettings == nil then return end
 	useSettings.Locked = useSettings.Locked or false
 	useSettings.Cooldown = useSettings.Cooldown or 0.25
 	useSettings.ElementType = useSettings.ElementType or "Numeric"
@@ -154,7 +155,7 @@ end
 ]=]
 
 function InputField:RemoveAction(actionName: string)
-	table.remove(self.Actions,actionName)
+	self.Actions[actionName] = nil
 end
 
 --[=[

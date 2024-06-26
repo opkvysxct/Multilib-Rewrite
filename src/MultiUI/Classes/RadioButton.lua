@@ -19,7 +19,8 @@ RadioButton.__index = RadioButton
 function RadioButton.new(model: any, elements: {GuiObject}, IdName: string, radioGroup: {}, useSettings: Mtypes.RadioButton?)
 	local self = setmetatable({}, RadioButton)
 
-	useSettings = useSettings or {}
+	useSettings = useSettings or table.clone(Mtypes.TRadioButton)
+	if useSettings == nil then return end
 	useSettings.Locked = useSettings.Locked or false
 	useSettings.Cooldown = useSettings.Cooldown or 0.25
 

@@ -16,7 +16,7 @@ local Lib = {}
 	Checks if the player is in first person.
 ]=]
 
-function Lib:IsFirstPerson(threshold: number)
+function Lib:IsFirstPerson(threshold: number?)
 	if threshold == nil then
 		threshold = 0.2
 	end
@@ -34,7 +34,7 @@ end
 ]=]
 
 function Lib:ForceFirstPerson(State: boolean)
-	if State == true then
+	if State then
 		Players.LocalPlayer.CameraMode = Enum.CameraMode.LockFirstPerson
 	else
 		Players.LocalPlayer.CameraMode = Enum.CameraMode.Classic
