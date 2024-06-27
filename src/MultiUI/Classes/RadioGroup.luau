@@ -53,7 +53,7 @@ end
 	Inserts element into the RadioGroup.RadioButtons table.
 ]=]
 
-function RadioGroup:InsertElement(element: any)
+function RadioGroup:InsertElement<T>(element: any)
 	self.RadioButtons[element.IdName] = element
 end
 
@@ -91,7 +91,7 @@ end
 	Sets the Parent of every radioButton.
 ]=]
 
-function RadioGroup:Append(where: any)
+function RadioGroup:Append<T>(where: T)
 	for _, radioButton in self.RadioButtons do
 		radioButton:Append(where)
 	end

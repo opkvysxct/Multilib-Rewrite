@@ -50,6 +50,7 @@ export type Slider = {
 	Cooldown: number?,
 	Type: string?,
 	StartingValue: any?,
+	SliderArea: number?,
 	MinValue: number?,
 	MaxValue: number?,
 	StepBy: number?,

@@ -22,10 +22,11 @@ Slider.__index = Slider
 function Slider.new(model: any, elements: {GuiObject}, IdName: string, useSettings: Mtypes.Slider?)
 	local self = setmetatable({}, Slider)
 
-	useSettings = useSettings or {}
+	useSettings = useSettings or table.clone(Mtypes.TRadioButton)
+	if useSettings == nil then return end
 	useSettings.Locked = useSettings.Locked or false
 	useSettings.Type = useSettings.Type or "Numeric"
-	useSettings.SliderArea = useSettings.SliderArea or 1.25
+	useSettings.SliderArea = useSettings.SliderArea or 1.25 :: number
 	if useSettings.Type == "Numeric" then
 		if useSettings.StartingValue == nil then
 			useSettings.StartingValue = 50
@@ -58,7 +59,7 @@ function Slider.new(model: any, elements: {GuiObject}, IdName: string, useSettin
 		else
 			self._TextValues = useSettings.TextValues
 		end
-		if useSettings.StartingValue == nil then
+		if useSettings.StartingValue == nil and useSettings.TextValues ~= nil then
 			useSettings.StartingValue = useSettings.TextValues[1]
 			self._StartingValue = useSettings.StartingValue
 		else
@@ -66,9 +67,10 @@ function Slider.new(model: any, elements: {GuiObject}, IdName: string, useSettin
 		end
 		self._StepBy =  1
 		self._MinValue = 0
+		if useSettings.TextValues == nil then return end
 		self._MaxValue = #useSettings.TextValues - 1
 	end
-
+	if useSettings.SliderArea == nil then return end
 	model, elements = MInstance:PerfectClone(model,elements)
 
 	self._ModelElements = {}
@@ -103,7 +105,7 @@ function Slider.new(model: any, elements: {GuiObject}, IdName: string, useSettin
 	if self.SubType == "Numeric" then
 		self:_DisplayAnimFunc(self.Value)
 	elseif self.SubType == "Text" then
-		self:_DisplayAnimFunc(table.find(self._TextValues,self.Value) - 1)
+		self:_DisplayAnimFunc(self._TextValues[self.Value] - 1)
 	end
 
 	return self
@@ -214,7 +216,7 @@ end
 ]=]
 
 function Slider:RemoveAction(actionName: string)
-	table.remove(self.Actions,actionName)
+	self.Actions[actionName] = nil
 end
 
 --[=[
@@ -274,12 +276,12 @@ function Slider:_DisplayAnimFunc(value: number) -- internal private function, do
 	end
 	local drag:GuiButton = self._ModelElements.Drag
 	local progressBar:GuiObject = self._ModelElements.ProgressBar
-	local showText:GuiObject = self._ModelElements.ShowText
+	local showText:TextLabel = self._ModelElements.ShowText
 	local tweenInfoToUse = TweenInfo.new(0.05,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut)
 	TweenService:Create(drag,tweenInfoToUse,{Position = UDim2.fromScale(ConvertToAbsolute() / 100,0.5)}):Play()
 	TweenService:Create(progressBar,tweenInfoToUse,{Size = UDim2.fromScale(ConvertToAbsolute() / 100,1)}):Play()
 	if self.SubType == "Numeric" then
-		showText.Text = value
+		showText.Text = tostring(value)
 	elseif self.SubType == "Text" then
 		showText.Text = self._TextValues[value + 1]
 	end
