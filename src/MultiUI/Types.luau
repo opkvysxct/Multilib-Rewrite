@@ -6,6 +6,13 @@ export type ArrowChange = {
 	StartingIndex: number?
 }
 
+export type Button = {
+	Locked: boolean?,
+	Cooldown: number?,
+	OverrideDisplayAnimation: (() -> nil)?,
+}
+
+
 export type CheckBox = {
 	Locked: boolean?,
 	Cooldown: number?,
@@ -66,6 +73,14 @@ local arrowChange: ArrowChange = {
 	StartingIndex = 1
 }
 Templates.TArrowChange = arrowChange
+
+local button: Button = {
+	Locked = false,
+	Cooldown = 1,
+	OverrideDisplayAnimation = nil,
+	StartingValue = false
+}
+Templates.TButton = button
 
 local checkBox: CheckBox = {
 	Locked = false,

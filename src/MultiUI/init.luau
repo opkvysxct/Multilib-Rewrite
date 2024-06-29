@@ -21,6 +21,7 @@ local MultiUI = {}
 
 	MultiUI.CC = {}
 	MultiUI.CC.ArrowChange = require(script.Classes.ArrowChange)
+	MultiUI.CC.Button = require(script.Classes.Button)
 	MultiUI.CC.CheckBox = require(script.Classes.CheckBox)
 	MultiUI.CC.DropDownMenu = require(script.Classes.DropDownMenu)
 	MultiUI.CC.DropDownOption = require(script.Classes.DropDownOption)
