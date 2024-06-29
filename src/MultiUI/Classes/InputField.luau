@@ -15,16 +15,17 @@ InputField.__index = InputField
 	Constructor for InputField object.
 ]=]
 
-function InputField.new(model: any, elements: {GuiObject}, IdName: string, useSettings: Mtypes.InputField?)
+function InputField.new(model: any, elements: {GuiObject}, IdName: string, useSettings: Mtypes.InputField)
 	local self = setmetatable({}, InputField)
+	local trueSettings = {}
 
 	useSettings = useSettings or table.clone(Mtypes.TInputField)
-	if useSettings == nil then return end
-	useSettings.Locked = useSettings.Locked or false
-	useSettings.Cooldown = useSettings.Cooldown or 0.25
-	useSettings.ElementType = useSettings.ElementType or "Numeric"
-	useSettings.PlaceholderText = useSettings.PlaceholderText or "Input"
-	useSettings.Lenght = useSettings.Lenght or 10
+	trueSettings.locked = useSettings.Locked or false
+	trueSettings.Cooldown = useSettings.Cooldown or 0.25
+	trueSettings.ElementType = useSettings.ElementType or "Numeric"
+	trueSettings.PlaceholderText = useSettings.PlaceholderText or "Input"
+	trueSettings.Lenght = useSettings.Lenght or 10
+	trueSettings.StartingValue = useSettings.StartingValue or "abc"
 
 	model, elements = PerfectClone(model,elements)
 
@@ -38,26 +39,26 @@ function InputField.new(model: any, elements: {GuiObject}, IdName: string, useSe
 	elseif useSettings.ElementType == "Text" then
 		self.AllowedCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	else
-		useSettings.CustomCharacters = useSettings.CustomCharacters or "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
-		self.AllowedCharacters = useSettings.CustomCharacters
+		trueSettings.CustomCharacters = useSettings.CustomCharacters or "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+		self.AllowedCharacters = trueSettings.CustomCharacters
 	end
 
-	self._ModelElements.Input.placeholderText = useSettings.PlaceholderText
+	self._ModelElements.Input.placeholderText = trueSettings.PlaceholderText
 
 	self._IsCooldown = false
 	self.Initiated = false
 	self.ElementType = "InputField"
-	self.Lenght = useSettings.Lenght
-	self.SubType = useSettings.ElementType
+	self.Lenght = trueSettings.Lenght
+	self.SubType = trueSettings.ElementType
 	self.Actions = {}
 
 	self._Model = model
 	self._Model.Name = IdName
 	self.IdName = IdName
 
-	self.CooldownTime = useSettings.Cooldown
-	self.Value = useSettings.StartingValue
-	self.Locked = useSettings.Locked
+	self.CooldownTime = trueSettings.Cooldown
+	self.Value = trueSettings.StartingValue
+	self.Locked = trueSettings.locked
 
 	return self
 end

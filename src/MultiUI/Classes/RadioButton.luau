@@ -15,13 +15,13 @@ RadioButton.__index = RadioButton
 	Constructor for RadioButton object.
 ]=]
 
-function RadioButton.new(model: any, elements: {GuiObject}, IdName: string, radioGroup: {}, useSettings: Mtypes.RadioButton?)
+function RadioButton.new(model: any, elements: {GuiObject}, IdName: string, radioGroup: {}, useSettings: Mtypes.RadioButton)
 	local self = setmetatable({}, RadioButton)
+	local trueSettings = {}
 
 	useSettings = useSettings or table.clone(Mtypes.TRadioButton)
-	if useSettings == nil then return end
-	useSettings.Locked = useSettings.Locked or false
-	useSettings.Cooldown = useSettings.Cooldown or 0.25
+	trueSettings.Locked = useSettings.Locked or false
+	trueSettings.Cooldown = useSettings.Cooldown or 0.25
 
 	if useSettings.OverrideDisplayAnimation ~= nil then
 		self._DisplayAnimFunc = useSettings.OverrideDisplayAnimation 
@@ -45,8 +45,8 @@ function RadioButton.new(model: any, elements: {GuiObject}, IdName: string, radi
 	self.IdName = IdName
 	self.radioGroup = radioGroup
 
-	self.CooldownTime = useSettings.Cooldown
-	self.Locked = useSettings.Locked
+	self.CooldownTime = trueSettings.Cooldown
+	self.Locked = trueSettings.Locked
 
 	self.radioGroup:InsertElement(self)
 	self:_DisplayAnimFunc(false)

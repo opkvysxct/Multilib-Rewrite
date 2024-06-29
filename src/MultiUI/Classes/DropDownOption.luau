@@ -16,13 +16,13 @@ DropDownOption.__index = DropDownOption
 	Constructor for DropDownOption object.
 ]=]
 
-function DropDownOption.new(model: any, elements: {GuiObject}, IdName: string, DropDownMenu: {}, useSettings: Mtypes.DropDownOption?)
+function DropDownOption.new(model: any, elements: {GuiObject}, IdName: string, DropDownMenu: {}, useSettings: Mtypes.DropDownOption)
 	local self = setmetatable({}, DropDownOption)
+	local trueSettings = {}
 
 	useSettings = useSettings or table.clone(Mtypes.TDropDownOption)
-	if useSettings == nil then return end
-	useSettings.Locked = useSettings.Locked or false
-	useSettings.Cooldown = useSettings.Cooldown or 0.25
+	trueSettings.Locked = useSettings.Locked or false
+	trueSettings.Cooldown = useSettings.Cooldown or 0.25
 
 	model, elements = PerfectClone(model,elements)
 
@@ -42,8 +42,8 @@ function DropDownOption.new(model: any, elements: {GuiObject}, IdName: string, D
 	self.IdName = IdName
 	self.DropDownMenu = DropDownMenu
 
-	self.CooldownTime = useSettings.Cooldown
-	self.Locked = useSettings.Locked
+	self.CooldownTime = trueSettings.Cooldown
+	self.Locked = trueSettings.Locked
 
 	self._ModelElements.TextLabel.Text = IdName
 

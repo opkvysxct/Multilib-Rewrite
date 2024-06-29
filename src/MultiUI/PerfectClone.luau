@@ -1,3 +1,4 @@
+--COPY OF MAINSTREAM MULTILIB -> SHARED -> COMPONENTS -> INSTANCES:PerfectClone(trueModel: any, trueElements: {})
 return function (trueModel: any, trueElements: {})
 	local model = trueModel:Clone()
 	local elements = {}

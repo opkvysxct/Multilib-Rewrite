@@ -18,58 +18,37 @@ Slider.__index = Slider
 	Constructor for Slider object.
 ]=]
 
-function Slider.new(model: any, elements: {GuiObject}, IdName: string, useSettings: Mtypes.Slider?)
+function Slider.new(model: any, elements: {GuiObject}, IdName: string, useSettings: Mtypes.Slider)
 	local self = setmetatable({}, Slider)
+	local trueSettings = {}
 
 	useSettings = useSettings or table.clone(Mtypes.TRadioButton)
-	if useSettings == nil then return end
-	useSettings.Locked = useSettings.Locked or false
-	useSettings.Type = useSettings.Type or "Numeric"
-	useSettings.SliderArea = useSettings.SliderArea or 1.25 :: number
+	trueSettings.Locked = useSettings.Locked or false
+	trueSettings.Type = useSettings.Type or "Numeric"
+	trueSettings.SliderArea = useSettings.SliderArea or 1.25
 	if useSettings.Type == "Numeric" then
-		if useSettings.StartingValue == nil then
-			useSettings.StartingValue = 50
-			self._StartingValue = useSettings.StartingValue
-		else
-			self._StartingValue = useSettings.StartingValue
-		end
-		if useSettings.MinValue == nil then
-			useSettings.MinValue = 0
-			self._MinValue = useSettings.MinValue
-		else
-			self._MinValue = useSettings.MinValue
-		end
-		if useSettings.MaxValue == nil then
-			useSettings.MaxValue = 100
-			self._MaxValue = useSettings.MaxValue
-		else
-			self._MaxValue = useSettings.MaxValue
-		end
-		if useSettings.StepBy == nil then
-			useSettings.StepBy = 5
-			self._StepBy = useSettings.StepBy
-		else
-			self._StepBy = useSettings.StepBy
-		end
+		trueSettings.StartingValue = useSettings.StartingValue or 50
+		self._StartingValue = trueSettings.StartingValue
+		
+		trueSettings.MinValue = useSettings.MinValue or 50
+		self._MinValue = trueSettings.MinValue
+
+		trueSettings.MaxValue = useSettings.MaxValue or 50
+		self._MaxValue = trueSettings.MaxValue
+
+		trueSettings.StepBy = useSettings.StepBy or 50
+		self._StepBy = trueSettings.StepBy
 	elseif useSettings.Type == "Text" then
-		if useSettings.TextValues == nil then
-			useSettings.TextValues = {"FirstValue","startingValue","LastValue"}
-			self._TextValues = useSettings.TextValues
-		else
-			self._TextValues = useSettings.TextValues
-		end
-		if useSettings.StartingValue == nil and useSettings.TextValues ~= nil then
-			useSettings.StartingValue = useSettings.TextValues[1]
-			self._StartingValue = useSettings.StartingValue
-		else
-			self._StartingValue = useSettings.StartingValue
-		end
-		self._StepBy =  1
+		trueSettings.TextValues = useSettings.TextValues or {"FirstValue","startingValue","LastValue"}
+		self._TextValues = trueSettings.TextValues
+		trueSettings.StartingValue = trueSettings.TextValues[1]
+		self._StartingValue = trueSettings.StartingValue
+
+		self._StepBy = 1
 		self._MinValue = 0
-		if useSettings.TextValues == nil then return end
-		self._MaxValue = #useSettings.TextValues - 1
+		self._MaxValue = #trueSettings.TextValues - 1
 	end
-	if useSettings.SliderArea == nil then return end
+
 	model, elements = PerfectClone(model,elements)
 
 	self._ModelElements = {}
@@ -79,15 +58,14 @@ function Slider.new(model: any, elements: {GuiObject}, IdName: string, useSettin
 
 	self.Initiated = false
 	self.ElementType = "Slider"
-	self.SubType = useSettings.Type
+	self.SubType = trueSettings.Type
 	self.Actions = {}
 	self._Model = model
 	self._Model.Name = IdName
 	self.IdName = IdName
 
-	self.CooldownTime = useSettings.Cooldown
-	self.Value = useSettings.StartingValue
-	self.Locked = useSettings.Locked
+	self.Value = trueSettings.StartingValue
+	self.Locked = trueSettings.Locked
 	self.IsActive = false
 
 	self._ModelElements.Drag.AnchorPoint = Vector2.new(0.5,0.5)
@@ -95,7 +73,7 @@ function Slider.new(model: any, elements: {GuiObject}, IdName: string, useSettin
 	self._ModelElements.MobileDetect = Instance.new("Frame")
 	self._ModelElements.MobileDetect.AnchorPoint = Vector2.new(0.5,0.5)
 	self._ModelElements.MobileDetect.Position = UDim2.fromScale(0.5,0.5)
-	self._ModelElements.MobileDetect.Size = UDim2.fromScale(useSettings.SliderArea,useSettings.SliderArea)
+	self._ModelElements.MobileDetect.Size = UDim2.fromScale(trueSettings.SliderArea,trueSettings.SliderArea)
 	self._ModelElements.MobileDetect.BackgroundTransparency = 1
 	self._ModelElements.MobileDetect.ZIndex = math.huge
 	self._ModelElements.MobileDetect.Name = "MobileDetect"

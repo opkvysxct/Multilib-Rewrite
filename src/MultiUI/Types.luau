@@ -47,7 +47,6 @@ export type RadioButton = {
 
 export type Slider = {
 	Locked: boolean?,
-	Cooldown: number?,
 	Type: string?,
 	StartingValue: any?,
 	SliderArea: number?,
@@ -114,7 +113,6 @@ Templates.TRadioButton = radioButton
 
 local slider: Slider = {
 	Locked = false,
-	Cooldown = 1,
 	Type = "Numeric",
 	StartingValue = 50,
 	MinValue = 1,

@@ -15,15 +15,15 @@ ArrowChange.__index = ArrowChange
 	Constructor for ArrowChange object.
 ]=]
 
-function ArrowChange.new(model: any, elements: {GuiObject}, IdName: string, useSettings: Mtypes.ArrowChange?)
+function ArrowChange.new(model: any, elements: {GuiObject}, IdName: string, useSettings: Mtypes.ArrowChange)
 	local self = setmetatable({}, ArrowChange)
+	local trueSettings = {}
 
 	useSettings = useSettings or table.clone(Mtypes.TArrowChange)
-	if useSettings == nil then return end
-	useSettings.Locked = useSettings.Locked or false
-	useSettings.Cooldown = useSettings.Cooldown or 0.25
-	useSettings.Values = useSettings.Values or {"first","second","Third"}
-	useSettings.StartingIndex = useSettings.StartingIndex or 1
+	trueSettings.Locked = useSettings.Locked or false
+	trueSettings.Cooldown = useSettings.Cooldown or 0.25
+	trueSettings.Values = useSettings.Values or {"first","second","Third"}
+	trueSettings.StartingIndex = useSettings.StartingIndex or 1
 
 	if useSettings.OverrideDisplayAnimation ~= nil then
 		self._DisplayAnimFunc = useSettings.OverrideDisplayAnimation 
@@ -35,14 +35,14 @@ function ArrowChange.new(model: any, elements: {GuiObject}, IdName: string, useS
 	for index, value in elements do
 		self._ModelElements[index] = value
 	end
-	if useSettings.Values ~= nil then
-		if useSettings.StartingIndex < 1 or useSettings.StartingIndex > #useSettings.Values then
-			useSettings.StartingIndex = 1
+	if trueSettings.Values ~= nil then
+		if trueSettings.StartingIndex < 1 or trueSettings.StartingIndex > #trueSettings.Values then
+			trueSettings.StartingIndex = 1
 		end
 	end
 
-	self.ActualIndex = useSettings.StartingIndex
-	self.Values = useSettings.Values
+	self.ActualIndex = trueSettings.StartingIndex
+	self.Values = trueSettings.Values
 
 	self._IsCooldown = false
 	self.Initiated = false
@@ -53,9 +53,9 @@ function ArrowChange.new(model: any, elements: {GuiObject}, IdName: string, useS
 	self._Model.Name = IdName
 	self.IdName = IdName
 
-	self.CooldownTime = useSettings.Cooldown
-	self.Value = useSettings.StartingIndex
-	self.Locked = useSettings.Locked
+	self.CooldownTime = trueSettings.Cooldown
+	self.Value = trueSettings.StartingIndex
+	self.Locked = trueSettings.Locked
 
 	self:_DisplayAnimFunc()
 
