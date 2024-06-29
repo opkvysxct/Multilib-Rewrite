@@ -1,6 +1,5 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Mtypes = require(script.Parent.Parent.Types)
-local MInstance = require(ReplicatedStorage.Packages.Multilib).Shared.C.Instance
+local PerfectClone = require(script.Parent.Parent.PerfectClone)
 local CheckBox = {}
 CheckBox.__index = CheckBox
 
@@ -28,7 +27,7 @@ function CheckBox.new(model: any, elements: {GuiObject}, IdName: string, useSett
 		self._DisplayAnimFunc = useSettings.OverrideDisplayAnimation 
 	end
 	
-	model, elements = MInstance:PerfectClone(model,elements)
+	model, elements = PerfectClone(model,elements)
 
 	self._ModelElements = {}
 	for index, value in elements do

@@ -1,5 +1,4 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local MInstance = require(ReplicatedStorage.Packages.Multilib).Shared.C.Instance
+local PerfectClone = require(script.Parent.Parent.PerfectClone)
 local TweenService = game:GetService("TweenService")
 local Lib = {}
 
@@ -48,7 +47,7 @@ end
 ]=]
 
 function Lib:_AppendBigNotifLogic(title: string, description: string, imageID: number?)
-	local model, elements = MInstance:PerfectClone(self.BigNotifConfig.Template,self.BigNotifConfig.TemplatePathes)
+	local model, elements = PerfectClone(self.BigNotifConfig.Template,self.BigNotifConfig.TemplatePathes)
 	elements.Title.Text = title
 	elements.Description.Text = description
 	if elements["Image"] then
@@ -78,7 +77,7 @@ end
 ]=]
 
 function Lib:_AppendSmallNotifLogic(title: string, description: string, imageID: number?)
-	local model, elements = MInstance:PerfectClone(self.SmallNotifConfig.Template,self.SmallNotifConfig.TemplatePathes)
+	local model, elements = PerfectClone(self.SmallNotifConfig.Template,self.SmallNotifConfig.TemplatePathes)
 	local heightBase = model.Size.Y.Scale
 	table.insert(self._SmallNotifs,{Model = model, Elements = elements})
 	for index, notif in self._SmallNotifs do

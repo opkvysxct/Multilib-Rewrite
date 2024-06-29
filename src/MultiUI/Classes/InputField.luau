@@ -1,6 +1,5 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Mtypes = require(script.Parent.Parent.Types)
-local MInstance = require(ReplicatedStorage.Packages.Multilib).Shared.C.Instance
+local PerfectClone = require(script.Parent.Parent.PerfectClone)
 local InputField = {}
 InputField.__index = InputField
 
@@ -27,7 +26,7 @@ function InputField.new(model: any, elements: {GuiObject}, IdName: string, useSe
 	useSettings.PlaceholderText = useSettings.PlaceholderText or "Input"
 	useSettings.Lenght = useSettings.Lenght or 10
 
-	model, elements = MInstance:PerfectClone(model,elements)
+	model, elements = PerfectClone(model,elements)
 
 	self._ModelElements = {}
 	for index, value in elements do

@@ -1,10 +1,9 @@
 [package]
 name = "opkvysxct/multiui"
-version = "1.1.0"
+version = "1.2.0"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 license = "MIT"
 description = "Sub library of Multilib for premade UI elements."
 
 [dependencies]
-Multilib = "opkvysxct/multilib@^2.7.0"

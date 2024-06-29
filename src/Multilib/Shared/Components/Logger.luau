@@ -27,7 +27,7 @@ end
 	Prints given message, can be forced to do even if logger is disabled for some reason.
 ]=]
 
-function Lib:Print(parentScript: Script, content: any, force: boolean?)
+function Lib:Print(parentScript: Script | ModuleScript | LocalScript, content: any, force: boolean?)
 	if self:_Checker() or force == true then
 		print("[".. parentScript.Name .. "]", content)
 	end
@@ -38,7 +38,7 @@ end
 	Warns given message, can be forced to do even if logger is disabled for some reason.
 ]=]
 
-function Lib:Warn(parentScript: Script, content: any, force: boolean?)
+function Lib:Warn(parentScript: Script | ModuleScript | LocalScript, content: any, force: boolean?)
 	if self:_Checker() or force == true  then
 		warn("[".. parentScript.Name .. "]", content)
 	end
@@ -49,7 +49,7 @@ end
 	Errors given message, can be forced to do even if logger is disabled for some reason.
 ]=]
 
-function Lib:Error(parentScript: Script, content: any, force: boolean?)
+function Lib:Error(parentScript: Script | ModuleScript | LocalScript, content: any, force: boolean?)
 	if self:_Checker() or force == true  then
 		error("[".. parentScript.Name .. "]", content)
 	end

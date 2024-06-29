@@ -1,6 +1,5 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Mtypes = require(script.Parent.Parent.Types)
-local MInstance = require(ReplicatedStorage.Packages.Multilib).Shared.C.Instance
+local PerfectClone = require(script.Parent.Parent.PerfectClone)
 local RunService = game:GetService("RunService")
 local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
@@ -71,7 +70,7 @@ function Slider.new(model: any, elements: {GuiObject}, IdName: string, useSettin
 		self._MaxValue = #useSettings.TextValues - 1
 	end
 	if useSettings.SliderArea == nil then return end
-	model, elements = MInstance:PerfectClone(model,elements)
+	model, elements = PerfectClone(model,elements)
 
 	self._ModelElements = {}
 	for index, value in elements do

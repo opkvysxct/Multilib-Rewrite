@@ -1,6 +1,5 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Mtypes = require(script.Parent.Parent.Types)
-local MInstance = require(ReplicatedStorage.Packages.Multilib).Shared.C.Instance
+local PerfectClone = require(script.Parent.Parent.PerfectClone)
 local TweenService = game:GetService("TweenService")
 local DropDownOption = require(script.Parent.DropDownOption)
 local DropDownMenu = {}
@@ -34,7 +33,7 @@ function DropDownMenu.new(model: any, elements: {GuiObject}, IdName: string, Dro
 		self._DisplayAnimFunc = useSettings.OverrideDisplayAnimation 
 	end
 
-	model, elements = MInstance:PerfectClone(model,elements)
+	model, elements = PerfectClone(model,elements)
 
 	self._ModelElements = {}
 	for index, value in pairs(elements) do

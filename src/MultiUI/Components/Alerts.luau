@@ -1,5 +1,4 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local MInstance = require(ReplicatedStorage.Packages.Multilib).Shared.C.Instance
+local PerfectClone = require(script.Parent.Parent.PerfectClone)
 local TweenService = game:GetService("TweenService")
 local Lib = {}
 
@@ -18,7 +17,7 @@ local Lib = {}
 function Lib:AppendInfoAlert(title: string, description: string, imageID: number?)
 	if self.InfoAlertConfig.WasConfigured == true then
 		local canProceed = false
-		local model, elements = MInstance:PerfectClone(self.InfoAlertConfig.Template,self.InfoAlertConfig.TemplatePathes)
+		local model, elements = PerfectClone(self.InfoAlertConfig.Template,self.InfoAlertConfig.TemplatePathes)
 		elements.Title.Text = title
 		elements.Description.Text = description
 		if imageID ~= nil then
@@ -49,7 +48,7 @@ function Lib:AppendChoiceAlert(title: string, description: string, imageID: numb
 	local valueToReturn = nil
 	if self.ChoiceAlertConfig.WasConfigured == true then
 		local canProceed = false
-		local model, elements = MInstance:PerfectClone(self.ChoiceAlertConfig.Template,self.ChoiceAlertConfig.TemplatePathes)
+		local model, elements = PerfectClone(self.ChoiceAlertConfig.Template,self.ChoiceAlertConfig.TemplatePathes)
 		elements.Title.Text = title
 		elements.Description.Text = description
 		if imageID ~= nil then
