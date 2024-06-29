@@ -17,7 +17,7 @@ DropDownMenu.__index = DropDownMenu
 	Constructor for DropDownMenu object.
 ]=]
 
-function DropDownMenu.new(model: any, elements: {GuiObject}, IdName: string, DropDownOptions: {}, useSettings: Mtypes.DropDownMenu)
+function DropDownMenu.new(model: GuiObject, elements: {GuiObject}, IdName: string, uiOrder: number, DropDownOptions: {}, useSettings: Mtypes.DropDownMenu)
 	local self = setmetatable({}, DropDownMenu)
 	local trueSettings = {}
 
@@ -33,6 +33,7 @@ function DropDownMenu.new(model: any, elements: {GuiObject}, IdName: string, Dro
 	end
 
 	model, elements = PerfectClone(model,elements)
+	model.LayoutOrder = uiOrder
 
 	self._ModelElements = {}
 	for index, value in pairs(elements) do
@@ -74,11 +75,12 @@ end
 function DropDownMenu:Init() -- should be called only via Form:InitAll()
 	if self.Initiated == false then
 		self.Initiated = true
-		local function CreateAndBind(value)
+		local function CreateAndBind(value, order)
 			local DropDownOptionObject = DropDownOption.new(
 				self.DropDownOptionsSettings.Model,
 				self.DropDownOptionsSettings.Elements,
 				value,
+				order,
 				self,
 				self.DropDownOptionsSettings.Settings
 			)
@@ -86,8 +88,8 @@ function DropDownMenu:Init() -- should be called only via Form:InitAll()
 			DropDownOptionObject:Init()
 			table.insert(self.DropDownOptions,DropDownOptionObject)
 		end
-		for _,value in pairs(self.Values) do
-			CreateAndBind(value)
+		for index,value in pairs(self.Values) do
+			CreateAndBind(value,index)
 		end
 		local ScaleSub = self._ModelElements.UIListLayout.Padding.Scale / (#self.DropDownOptions * 0.1)
 		local ScrollingFrame = self._ModelElements.ScrollingFrame

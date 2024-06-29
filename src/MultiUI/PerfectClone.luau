@@ -1,5 +1,5 @@
 --COPY OF MAINSTREAM MULTILIB -> SHARED -> COMPONENTS -> INSTANCES:PerfectClone(trueModel: any, trueElements: {})
-return function (trueModel: any, trueElements: {})
+return function (trueModel: any, trueElements: {}) : (GuiObject, {any})
 	local model = trueModel:Clone()
 	local elements = {}
 	for index, element in trueElements do

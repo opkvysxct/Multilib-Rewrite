@@ -15,7 +15,7 @@ RadioButton.__index = RadioButton
 	Constructor for RadioButton object.
 ]=]
 
-function RadioButton.new(model: any, elements: {GuiObject}, IdName: string, radioGroup: {}, useSettings: Mtypes.RadioButton)
+function RadioButton.new(model: GuiObject, elements: {GuiObject}, IdName: string, uiOrder: number, radioGroup: {}, useSettings: Mtypes.RadioButton)
 	local self = setmetatable({}, RadioButton)
 	local trueSettings = {}
 
@@ -28,12 +28,14 @@ function RadioButton.new(model: any, elements: {GuiObject}, IdName: string, radi
 	end
 
 	model, elements = PerfectClone(model,elements)
-
+	model.LayoutOrder = uiOrder
+	
 	self._ModelElements = {}
 	for index, value in elements do
 		self._ModelElements[index] = value
 	end
 
+	model.LayoutOrder = uiOrder
 
 	self._IsCooldown = false
 	self.Initiated = false

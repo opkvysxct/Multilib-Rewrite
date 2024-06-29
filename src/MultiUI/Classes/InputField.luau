@@ -15,7 +15,7 @@ InputField.__index = InputField
 	Constructor for InputField object.
 ]=]
 
-function InputField.new(model: any, elements: {GuiObject}, IdName: string, useSettings: Mtypes.InputField)
+function InputField.new(model: GuiObject, elements: {GuiObject}, IdName: string, uiOrder: number, useSettings: Mtypes.InputField)
 	local self = setmetatable({}, InputField)
 	local trueSettings = {}
 
@@ -28,7 +28,8 @@ function InputField.new(model: any, elements: {GuiObject}, IdName: string, useSe
 	trueSettings.StartingValue = useSettings.StartingValue or "abc"
 
 	model, elements = PerfectClone(model,elements)
-
+	model.LayoutOrder = uiOrder
+	
 	self._ModelElements = {}
 	for index, value in elements do
 		self._ModelElements[index] = value

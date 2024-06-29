@@ -15,7 +15,7 @@ ArrowChange.__index = ArrowChange
 	Constructor for ArrowChange object.
 ]=]
 
-function ArrowChange.new(model: any, elements: {GuiObject}, IdName: string, useSettings: Mtypes.ArrowChange)
+function ArrowChange.new(model: GuiObject, elements: {GuiObject}, IdName: string, uiOrder: number, useSettings: Mtypes.ArrowChange)
 	local self = setmetatable({}, ArrowChange)
 	local trueSettings = {}
 
@@ -30,7 +30,8 @@ function ArrowChange.new(model: any, elements: {GuiObject}, IdName: string, useS
 	end
 
 	model, elements = PerfectClone(model,elements)
-
+	model.LayoutOrder = uiOrder
+	
 	self._ModelElements = {}
 	for index, value in elements do
 		self._ModelElements[index] = value

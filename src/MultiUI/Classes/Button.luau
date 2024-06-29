@@ -15,7 +15,7 @@ Button.__index = Button
 	Constructor for Button object.
 ]=]
 
-function Button.new(model: any, elements: {GuiObject}, IdName: string, useSettings: Mtypes.Button)
+function Button.new(model: GuiObject, elements: {GuiObject}, IdName: string, uiOrder: number, useSettings: Mtypes.Button)
 	local self = setmetatable({}, Button)
 	local trueSettings = {}
 
@@ -28,7 +28,8 @@ function Button.new(model: any, elements: {GuiObject}, IdName: string, useSettin
 	end
 	
 	model, elements = PerfectClone(model,elements)
-
+	model.LayoutOrder = uiOrder
+	
 	self._ModelElements = {}
 	for index, value in elements do
 		self._ModelElements[index] = value

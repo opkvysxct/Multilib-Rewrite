@@ -11,9 +11,10 @@ Form.__index = Form
 	@within Form
 	@return <table> -- [Form Object]
 	Constructor for Form object.
+	Abstract class to manage other UI Elements
 ]=]
 
-function Form.new() -- mostly abstract class to manage other ui Elements
+function Form.new()
 	local self = setmetatable({}, Form)
 	self.Data = {}
 	self.Elements = {}

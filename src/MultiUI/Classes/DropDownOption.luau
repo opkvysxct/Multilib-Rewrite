@@ -16,7 +16,7 @@ DropDownOption.__index = DropDownOption
 	Constructor for DropDownOption object.
 ]=]
 
-function DropDownOption.new(model: any, elements: {GuiObject}, IdName: string, DropDownMenu: {}, useSettings: Mtypes.DropDownOption)
+function DropDownOption.new(model: GuiObject, elements: {GuiObject}, IdName: string, uiOrder: number, DropDownMenu: {}, useSettings: Mtypes.DropDownOption)
 	local self = setmetatable({}, DropDownOption)
 	local trueSettings = {}
 
@@ -25,7 +25,8 @@ function DropDownOption.new(model: any, elements: {GuiObject}, IdName: string, D
 	trueSettings.Cooldown = useSettings.Cooldown or 0.25
 
 	model, elements = PerfectClone(model,elements)
-
+	model.LayoutOrder = uiOrder
+	
 	self._ModelElements = {}
 	for index, value in elements do
 		self._ModelElements[index] = value

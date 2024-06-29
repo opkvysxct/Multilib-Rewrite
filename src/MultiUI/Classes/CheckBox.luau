@@ -15,7 +15,7 @@ CheckBox.__index = CheckBox
 	Constructor for CheckBox object.
 ]=]
 
-function CheckBox.new(model: any, elements: {GuiObject}, IdName: string, useSettings: Mtypes.CheckBox)
+function CheckBox.new(model: GuiObject, elements: {GuiObject}, IdName: string, uiOrder: number, useSettings: Mtypes.CheckBox)
 	local self = setmetatable({}, CheckBox)
 	local trueSettings = {}
 
@@ -29,7 +29,8 @@ function CheckBox.new(model: any, elements: {GuiObject}, IdName: string, useSett
 	end
 	
 	model, elements = PerfectClone(model,elements)
-
+	model.LayoutOrder = uiOrder
+	
 	self._ModelElements = {}
 	for index, value in elements do
 		self._ModelElements[index] = value

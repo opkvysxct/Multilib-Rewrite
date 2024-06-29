@@ -18,7 +18,7 @@ Slider.__index = Slider
 	Constructor for Slider object.
 ]=]
 
-function Slider.new(model: any, elements: {GuiObject}, IdName: string, useSettings: Mtypes.Slider)
+function Slider.new(model: GuiObject, elements: {GuiObject}, IdName: string, uiOrder: number, useSettings: Mtypes.Slider)
 	local self = setmetatable({}, Slider)
 	local trueSettings = {}
 
@@ -50,11 +50,15 @@ function Slider.new(model: any, elements: {GuiObject}, IdName: string, useSettin
 	end
 
 	model, elements = PerfectClone(model,elements)
+	model.LayoutOrder = uiOrder
 
 	self._ModelElements = {}
 	for index, value in elements do
 		self._ModelElements[index] = value
 	end
+
+
+
 
 	self.Initiated = false
 	self.ElementType = "Slider"
