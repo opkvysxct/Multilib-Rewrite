@@ -4,9 +4,8 @@
 	</h1>
 </div>
 
-# NO LONGER MAINTAINED
+# NO LONGER MAINTAINED !!!
 I Have simply moved to C++ and have no plans for going back to Lua, anyone can continue this project and take full credits for it, if it helps you in any way, then it's your.
-# NO LONGER MAINTAINED
 
 A Roblox library that allows you to perform *simple* task even *simplier*. See ->
 [**Docs**](https://opkvysxct.github.io/Multilib-Rewrite/) for installation and usage help!
